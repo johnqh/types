@@ -1,0 +1,45 @@
+{
+  "name": "@johnqh/types",
+  "version": "1.0.0",
+  "description": "Common TypeScript types, interfaces, and enums for 0xmail.box projects",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "keywords": [
+    "typescript",
+    "types",
+    "interfaces",
+    "0xmail",
+    "web3"
+  ],
+  "author": "0xmail.box",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
