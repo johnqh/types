@@ -1,3 +1,6 @@
+// API response types
+export * from './api';
+
 // Business domain types
 export * from './business';
 
