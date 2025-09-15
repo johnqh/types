@@ -30,7 +30,7 @@ export interface AddressFormats {
 export interface ValidationResponse extends BaseResponse {
   isValid: boolean;
   address: string;
-  addressType: ChainType | 'unknown';
+  addressType?: ChainType;
   normalizedAddress?: string;
   formats?: AddressFormats;
   error?: string;

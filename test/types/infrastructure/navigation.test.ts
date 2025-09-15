@@ -5,7 +5,7 @@ import {
   type UINavigationService,
   type UILocationHook,
   type UINavigationConfig,
-} from './navigation';
+} from '../../../src/types/infrastructure/navigation';
 
 describe('Navigation Types', () => {
   describe('UINavigationState', () => {

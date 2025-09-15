@@ -7,7 +7,7 @@ import {
   Theme,
   NotificationType,
   EmailFolderUtils,
-} from './enums';
+} from '../../../src/types/business/enums';
 
 describe('Business Enums', () => {
   describe('ChainType', () => {

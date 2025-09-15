@@ -13,7 +13,7 @@ import {
   type SupportedChainId,
   type ContractType,
   type ProcessedEventName,
-} from './api';
+} from '../../../src/types/infrastructure/api';
 
 describe('API Types', () => {
   describe('ApiResponse', () => {

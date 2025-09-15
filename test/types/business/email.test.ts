@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { StandardEmailFolder } from './enums';
-import { EmailFolder, type WalletUserData } from './email';
+import { StandardEmailFolder, ChainType } from '../../../src/types/business/enums';
+import { EmailFolder, type WalletUserData } from '../../../src/types/business/email';
 
 describe('Email Types', () => {
   describe('WalletUserData', () => {
     it('should have required fields', () => {
       const userData: WalletUserData = {
         walletAddress: '0x1234567890123456789012345678901234567890',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
       };
 
       expect(userData.walletAddress).toBe(
@@ -19,7 +19,7 @@ describe('Email Types', () => {
     it('should accept optional fields', () => {
       const userData: WalletUserData = {
         walletAddress: '0x1234567890123456789012345678901234567890',
-        chainType: 'solana',
+        chainType: ChainType.SOLANA,
         walletType: 'metamask',
         displayName: 'John Doe',
         avatar: 'https://example.com/avatar.jpg',
@@ -39,22 +39,22 @@ describe('Email Types', () => {
     it('should work with different chain types', () => {
       const evmUser: WalletUserData = {
         walletAddress: '0x1234567890123456789012345678901234567890',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
       };
 
       const solanaUser: WalletUserData = {
         walletAddress: 'DsK1234567890123456789012345678901234567890',
-        chainType: 'solana',
+        chainType: ChainType.SOLANA,
       };
 
-      expect(evmUser.chainType).toBe('evm');
-      expect(solanaUser.chainType).toBe('solana');
+      expect(evmUser.chainType).toBe(ChainType.EVM);
+      expect(solanaUser.chainType).toBe(ChainType.SOLANA);
     });
 
     it('should handle complex metadata', () => {
       const userData: WalletUserData = {
         walletAddress: '0x1234567890123456789012345678901234567890',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         metadata: {
           userProfile: {
             bio: 'Web3 enthusiast',
@@ -87,7 +87,7 @@ describe('Email Types', () => {
     it('should work without optional metadata', () => {
       const userData: WalletUserData = {
         walletAddress: '0x1234567890123456789012345678901234567890',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         walletType: 'walletconnect',
         displayName: 'Alice',
       };

@@ -8,7 +8,7 @@ import {
   isZeroAddress,
   isTestNet,
   validateEventArgs,
-} from './event-helpers';
+} from '../../../src/utils/blockchain/event-helpers';
 
 describe('Event Helpers', () => {
   describe('ID Generation', () => {

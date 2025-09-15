@@ -4,7 +4,7 @@ import {
   createSearchParams,
   searchParamsToString,
   parseSearchParams,
-} from './url-params';
+} from '../../../src/utils/url/url-params';
 
 describe('URL Params Utilities', () => {
   describe('createURLSearchParams', () => {
