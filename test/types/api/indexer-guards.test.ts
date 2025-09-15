@@ -11,7 +11,7 @@ import {
   isNonceResponse,
   isEntitlementResponse,
   isPointsResponse,
-  isMessageGenerationResponse,
+  isSimpleMessageResponse,
   isLeaderboardResponse,
   isSiteStatsResponse,
   isSolanaWebhookResponse,
@@ -29,7 +29,7 @@ import type {
   SignatureVerificationResponse,
   NonceResponse,
   EntitlementResponse,
-  MessageGenerationResponse,
+  SimpleMessageResponse,
   LeaderboardResponse,
   SiteStatsResponse,
   SolanaWebhookResponse,
@@ -369,57 +369,38 @@ describe('Indexer Type Guards', () => {
     });
   });
 
-  describe('isMessageGenerationResponse', () => {
-    it('should identify message generation responses correctly', () => {
-      const messageResponse: MessageGenerationResponse = {
+  describe('isSimpleMessageResponse', () => {
+    it('should identify simple message responses correctly', () => {
+      const messageResponse: SimpleMessageResponse = {
         timestamp: mockTimestamp,
+        message: 'Simple authentication message',
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         chainId: 1,
-        domain: '0xmail.box',
-        uri: 'https://0xmail.box',
-        messages: {
-          simple: 'simple message',
-          info: {
-            domain: '0xmail.box',
-            uri: 'https://0xmail.box',
-            chainId: 1,
-          },
-        },
-        recommended: 'simple',
-        instructions: {
-          evm: 'Sign with MetaMask',
-          solana: 'Sign with Phantom',
-        },
-        verification: {
-          endpoint: '/api/verify',
-          method: 'POST',
-          body: {
-            walletAddress: mockWalletAddress,
-            signature: 'signature',
-            message: 'message',
-          },
-          note: 'Verification endpoint',
-        },
-        regeneration: {
-          note: 'Regenerate message',
-          endpoint: '/api/regenerate',
-        },
       };
 
-      expect(isMessageGenerationResponse(messageResponse)).toBe(true);
+      expect(isSimpleMessageResponse(messageResponse)).toBe(true);
+    });
+
+    it('should handle responses without optional chainId', () => {
+      const messageResponse: SimpleMessageResponse = {
+        timestamp: mockTimestamp,
+        message: 'Simple authentication message',
+        walletAddress: mockWalletAddress,
+        chainType: ChainType.SOLANA,
+      };
+
+      expect(isSimpleMessageResponse(messageResponse)).toBe(true);
     });
 
     it('should reject responses missing required properties', () => {
       const incompleteResponse = {
         timestamp: mockTimestamp,
         walletAddress: mockWalletAddress,
-        messages: {},
-        instructions: {},
-        // missing verification
+        // missing message and chainType
       };
 
-      expect(isMessageGenerationResponse(incompleteResponse)).toBe(false);
+      expect(isSimpleMessageResponse(incompleteResponse)).toBe(false);
     });
   });
 
@@ -605,7 +586,7 @@ describe('Indexer Type Guards', () => {
         isNonceResponse,
         isEntitlementResponse,
         isPointsResponse,
-        isMessageGenerationResponse,
+        isSimpleMessageResponse,
         isLeaderboardResponse,
         isSiteStatsResponse,
         isSolanaWebhookResponse,

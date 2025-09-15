@@ -14,7 +14,7 @@ import type {
   SignatureVerificationResponse,
   NonceResponse,
   EntitlementResponse,
-  MessageGenerationResponse,
+  SimpleMessageResponse,
   LeaderboardResponse,
   SiteStatsResponse,
   SolanaWebhookResponse,
@@ -65,8 +65,8 @@ export function isPointsResponse(response: unknown): response is PointsResponse 
   return !!(response && typeof response === 'object' && 'data' in response && response.data && typeof response.data === 'object' && 'pointsEarned' in response.data);
 }
 
-export function isMessageGenerationResponse(response: unknown): response is MessageGenerationResponse {
-  return !!(response && typeof response === 'object' && 'messages' in response && 'instructions' in response && 'verification' in response);
+export function isSimpleMessageResponse(response: unknown): response is SimpleMessageResponse {
+  return !!(response && typeof response === 'object' && 'message' in response && 'walletAddress' in response && 'chainType' in response);
 }
 
 // Points API response type guards

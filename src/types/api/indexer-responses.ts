@@ -170,52 +170,11 @@ export interface PointsResponse extends SuccessResponse {
 }
 
 // Message generation types
-export interface MessageInfo {
-  domain: string;
-  uri: string;
-  chainId: number;
-  date?: string;
-}
-
-export interface Messages {
-  deterministic?: string;
-  simple: string;
-  solana?: string;
-  info: MessageInfo;
-}
-
-export interface MessageInstructions {
-  evm: string;
-  solana: string;
-}
-
-export interface VerificationEndpoint {
-  endpoint: string;
-  method: string;
-  body: {
-    walletAddress: string;
-    signature: string;
-    message: string;
-  };
-  note: string;
-}
-
-export interface RegenerationInfo {
-  note: string;
-  endpoint: string;
-}
-
-export interface MessageGenerationResponse extends BaseResponse {
+export interface SimpleMessageResponse extends BaseResponse {
+  message: string;
   walletAddress: string;
-  addressType: ChainType;
-  chainId: number;
-  domain: string;
-  uri: string;
-  messages: Messages;
-  recommended: 'deterministic' | 'simple' | 'solana';
-  instructions: MessageInstructions;
-  verification: VerificationEndpoint;
-  regeneration: RegenerationInfo;
+  chainType: ChainType;
+  chainId?: number;
 }
 
 // Points API response types
@@ -288,7 +247,7 @@ export type IndexerApiResponse =
   | NonceResponse
   | EntitlementResponse
   | PointsResponse
-  | MessageGenerationResponse
+  | SimpleMessageResponse
   | LeaderboardResponse
   | SiteStatsResponse
   | SolanaWebhookResponse
