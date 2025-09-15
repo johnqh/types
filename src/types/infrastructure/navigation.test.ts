@@ -17,7 +17,7 @@ describe('Navigation Types', () => {
         params: { userId: '123', orgId: '456' },
         searchParams: { tab: 'inbox', page: '1' },
       };
-      
+
       expect(state.pathname).toBe('/dashboard');
       expect(state.search).toBe('?tab=inbox&page=1');
       expect(state.hash).toBe('#section1');
@@ -33,7 +33,7 @@ describe('Navigation Types', () => {
         params: {},
         searchParams: {},
       };
-      
+
       expect(state.pathname).toBe('/');
       expect(Object.keys(state.params)).toHaveLength(0);
     });
@@ -47,7 +47,7 @@ describe('Navigation Types', () => {
         state: { fromPage: 'home' },
         preventScrollReset: false,
       };
-      
+
       expect(options1.replace).toBeUndefined();
       expect(options2.replace).toBe(true);
       expect(options2.state).toEqual({ fromPage: 'home' });
@@ -62,7 +62,7 @@ describe('Navigation Types', () => {
           flags: { isModal: true },
         },
       };
-      
+
       expect(options.state?.previousUrl).toBe('/home');
       expect(options.state?.flags).toEqual({ isModal: true });
     });
@@ -100,7 +100,7 @@ describe('Navigation Types', () => {
         canGoBack: (): boolean => true,
         canGoForward: (): boolean => false,
       };
-      
+
       expect(typeof mockService.navigate).toBe('function');
       expect(typeof mockService.getCurrentState).toBe('function');
       expect(typeof mockService.canGoBack).toBe('function');
@@ -117,7 +117,7 @@ describe('Navigation Types', () => {
         state: { previousRoute: '/home' },
         key: 'location-key-123',
       };
-      
+
       expect(location.pathname).toBe('/dashboard/email');
       expect(location.searchParams.folder).toBe('inbox');
       expect(location.state.previousRoute).toBe('/home');
@@ -133,7 +133,7 @@ describe('Navigation Types', () => {
         state: {},
         key: 'root-key',
       };
-      
+
       expect(Object.keys(location.state)).toHaveLength(0);
       expect(location.pathname).toBe('/');
     });
@@ -149,7 +149,7 @@ describe('Navigation Types', () => {
         enableAnalytics: true,
         fallbackPath: '/home',
       };
-      
+
       expect(config1.enableBackGesture).toBeUndefined();
       expect(config2.enableBackGesture).toBe(true);
       expect(config2.animationType).toBe('slide');
@@ -160,7 +160,7 @@ describe('Navigation Types', () => {
       const slideConfig: UINavigationConfig = { animationType: 'slide' };
       const fadeConfig: UINavigationConfig = { animationType: 'fade' };
       const noneConfig: UINavigationConfig = { animationType: 'none' };
-      
+
       expect(slideConfig.animationType).toBe('slide');
       expect(fadeConfig.animationType).toBe('fade');
       expect(noneConfig.animationType).toBe('none');
@@ -172,7 +172,7 @@ describe('Navigation Types', () => {
         enableSwipeGesture: true,
         animationType: 'slide',
       };
-      
+
       expect(rnConfig.enableBackGesture).toBe(true);
       expect(rnConfig.enableSwipeGesture).toBe(true);
     });

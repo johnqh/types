@@ -33,7 +33,7 @@ describe('Business Enums', () => {
       // EmailFolder is a type union, not an enum, so we test with values
       const standardFolder: EmailFolder = StandardEmailFolder.INBOX;
       const customFolder: EmailFolder = 'custom-folder';
-      
+
       expect(standardFolder).toBe('inbox');
       expect(customFolder).toBe('custom-folder');
     });

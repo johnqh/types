@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { StandardEmailFolder } from './enums';
-import {
-  EmailFolder,
-  type WalletUserData,
-} from './email';
+import { EmailFolder, type WalletUserData } from './email';
 
 describe('Email Types', () => {
   describe('WalletUserData', () => {
@@ -12,8 +9,10 @@ describe('Email Types', () => {
         walletAddress: '0x1234567890123456789012345678901234567890',
         chainType: 'evm',
       };
-      
-      expect(userData.walletAddress).toBe('0x1234567890123456789012345678901234567890');
+
+      expect(userData.walletAddress).toBe(
+        '0x1234567890123456789012345678901234567890'
+      );
       expect(userData.chainType).toBe('evm');
     });
 
@@ -30,7 +29,7 @@ describe('Email Types', () => {
           settings: { notifications: true },
         },
       };
-      
+
       expect(userData.walletType).toBe('metamask');
       expect(userData.displayName).toBe('John Doe');
       expect(userData.avatar).toBe('https://example.com/avatar.jpg');
@@ -42,12 +41,12 @@ describe('Email Types', () => {
         walletAddress: '0x1234567890123456789012345678901234567890',
         chainType: 'evm',
       };
-      
+
       const solanaUser: WalletUserData = {
         walletAddress: 'DsK1234567890123456789012345678901234567890',
         chainType: 'solana',
       };
-      
+
       expect(evmUser.chainType).toBe('evm');
       expect(solanaUser.chainType).toBe('solana');
     });
@@ -79,7 +78,7 @@ describe('Email Types', () => {
           },
         },
       };
-      
+
       expect(userData.metadata?.userProfile).toBeDefined();
       expect(userData.metadata?.accountSettings).toBeDefined();
       expect(userData.metadata?.statistics).toBeDefined();
@@ -92,7 +91,7 @@ describe('Email Types', () => {
         walletType: 'walletconnect',
         displayName: 'Alice',
       };
-      
+
       expect(userData.metadata).toBeUndefined();
       expect(userData.walletType).toBe('walletconnect');
       expect(userData.displayName).toBe('Alice');
@@ -115,7 +114,7 @@ describe('Email Types', () => {
       // EmailFolder is a type union: StandardEmailFolder | string
       const standardFolder: EmailFolder = StandardEmailFolder.INBOX;
       const customFolder: EmailFolder = 'my-custom-folder';
-      
+
       expect(standardFolder).toBe('inbox');
       expect(customFolder).toBe('my-custom-folder');
     });
@@ -125,9 +124,9 @@ describe('Email Types', () => {
         StandardEmailFolder.INBOX,
         StandardEmailFolder.SENT,
         'custom-folder-1',
-        'custom-folder-2'
+        'custom-folder-2',
       ];
-      
+
       expect(folders).toContain('inbox');
       expect(folders).toContain('sent');
       expect(folders).toContain('custom-folder-1');

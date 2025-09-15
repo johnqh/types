@@ -21,7 +21,10 @@ describe('URL Params Utilities', () => {
     });
 
     it('should create URLSearchParams from array of tuples', () => {
-      const params = createURLSearchParams([['foo', 'bar'], ['baz', 'qux']]);
+      const params = createURLSearchParams([
+        ['foo', 'bar'],
+        ['baz', 'qux'],
+      ]);
       expect(params.get('foo')).toBe('bar');
       expect(params.get('baz')).toBe('qux');
     });
@@ -45,7 +48,9 @@ describe('URL Params Utilities', () => {
     });
 
     it('should handle special characters', () => {
-      const params = createSearchParams({ 'key with spaces': 'value&with=chars' });
+      const params = createSearchParams({
+        'key with spaces': 'value&with=chars',
+      });
       expect(params.get('key with spaces')).toBe('value&with=chars');
     });
   });

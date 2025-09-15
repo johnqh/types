@@ -30,7 +30,7 @@ describe('Event Helpers', () => {
     it('should create delegation ID with lowercase address', () => {
       const result = createDelegationId('0xABC123', true);
       expect(result).toBe('0xabc123-true');
-      
+
       const result2 = createDelegationId('0xDEF456', false);
       expect(result2).toBe('0xdef456-false');
     });
@@ -65,13 +65,21 @@ describe('Event Helpers', () => {
 
   describe('Address Validation', () => {
     it('should identify zero address correctly', () => {
-      expect(isZeroAddress('0x0000000000000000000000000000000000000000')).toBe(true);
-      expect(isZeroAddress('0X0000000000000000000000000000000000000000')).toBe(true);
+      expect(isZeroAddress('0x0000000000000000000000000000000000000000')).toBe(
+        true
+      );
+      expect(isZeroAddress('0X0000000000000000000000000000000000000000')).toBe(
+        true
+      );
     });
 
     it('should identify non-zero address correctly', () => {
-      expect(isZeroAddress('0x1234567890123456789012345678901234567890')).toBe(false);
-      expect(isZeroAddress('0x000000000000000000000000000000000000000a')).toBe(false);
+      expect(isZeroAddress('0x1234567890123456789012345678901234567890')).toBe(
+        false
+      );
+      expect(isZeroAddress('0x000000000000000000000000000000000000000a')).toBe(
+        false
+      );
     });
   });
 

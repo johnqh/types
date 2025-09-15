@@ -44,7 +44,9 @@ describe('Logger', () => {
     it('should log warning messages', () => {
       logger.warn('Test warning message');
       expect(consoleSpy.warn).toHaveBeenCalled();
-      expect(consoleSpy.warn.mock.calls[0][0]).toContain('Test warning message');
+      expect(consoleSpy.warn.mock.calls[0][0]).toContain(
+        'Test warning message'
+      );
     });
 
     it('should log info messages', () => {
@@ -66,7 +68,7 @@ describe('Logger', () => {
     it('should create contextual logger with error method', () => {
       const contextLogger = logger.withContext('TestContext');
       contextLogger.error('Test message');
-      
+
       expect(consoleSpy.error).toHaveBeenCalled();
       expect(consoleSpy.error.mock.calls[0][0]).toContain('[TestContext]');
     });
@@ -74,7 +76,7 @@ describe('Logger', () => {
     it('should create contextual logger with warn method', () => {
       const contextLogger = logger.withContext('TestContext');
       contextLogger.warn('Test message');
-      
+
       expect(consoleSpy.warn).toHaveBeenCalled();
       expect(consoleSpy.warn.mock.calls[0][0]).toContain('[TestContext]');
     });
@@ -82,14 +84,14 @@ describe('Logger', () => {
     it('should create contextual logger with info method', () => {
       const contextLogger = logger.withContext('TestContext');
       contextLogger.info('Test message');
-      
+
       expect(typeof contextLogger.info).toBe('function');
     });
 
     it('should create contextual logger with debug method', () => {
       const contextLogger = logger.withContext('TestContext');
       contextLogger.debug('Test message');
-      
+
       expect(typeof contextLogger.debug).toBe('function');
     });
 
@@ -97,7 +99,7 @@ describe('Logger', () => {
       const contextLogger = logger.withContext('TestContext');
       const testData = { test: 'data' };
       contextLogger.error('Test message', testData);
-      
+
       expect(consoleSpy.error).toHaveBeenCalledTimes(2);
       expect(consoleSpy.error.mock.calls[1][0]).toBe(testData);
     });

@@ -23,7 +23,7 @@ describe('API Types', () => {
         data: 'test data',
         timestamp: '2023-01-01T00:00:00Z',
       };
-      
+
       expect(response.success).toBe(true);
       expect(response.data).toBe('test data');
       expect(response.timestamp).toBe('2023-01-01T00:00:00Z');
@@ -35,7 +35,7 @@ describe('API Types', () => {
         error: 'Something went wrong',
         timestamp: '2023-01-01T00:00:00Z',
       };
-      
+
       expect(response.success).toBe(false);
       expect(response.error).toBe('Something went wrong');
     });
@@ -46,7 +46,7 @@ describe('API Types', () => {
         data: { complex: 'object' },
         timestamp: '2023-01-01T00:00:00Z',
       };
-      
+
       expect(response.data).toEqual({ complex: 'object' });
     });
   });
@@ -59,8 +59,10 @@ describe('API Types', () => {
         timestamp: 1640995200000,
         nonce: 'random-nonce',
       };
-      
-      expect(request.walletAddress).toBe('0x1234567890123456789012345678901234567890');
+
+      expect(request.walletAddress).toBe(
+        '0x1234567890123456789012345678901234567890'
+      );
       expect(request.signature).toBe('0xabcdef');
       expect(request.timestamp).toBe(1640995200000);
       expect(request.nonce).toBe('random-nonce');
@@ -77,7 +79,7 @@ describe('API Types', () => {
         logIndex: 0,
         timestamp: BigInt(1640995200),
       };
-      
+
       expect(metadata.chainId).toBe(1);
       expect(metadata.chainType).toBe(ChainType.EVM);
       expect(metadata.blockNumber).toBe(12345678);
@@ -104,7 +106,7 @@ describe('API Types', () => {
         logIndex: 0,
         timestamp: BigInt(1640995200),
       };
-      
+
       expect(mail.id).toBe('1-0x123-0');
       expect(mail.from).toBe('0x1234567890123456789012345678901234567890');
       expect(mail.priority).toBe(true);
@@ -127,7 +129,7 @@ describe('API Types', () => {
         logIndex: 0,
         timestamp: BigInt(1640995200),
       };
-      
+
       expect(preparedMail.mailHash).toBe('0xpreparedmailhash');
       expect(preparedMail.feesPaid).toBe(BigInt('500000000000000000'));
     });
@@ -144,8 +146,10 @@ describe('API Types', () => {
         txHash: '0xabcdef123456',
         timestamp: BigInt(1640995200),
       };
-      
-      expect(delegation.delegatorAddress).toBe('0x1234567890123456789012345678901234567890');
+
+      expect(delegation.delegatorAddress).toBe(
+        '0x1234567890123456789012345678901234567890'
+      );
       expect(delegation.isTestNet).toBe(true);
     });
   });
@@ -162,7 +166,7 @@ describe('API Types', () => {
         totalVolume: BigInt('1000000000000000000000'),
         lastUpdated: BigInt(1640995200),
       };
-      
+
       expect(stats.chainId).toBe(1);
       expect(stats.totalMails).toBe(BigInt(1000));
     });
@@ -181,8 +185,10 @@ describe('API Types', () => {
         totalFeesReceived: BigInt('50000000000000000'),
         lastActivity: BigInt(1640995200),
       };
-      
-      expect(userStats.userAddress).toBe('0x1234567890123456789012345678901234567890');
+
+      expect(userStats.userAddress).toBe(
+        '0x1234567890123456789012345678901234567890'
+      );
       expect(userStats.totalMailsSent).toBe(BigInt(10));
     });
   });
@@ -199,7 +205,7 @@ describe('API Types', () => {
         totalVolume: BigInt('5000000000000000000000'),
         lastUpdated: BigInt(1640995200),
       };
-      
+
       expect(chainStats.id).toBe('global');
       expect(chainStats.totalChains).toBe(5);
     });
@@ -210,7 +216,7 @@ describe('API Types', () => {
       const mainnetIds: SupportedChainId[] = [1, 137, 42161, 10, 8453];
       const testnetIds: SupportedChainId[] = [11155111, 80001, 421614];
       const solanaIds: SupportedChainId[] = [-101, -102, -103, -104];
-      
+
       expect(mainnetIds).toContain(1);
       expect(testnetIds).toContain(11155111);
       expect(solanaIds).toContain(-101);
