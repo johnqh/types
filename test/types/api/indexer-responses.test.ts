@@ -6,9 +6,9 @@ import type {
   SuccessResponse,
   AddressFormats,
   ValidationResponse,
-  DomainEmail,
+  DomainAccount,
   WalletEmailAccounts,
-  EmailAddressesResponse,
+  EmailAccountsResponse,
   DelegationInfo,
   DelegationResponse,
   DelegatorInfo,
@@ -19,20 +19,11 @@ import type {
   EntitlementResponse,
   PointsData,
   PointsResponse,
-  MessageInfo,
-  Messages,
-  MessageInstructions,
-  VerificationEndpoint,
-  RegenerationInfo,
-  MessageGenerationResponse,
-  LeaderboardUser,
+  SimpleMessageResponse,
   LeaderboardResponse,
-  SiteStatsData,
   SiteStatsResponse,
   SolanaWebhookResponse,
-  SolanaSetupResult,
   SolanaSetupResponse,
-  SolanaIndexerStatus,
   SolanaStatusResponse,
   SolanaTestTransactionResponse,
   IndexerApiResponse,
@@ -145,60 +136,60 @@ describe('Indexer Response Types', () => {
     });
   });
 
-  describe('DomainEmail', () => {
-    it('should define ENS email structure', () => {
-      const email: DomainEmail = {
-        email: 'test.eth',
+  describe('DomainAccount', () => {
+    it('should define ENS account structure', () => {
+      const account: DomainAccount = {
+        account: 'test.eth',
         type: 'ens',
         domain: 'eth',
         verified: true,
       };
 
-      expect(email.type).toBe('ens');
-      expect(email.domain).toBe('eth');
-      expect(email.verified).toBe(true);
+      expect(account.type).toBe('ens');
+      expect(account.domain).toBe('eth');
+      expect(account.verified).toBe(true);
     });
 
-    it('should define SNS email structure', () => {
-      const email: DomainEmail = {
-        email: 'test.sol',
+    it('should define SNS account structure', () => {
+      const account: DomainAccount = {
+        account: 'test.sol',
         type: 'sns',
         domain: 'sol',
       };
 
-      expect(email.type).toBe('sns');
-      expect(email.verified).toBeUndefined();
+      expect(account.type).toBe('sns');
+      expect(account.verified).toBeUndefined();
     });
   });
 
   describe('WalletEmailAccounts', () => {
     it('should define wallet email structure', () => {
-      const walletEmails: WalletEmailAccounts = {
+      const walletAccounts: WalletEmailAccounts = {
         walletAddress: mockWalletAddress,
         addressType: ChainType.EVM,
         isPrimary: true,
-        primaryEmail: `${mockWalletAddress}@0xmail.box`,
-        domainEmails: [
+        primaryAccount: `${mockWalletAddress}@0xmail.box`,
+        domainAccounts: [
           {
-            email: 'test.eth',
+            account: 'test.eth',
             type: 'ens',
             domain: 'eth',
             verified: true,
           },
         ],
-        totalEmails: 2,
+        totalAccounts: 2,
       };
 
-      expect(walletEmails.isPrimary).toBe(true);
-      expect(walletEmails.primaryEmail).toBe(`${mockWalletAddress}@0xmail.box`);
-      expect(walletEmails.domainEmails).toHaveLength(1);
-      expect(walletEmails.totalEmails).toBe(2);
+      expect(walletAccounts.isPrimary).toBe(true);
+      expect(walletAccounts.primaryAccount).toBe(`${mockWalletAddress}@0xmail.box`);
+      expect(walletAccounts.domainAccounts).toHaveLength(1);
+      expect(walletAccounts.totalAccounts).toBe(2);
     });
   });
 
-  describe('EmailAddressesResponse', () => {
-    it('should define complete email addresses response', () => {
-      const response: EmailAddressesResponse = {
+  describe('EmailAccountsResponse', () => {
+    it('should define complete email accounts response', () => {
+      const response: EmailAccountsResponse = {
         timestamp: mockTimestamp,
         requestedWallet: mockWalletAddress,
         addressType: ChainType.EVM,
@@ -207,13 +198,13 @@ describe('Indexer Response Types', () => {
             walletAddress: mockWalletAddress,
             addressType: ChainType.EVM,
             isPrimary: true,
-            primaryEmail: `${mockWalletAddress}@0xmail.box`,
-            domainEmails: [],
-            totalEmails: 1,
+            primaryAccount: `${mockWalletAddress}@0xmail.box`,
+            domainAccounts: [],
+            totalAccounts: 1,
           },
         ],
         totalWallets: 1,
-        totalEmails: 1,
+        totalAccounts: 1,
         verified: true,
       };
 
@@ -364,50 +355,31 @@ describe('Indexer Response Types', () => {
     });
   });
 
-  describe('MessageGenerationResponse', () => {
-    it('should define message generation response structure', () => {
-      const response: MessageGenerationResponse = {
+  describe('SimpleMessageResponse', () => {
+    it('should define simple message response structure', () => {
+      const response: SimpleMessageResponse = {
         timestamp: mockTimestamp,
+        message: 'Simple authentication message',
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         chainId: 1,
-        domain: '0xmail.box',
-        uri: 'https://0xmail.box',
-        messages: {
-          deterministic: 'deterministic message',
-          simple: 'simple message',
-          solana: 'solana message',
-          info: {
-            domain: '0xmail.box',
-            uri: 'https://0xmail.box',
-            chainId: 1,
-            date: mockTimestamp,
-          },
-        },
-        recommended: 'simple',
-        instructions: {
-          evm: 'Sign with MetaMask',
-          solana: 'Sign with Phantom',
-        },
-        verification: {
-          endpoint: '/api/verify',
-          method: 'POST',
-          body: {
-            walletAddress: mockWalletAddress,
-            signature: 'signature',
-            message: 'message',
-          },
-          note: 'Verification endpoint',
-        },
-        regeneration: {
-          note: 'Regenerate message',
-          endpoint: '/api/regenerate',
-        },
       };
 
-      expect(response.recommended).toBe('simple');
-      expect(response.messages.simple).toBe('simple message');
-      expect(response.verification.method).toBe('POST');
+      expect(response.message).toBe('Simple authentication message');
+      expect(response.walletAddress).toBe(mockWalletAddress);
+      expect(response.chainType).toBe(ChainType.EVM);
+      expect(response.chainId).toBe(1);
+    });
+
+    it('should handle responses without optional chainId', () => {
+      const response: SimpleMessageResponse = {
+        timestamp: mockTimestamp,
+        message: 'Simple authentication message',
+        walletAddress: mockWalletAddress,
+        chainType: ChainType.SOLANA,
+      };
+
+      expect(response.chainId).toBeUndefined();
     });
   });
 

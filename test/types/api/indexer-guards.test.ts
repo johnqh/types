@@ -4,7 +4,7 @@ import {
   isIndexerErrorResponse,
   isIndexerSuccessResponse,
   isValidationResponse,
-  isEmailAddressesResponse,
+  isEmailAccountsResponse,
   isDelegationResponse,
   isDelegatorsResponse,
   isSignatureVerificationResponse,
@@ -23,7 +23,7 @@ import type {
   ErrorResponse,
   PointsResponse,
   ValidationResponse,
-  EmailAddressesResponse,
+  EmailAccountsResponse,
   DelegationResponse,
   DelegatorsResponse,
   SignatureVerificationResponse,
@@ -140,9 +140,9 @@ describe('Indexer Type Guards', () => {
     });
   });
 
-  describe('isEmailAddressesResponse', () => {
-    it('should identify email addresses responses correctly', () => {
-      const emailResponse: EmailAddressesResponse = {
+  describe('isEmailAccountsResponse', () => {
+    it('should identify email accounts responses correctly', () => {
+      const emailResponse: EmailAccountsResponse = {
         timestamp: mockTimestamp,
         requestedWallet: mockWalletAddress,
         addressType: ChainType.EVM,
@@ -151,17 +151,17 @@ describe('Indexer Type Guards', () => {
             walletAddress: mockWalletAddress,
             addressType: ChainType.EVM,
             isPrimary: true,
-            primaryEmail: `${mockWalletAddress}@0xmail.box`,
-            domainEmails: [],
-            totalEmails: 1,
+            primaryAccount: `${mockWalletAddress}@0xmail.box`,
+            domainAccounts: [],
+            totalAccounts: 1,
           },
         ],
         totalWallets: 1,
-        totalEmails: 1,
+        totalAccounts: 1,
         verified: true,
       };
 
-      expect(isEmailAddressesResponse(emailResponse)).toBe(true);
+      expect(isEmailAccountsResponse(emailResponse)).toBe(true);
     });
 
     it('should reject responses missing required properties', () => {
@@ -172,7 +172,7 @@ describe('Indexer Type Guards', () => {
         // missing totalWallets
       };
 
-      expect(isEmailAddressesResponse(incompleteResponse)).toBe(false);
+      expect(isEmailAccountsResponse(incompleteResponse)).toBe(false);
     });
   });
 
@@ -579,7 +579,7 @@ describe('Indexer Type Guards', () => {
         isIndexerErrorResponse,
         isIndexerSuccessResponse,
         isValidationResponse,
-        isEmailAddressesResponse,
+        isEmailAccountsResponse,
         isDelegationResponse,
         isDelegatorsResponse,
         isSignatureVerificationResponse,

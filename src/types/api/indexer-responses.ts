@@ -37,8 +37,8 @@ export interface ValidationResponse extends BaseResponse {
 }
 
 // Email addresses types
-export interface DomainEmail {
-  email: string;
+export interface DomainAccount {
+  account: string;
   type: 'ens' | 'sns';
   domain: string;
   verified?: boolean;
@@ -48,17 +48,17 @@ export interface WalletEmailAccounts {
   walletAddress: string;
   addressType: ChainType;
   isPrimary: boolean;
-  primaryEmail: string; // Always walletAddress@0xmail.box
-  domainEmails: DomainEmail[]; // ENS/SNS emails for this wallet
-  totalEmails: number;
+  primaryAccount: string; // Always walletAddress@0xmail.box
+  domainAccounts: DomainAccount[]; // ENS/SNS emails for this wallet
+  totalAccounts: number;
 }
 
-export interface EmailAddressesResponse extends BaseResponse {
+export interface EmailAccountsResponse extends BaseResponse {
   requestedWallet: string;
   addressType: ChainType;
   walletAccounts: WalletEmailAccounts[]; // First is requested wallet, rest are delegated
   totalWallets: number;
-  totalEmails: number;
+  totalAccounts: number;
   verified: boolean;
 }
 
@@ -240,7 +240,7 @@ export interface SolanaTestTransactionResponse extends SuccessResponse {
 // Extended union type to include all response types
 export type IndexerApiResponse =
   | ValidationResponse
-  | EmailAddressesResponse
+  | EmailAccountsResponse
   | DelegationResponse
   | DelegatorsResponse
   | SignatureVerificationResponse
