@@ -7,7 +7,7 @@ import type {
   AddressFormats,
   ValidationResponse,
   DomainEmail,
-  WalletEmailAddresses,
+  WalletEmailAccounts,
   EmailAddressesResponse,
   DelegationInfo,
   DelegationResponse,
@@ -171,9 +171,9 @@ describe('Indexer Response Types', () => {
     });
   });
 
-  describe('WalletEmailAddresses', () => {
+  describe('WalletEmailAccounts', () => {
     it('should define wallet email structure', () => {
-      const walletEmails: WalletEmailAddresses = {
+      const walletEmails: WalletEmailAccounts = {
         walletAddress: mockWalletAddress,
         addressType: ChainType.EVM,
         isPrimary: true,
@@ -202,7 +202,7 @@ describe('Indexer Response Types', () => {
         timestamp: mockTimestamp,
         requestedWallet: mockWalletAddress,
         addressType: ChainType.EVM,
-        walletEmails: [
+        walletAccounts: [
           {
             walletAddress: mockWalletAddress,
             addressType: ChainType.EVM,
@@ -218,7 +218,7 @@ describe('Indexer Response Types', () => {
       };
 
       expect(response.requestedWallet).toBe(mockWalletAddress);
-      expect(response.walletEmails).toHaveLength(1);
+      expect(response.walletAccounts).toHaveLength(1);
       expect(response.verified).toBe(true);
     });
   });

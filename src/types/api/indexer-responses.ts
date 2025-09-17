@@ -44,7 +44,7 @@ export interface DomainEmail {
   verified?: boolean;
 }
 
-export interface WalletEmailAddresses {
+export interface WalletEmailAccounts {
   walletAddress: string;
   addressType: ChainType;
   isPrimary: boolean;
@@ -56,7 +56,7 @@ export interface WalletEmailAddresses {
 export interface EmailAddressesResponse extends BaseResponse {
   requestedWallet: string;
   addressType: ChainType;
-  walletEmails: WalletEmailAddresses[]; // First is requested wallet, rest are delegated
+  walletAccounts: WalletEmailAccounts[]; // First is requested wallet, rest are delegated
   totalWallets: number;
   totalEmails: number;
   verified: boolean;

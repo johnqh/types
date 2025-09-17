@@ -38,7 +38,7 @@ export function isValidationResponse(response: unknown): response is ValidationR
 }
 
 export function isEmailAddressesResponse(response: unknown): response is EmailAddressesResponse {
-  return !!(response && typeof response === 'object' && 'requestedWallet' in response && 'walletEmails' in response && 'totalWallets' in response);
+  return !!(response && typeof response === 'object' && 'requestedWallet' in response && 'walletAccounts' in response && 'totalWallets' in response);
 }
 
 export function isDelegationResponse(response: unknown): response is DelegationResponse {

@@ -146,7 +146,7 @@ describe('Indexer Type Guards', () => {
         timestamp: mockTimestamp,
         requestedWallet: mockWalletAddress,
         addressType: ChainType.EVM,
-        walletEmails: [
+        walletAccounts: [
           {
             walletAddress: mockWalletAddress,
             addressType: ChainType.EVM,
@@ -168,7 +168,7 @@ describe('Indexer Type Guards', () => {
       const incompleteResponse = {
         timestamp: mockTimestamp,
         requestedWallet: mockWalletAddress,
-        walletEmails: [],
+        walletAccounts: [],
         // missing totalWallets
       };
 
