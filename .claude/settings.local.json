@@ -12,7 +12,15 @@
       "Bash(git add:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(npm outdated)",
+      "Bash(npm install:*)",
+      "Bash(chmod:*)",
+      "Bash(npm run:*)",
+      "Bash(npm version:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(git stash:*)"
     ],
     "deny": [],
     "ask": []
