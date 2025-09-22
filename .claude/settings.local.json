@@ -20,7 +20,14 @@
       "Bash(npm version:*)",
       "Bash(git rm:*)",
       "Bash(git commit:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npx tsc:*)",
+      "Bash(awk:*)",
+      "Bash(node:*)",
+      "Bash(for file in src/types/business/*.ts)",
+      "Bash(do [ \"$file\" != \"src/types/business/index.ts\" ])",
+      "Bash(done)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
