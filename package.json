@@ -1,6 +1,6 @@
 {
   "name": "@johnqh/types",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Common TypeScript types, interfaces, and enums for 0xmail.box projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
