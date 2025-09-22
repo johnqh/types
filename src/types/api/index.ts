@@ -1,4 +1,38 @@
-// Indexer type guards
+// Export all response types as named exports
+export type {
+  BaseResponse,
+  ErrorResponse,
+  SuccessResponse,
+  AddressFormats,
+  ValidationResponse,
+  DomainAccount,
+  WalletEmailAccounts,
+  EmailAccountsResponse,
+  DelegationInfo,
+  DelegationResponse,
+  DelegatorInfo,
+  DelegatorsResponse,
+  SignatureVerificationResponse,
+  NonceResponse,
+  EntitlementInfo,
+  EntitlementResponse,
+  PointsData,
+  PointsResponse,
+  SimpleMessageResponse,
+  LeaderboardUser,
+  LeaderboardResponse,
+  SiteStatsData,
+  SiteStatsResponse,
+  SolanaWebhookResponse,
+  SolanaSetupResult,
+  SolanaSetupResponse,
+  SolanaIndexerStatus,
+  SolanaStatusResponse,
+  SolanaTestTransactionResponse,
+  IndexerApiResponse
+} from './indexer-responses';
+
+// Export type guards
 export {
   isDelegationResponse,
   isDelegatorsResponse,

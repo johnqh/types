@@ -1,11 +1,32 @@
 {
   "name": "@johnqh/types",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Common TypeScript types, interfaces, and enums for 0xmail.box projects",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./api": {
+      "import": "./dist/types/api/indexer-responses.js",
+      "require": "./dist/types/api/indexer-responses.cjs",
+      "types": "./dist/types/api/indexer-responses.d.ts"
+    },
+    "./enums": {
+      "import": "./dist/types/business/enums.js",
+      "require": "./dist/types/business/enums.cjs",
+      "types": "./dist/types/business/enums.d.ts"
+    }
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && npm run build:cjs-rename",
+    "build:cjs-rename": "find dist -name '*.js' -not -name '*.cjs' -exec sh -c 'cp \"$1\" \"${1%.js}.cjs\"' _ {} \\;",
     "clean": "rimraf dist",
     "dev": "tsc --watch",
     "test": "vitest",
@@ -49,5 +70,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@johnqh/types": "file:"
   }
 }

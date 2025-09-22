@@ -69,6 +69,25 @@ export type {
   MessageHistoryResponse,
   DelegationStatusResponse,
   ContractError,
+
+  // API Response types (commonly used)
+  ValidationResponse,
+  EmailAccountsResponse,
+  WalletEmailAccounts,
+  DelegationResponse,
+  DelegatorsResponse,
+  SignatureVerificationResponse,
+  NonceResponse,
+  EntitlementResponse,
+  PointsResponse,
+  SimpleMessageResponse,
+  ErrorResponse,
+  LeaderboardResponse,
+  SiteStatsResponse,
+  SolanaWebhookResponse,
+  SolanaSetupResponse,
+  SolanaStatusResponse,
+  SolanaTestTransactionResponse
 } from './types';
 
 // Export the most commonly used enums
