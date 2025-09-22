@@ -9,6 +9,8 @@
  * @author MailBox Protocol Team
  */
 
+import { ChainType } from './business/enums';
+
 // =======================
 // Core Response Types
 // =======================
@@ -20,7 +22,7 @@ export interface BaseTransactionResponse {
   /** Transaction hash/signature */
   transactionHash: string;
   /** Blockchain type where transaction occurred */
-  chainType: 'evm' | 'solana';
+  chainType: ChainType.EVM | ChainType.SOLANA;
   /** Timestamp when transaction was created (Unix timestamp in ms) */
   timestamp?: number;
   /** Whether the transaction was successful */
@@ -243,7 +245,7 @@ export interface EmergencyDistributionResponse extends TransactionReceipt {
  * EVM-specific response additions
  */
 export interface EVMTransactionResponse extends TransactionReceipt {
-  chainType: 'evm';
+  chainType: ChainType.EVM;
   /** EVM block number */
   blockNumber: number;
   /** Gas used */
@@ -258,7 +260,7 @@ export interface EVMTransactionResponse extends TransactionReceipt {
  * Solana-specific response additions
  */
 export interface SolanaTransactionResponse extends TransactionReceipt {
-  chainType: 'solana';
+  chainType: ChainType.SOLANA;
   /** Solana slot number */
   slot: number;
   /** Compute units consumed */
@@ -286,7 +288,7 @@ export interface UnifiedClientResponse<T = unknown> {
     details?: unknown;
   };
   /** Chain where operation occurred */
-  chainType: 'evm' | 'solana';
+  chainType: ChainType.EVM | ChainType.SOLANA;
   /** Request metadata */
   metadata?: {
     requestId?: string;
@@ -384,14 +386,14 @@ export interface ContractError {
  * Type guard to check if response is EVM-specific
  */
 export function isEVMResponse(response: TransactionReceipt): response is EVMTransactionResponse {
-  return response.chainType === 'evm';
+  return response.chainType === ChainType.EVM;
 }
 
 /**
  * Type guard to check if response is Solana-specific
  */
 export function isSolanaResponse(response: TransactionReceipt): response is SolanaTransactionResponse {
-  return response.chainType === 'solana';
+  return response.chainType === ChainType.SOLANA;
 }
 
 /**

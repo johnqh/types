@@ -2,4 +2,11 @@
  * URL utilities export
  */
 
-export * from './url-params';
+// URL parameter utilities
+export {
+  createURLSearchParams,
+  createSearchParams,
+  searchParamsToString,
+  parseSearchParams,
+  type URLSearchParamsLike
+} from './url-params';

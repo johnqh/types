@@ -26,26 +26,27 @@ import {
   isSolanaResponse,
   isMailboxErrorResponse
 } from '../../src/types/mailbox-responses';
+import { ChainType } from '../../src/types/business/enums';
 
 describe('Mailbox Response Types', () => {
   describe('BaseTransactionResponse', () => {
     it('should accept valid base transaction response', () => {
       const response: BaseTransactionResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         timestamp: Date.now(),
         success: true
       };
 
       expect(response.transactionHash).toBe('0x123abc');
-      expect(response.chainType).toBe('evm');
+      expect(response.chainType).toBe(ChainType.EVM);
       expect(response.success).toBe(true);
     });
 
     it('should accept response with error', () => {
       const response: BaseTransactionResponse = {
         transactionHash: '0x123abc',
-        chainType: 'solana',
+        chainType: ChainType.SOLANA,
         success: false,
         error: 'Transaction failed'
       };
@@ -57,18 +58,18 @@ describe('Mailbox Response Types', () => {
     it('should accept both chain types', () => {
       const evmResponse: BaseTransactionResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true
       };
 
       const solanaResponse: BaseTransactionResponse = {
         transactionHash: 'abc123',
-        chainType: 'solana',
+        chainType: ChainType.SOLANA,
         success: true
       };
 
-      expect(evmResponse.chainType).toBe('evm');
-      expect(solanaResponse.chainType).toBe('solana');
+      expect(evmResponse.chainType).toBe(ChainType.EVM);
+      expect(solanaResponse.chainType).toBe(ChainType.SOLANA);
     });
   });
 
@@ -76,7 +77,7 @@ describe('Mailbox Response Types', () => {
     it('should extend BaseTransactionResponse with additional fields', () => {
       const receipt: TransactionReceipt = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         blockNumber: 12345,
         gasUsed: BigInt(21000),
@@ -91,7 +92,7 @@ describe('Mailbox Response Types', () => {
     it('should support Solana-specific fields', () => {
       const receipt: TransactionReceipt = {
         transactionHash: 'abc123',
-        chainType: 'solana',
+        chainType: ChainType.SOLANA,
         success: true,
         slot: 98765,
         confirmationStatus: 'finalized'
@@ -106,7 +107,7 @@ describe('Mailbox Response Types', () => {
     it('should handle regular message send response', () => {
       const response: MessageSendResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         messageId: 'msg_123',
         fee: BigInt(1000),
@@ -124,7 +125,7 @@ describe('Mailbox Response Types', () => {
     it('should handle priority message with claimable revenue', () => {
       const response: MessageSendResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         fee: BigInt(2000),
         isPriority: true,
@@ -142,7 +143,7 @@ describe('Mailbox Response Types', () => {
     it('should handle prepared message response', () => {
       const response: PreparedMessageSendResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         mailId: 'prepared_msg_456',
         fee: BigInt(1500),
@@ -190,7 +191,7 @@ describe('Mailbox Response Types', () => {
     it('should handle revenue claim response', () => {
       const response: ClaimRevenueResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         claimedAmount: BigInt(800),
         remainingAmount: BigInt(200),
@@ -208,7 +209,7 @@ describe('Mailbox Response Types', () => {
       claimTypes.forEach(claimType => {
         const response: ClaimRevenueResponse = {
           transactionHash: '0x123abc',
-          chainType: 'evm',
+          chainType: ChainType.EVM,
           success: true,
           claimedAmount: BigInt(100),
           remainingAmount: BigInt(0),
@@ -224,7 +225,7 @@ describe('Mailbox Response Types', () => {
     it('should handle new domain registration', () => {
       const response: DomainRegistrationResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         domain: 'example.eth',
         expiryTimestamp: Date.now() + 31536000000, // 1 year
@@ -240,7 +241,7 @@ describe('Mailbox Response Types', () => {
     it('should handle domain extension', () => {
       const response: DomainRegistrationResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         domain: 'example.eth',
         expiryTimestamp: Date.now() + 31536000000,
@@ -256,7 +257,7 @@ describe('Mailbox Response Types', () => {
     it('should handle delegation creation', () => {
       const response: MailboxDelegationResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         delegator: '0xdelegator',
         delegate: '0xdelegate',
@@ -272,7 +273,7 @@ describe('Mailbox Response Types', () => {
     it('should handle delegation clearing', () => {
       const response: MailboxDelegationResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         delegator: '0xdelegator',
         delegate: '0x0000000000000000000000000000000000000000',
@@ -313,7 +314,7 @@ describe('Mailbox Response Types', () => {
     it('should have EVM-specific fields', () => {
       const response: EVMTransactionResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         blockNumber: 12345,
         gasUsed: BigInt(21000),
@@ -321,7 +322,7 @@ describe('Mailbox Response Types', () => {
         contractAddress: '0xcontract'
       };
 
-      expect(response.chainType).toBe('evm');
+      expect(response.chainType).toBe(ChainType.EVM);
       expect(response.blockNumber).toBe(12345);
       expect(response.gasUsed).toBe(BigInt(21000));
       expect(response.contractAddress).toBe('0xcontract');
@@ -332,14 +333,14 @@ describe('Mailbox Response Types', () => {
     it('should have Solana-specific fields', () => {
       const response: SolanaTransactionResponse = {
         transactionHash: 'abc123',
-        chainType: 'solana',
+        chainType: ChainType.SOLANA,
         success: true,
         slot: 98765,
         computeUnitsConsumed: 5000,
         transactionFee: 5000
       };
 
-      expect(response.chainType).toBe('solana');
+      expect(response.chainType).toBe(ChainType.SOLANA);
       expect(response.slot).toBe(98765);
       expect(response.computeUnitsConsumed).toBe(5000);
       expect(response.transactionFee).toBe(5000);
@@ -351,7 +352,7 @@ describe('Mailbox Response Types', () => {
       const response: UnifiedClientResponse<{ messageId: string }> = {
         success: true,
         data: { messageId: 'msg_123' },
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         metadata: {
           requestId: 'req_456',
           timestamp: Date.now(),
@@ -372,7 +373,7 @@ describe('Mailbox Response Types', () => {
           code: 'TX_FAILED',
           details: { reason: 'Insufficient gas' }
         },
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         metadata: {
           timestamp: Date.now()
         }
@@ -388,7 +389,7 @@ describe('Mailbox Response Types', () => {
     it('should handle batch operation results', () => {
       const response: BatchOperationResponse = {
         transactionHash: '0x123abc',
-        chainType: 'evm',
+        chainType: ChainType.EVM,
         success: true,
         results: [
           { success: true, data: { id: '1' } },
@@ -489,13 +490,13 @@ describe('Mailbox Response Types', () => {
       it('should identify EVM responses', () => {
         const evmResponse: TransactionReceipt = {
           transactionHash: '0x123',
-          chainType: 'evm',
+          chainType: ChainType.EVM,
           success: true
         };
 
         const solanaResponse: TransactionReceipt = {
           transactionHash: 'abc123',
-          chainType: 'solana',
+          chainType: ChainType.SOLANA,
           success: true
         };
 
@@ -508,13 +509,13 @@ describe('Mailbox Response Types', () => {
       it('should identify Solana responses', () => {
         const evmResponse: TransactionReceipt = {
           transactionHash: '0x123',
-          chainType: 'evm',
+          chainType: ChainType.EVM,
           success: true
         };
 
         const solanaResponse: TransactionReceipt = {
           transactionHash: 'abc123',
-          chainType: 'solana',
+          chainType: ChainType.SOLANA,
           success: true
         };
 
@@ -528,7 +529,7 @@ describe('Mailbox Response Types', () => {
         const successResponse: UnifiedClientResponse = {
           success: true,
           data: { result: 'ok' },
-          chainType: 'evm',
+          chainType: ChainType.EVM,
           metadata: { timestamp: Date.now() }
         };
 
@@ -538,7 +539,7 @@ describe('Mailbox Response Types', () => {
             message: 'Something went wrong',
             code: 'ERROR'
           },
-          chainType: 'evm',
+          chainType: ChainType.EVM,
           metadata: { timestamp: Date.now() }
         };
 
@@ -549,7 +550,7 @@ describe('Mailbox Response Types', () => {
       it('should require error field to be present', () => {
         const noErrorResponse: UnifiedClientResponse = {
           success: false,
-          chainType: 'evm',
+          chainType: ChainType.EVM,
           metadata: { timestamp: Date.now() }
         };
 

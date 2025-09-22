@@ -13,7 +13,6 @@ export enum AuthStatus {
 // Chain types (more specific than @johnqh/di version)
 export enum ChainType {
   EVM = 'evm',
-  ETHEREUM = 'ethereum',
   SOLANA = 'solana',
   UNKNOWN = 'unknown',
 }

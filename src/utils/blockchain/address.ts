@@ -190,7 +190,6 @@ export function isValidWalletAddress(
 
   switch (chainType) {
     case ChainType.EVM:
-    case ChainType.ETHEREUM:
       return (
         addressType === AddressType.EVMAddress ||
         addressType === AddressType.ENSName
@@ -221,7 +220,6 @@ export function isValidSignature(
 
   switch (chainType) {
     case ChainType.EVM:
-    case ChainType.ETHEREUM:
       // EVM signature validation (0x followed by 130 hex characters)
       return /^0x[a-fA-F0-9]{130}$/.test(signature);
 
@@ -294,8 +292,6 @@ export function getChainDisplayName(chainType: ChainType): string {
   switch (chainType) {
     case ChainType.EVM:
       return 'EVM Chain';
-    case ChainType.ETHEREUM:
-      return 'Ethereum';
     case ChainType.SOLANA:
       return 'Solana';
     case ChainType.UNKNOWN:

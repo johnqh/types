@@ -1,5 +1,11 @@
-/**
- * Authentication utilities export
- */
-
-export * from './auth';
+// Authentication utilities
+export {
+  canAccessProtectedFeatures,
+  extractNonceFromMessage,
+  generateAuthMessage,
+  generateNonce,
+  getAuthStatusText,
+  isAuthExpired,
+  isAuthStatusConnected,
+  isValidNonce
+} from './auth';

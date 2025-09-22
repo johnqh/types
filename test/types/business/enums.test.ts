@@ -13,7 +13,6 @@ describe('Business Enums', () => {
   describe('ChainType', () => {
     it('should have correct values', () => {
       expect(ChainType.EVM).toBe('evm');
-      expect(ChainType.ETHEREUM).toBe('ethereum');
       expect(ChainType.SOLANA).toBe('solana');
       expect(ChainType.UNKNOWN).toBe('unknown');
     });
@@ -21,10 +20,9 @@ describe('Business Enums', () => {
     it('should have all expected chain types', () => {
       const chainTypes = Object.values(ChainType);
       expect(chainTypes).toContain('evm');
-      expect(chainTypes).toContain('ethereum');
       expect(chainTypes).toContain('solana');
       expect(chainTypes).toContain('unknown');
-      expect(chainTypes).toHaveLength(4);
+      expect(chainTypes).toHaveLength(3);
     });
   });
 

@@ -1,11 +1,20 @@
-/**
- * API Types Index
- * @description Barrel exports for all API-related types and functions
- * @package @johnqh/types
- */
-
-// Export all indexer response types
-export * from './indexer-responses';
-
-// Export all type guards
-export * from './indexer-guards';
+// Indexer type guards
+export {
+  isDelegationResponse,
+  isDelegatorsResponse,
+  isEmailAccountsResponse,
+  isEntitlementResponse,
+  isIndexerErrorResponse,
+  isIndexerSuccessResponse,
+  isLeaderboardResponse,
+  isNonceResponse,
+  isPointsResponse,
+  isSignatureVerificationResponse,
+  isSimpleMessageResponse,
+  isSiteStatsResponse,
+  isSolanaSetupResponse,
+  isSolanaStatusResponse,
+  isSolanaTestTransactionResponse,
+  isSolanaWebhookResponse,
+  isValidationResponse
+} from './indexer-guards';

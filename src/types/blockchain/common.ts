@@ -367,13 +367,13 @@ export const PROTOCOL_CONSTANTS = {
  */
 export const DEFAULT_NETWORKS: Record<string, NetworkConfig> = {
   ethereumMainnet: {
-    chainType: ChainType.ETHEREUM,
+    chainType: ChainType.EVM,
     network: 'mainnet',
     rpcUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_KEY',
     chainId: 1,
   },
   ethereumSepolia: {
-    chainType: ChainType.ETHEREUM,
+    chainType: ChainType.EVM,
     network: 'sepolia',
     rpcUrl: 'https://sepolia.infura.io/v3/YOUR_INFURA_KEY',
     chainId: 11155111,
