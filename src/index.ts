@@ -45,6 +45,30 @@ export type {
   NetworkClient,
   NetworkResponse,
   UINavigationService,
+
+  // Mailbox response types
+  BaseTransactionResponse,
+  TransactionReceipt,
+  MessageSendResponse,
+  PreparedMessageSendResponse,
+  ClaimableInfo,
+  ClaimRevenueResponse,
+  ClaimableAmountResponse,
+  DomainRegistrationResponse,
+  MailboxDelegationResponse,
+  DelegationRejectionResponse,
+  FeeInfo,
+  FeeUpdateResponse,
+  PauseInfo,
+  PauseResponse,
+  EmergencyDistributionResponse,
+  EVMTransactionResponse,
+  SolanaTransactionResponse,
+  UnifiedClientResponse,
+  BatchOperationResponse,
+  MessageHistoryResponse,
+  DelegationStatusResponse,
+  ContractError,
 } from './types';
 
 // Export the most commonly used enums

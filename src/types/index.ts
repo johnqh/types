@@ -12,3 +12,6 @@ export * from './config';
 
 // Infrastructure types
 export * from './infrastructure';
+
+// Mailbox contract response types
+export * from './mailbox-responses';
