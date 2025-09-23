@@ -9,6 +9,8 @@
  * - Database entity interfaces
  */
 
+import { Optional } from '../common';
+
 // Re-export ChainType from business enums
 export { ChainType } from '../business/enums';
 
@@ -121,7 +123,7 @@ export interface PreparedMailEntity extends ChainMetadata {
 export interface DelegationEntity extends ChainMetadata {
   id: string; // Format: "{chainId}-{delegatorAddress}"
   delegator: string; // Delegating wallet address (normalized lowercase)
-  delegateTo: string | null; // Delegated to address (null means cleared)
+  delegateTo: Optional<string>; // Delegated to address (null means cleared)
   contractAddress: string; // MailService contract address
 }
 

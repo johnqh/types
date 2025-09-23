@@ -252,7 +252,7 @@ describe('AddressValidator', () => {
       const result = AddressValidator.validateBasic(invalidAddress);
       
       expect(result.isValid).toBe(false);
-      expect(result.addressType).toBe(ChainType.UNKNOWN);
+      expect(result.addressType).toBeUndefined();
       expect(result.normalizedAddress).toBe(invalidAddress);
     });
 
@@ -260,7 +260,7 @@ describe('AddressValidator', () => {
       const result = AddressValidator.validateBasic('');
       
       expect(result.isValid).toBe(false);
-      expect(result.addressType).toBe(ChainType.UNKNOWN);
+      expect(result.addressType).toBeUndefined();
       expect(result.normalizedAddress).toBe('');
     });
   });

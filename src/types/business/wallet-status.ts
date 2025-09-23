@@ -3,6 +3,8 @@
  * Defines the structure for tracking wallet connection and verification state
  */
 
+import { Optional } from '../common';
+
 /**
  * Wallet status interface representing the current state of wallet connection
  */
@@ -28,16 +30,16 @@ export enum WalletConnectionState {
  * Type guard to check if wallet status is defined
  */
 export const isWalletConnected = (
-  status: WalletStatus | undefined
+  status: Optional<WalletStatus>
 ): status is WalletStatus => {
-  return status !== undefined && Boolean(status.walletAddress);
+  return status !== undefined && status !== null && Boolean(status.walletAddress);
 };
 
 /**
  * Type guard to check if wallet is verified (has message and signature)
  */
 export const isWalletVerified = (
-  status: WalletStatus | undefined
+  status: Optional<WalletStatus>
 ): status is Required<WalletStatus> => {
   return (
     isWalletConnected(status) &&
@@ -50,7 +52,7 @@ export const isWalletVerified = (
  * Get current wallet connection state
  */
 export const getWalletConnectionState = (
-  status: WalletStatus | undefined
+  status: Optional<WalletStatus>
 ): WalletConnectionState => {
   if (!isWalletConnected(status)) {
     return WalletConnectionState.DISCONNECTED;

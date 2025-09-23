@@ -3,13 +3,15 @@
  * Provides URLSearchParams functionality with React Native compatibility
  */
 
+import { Optional } from '../../types/common';
+
 /**
  * URLSearchParams interface for cross-platform compatibility
  */
 interface URLSearchParamsLike {
   append(name: string, value: string): void;
   delete(name: string): void;
-  get(name: string): string | null;
+  get(name: string): Optional<string>;
   getAll(name: string): string[];
   has(name: string): boolean;
   set(name: string, value: string): void;
@@ -67,7 +69,7 @@ class SimpleURLSearchParams implements URLSearchParamsLike {
     this.params.delete(name);
   }
 
-  get(name: string): string | null {
+  get(name: string): Optional<string> {
     const values = this.params.get(name);
     return values && values.length > 0 ? values[0] : null;
   }

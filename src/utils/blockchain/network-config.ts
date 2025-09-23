@@ -3,6 +3,8 @@
  * Contains network identifiers, chain IDs, and helper functions without external dependencies
  */
 
+import { Optional } from '../../types/common';
+
 // Network identifiers for multi-chain support
 export const NETWORK_IDENTIFIERS = {
   // Ethereum networks
@@ -106,7 +108,7 @@ export function isSolanaNetwork(network: string): network is SolanaNetwork {
  * @param network - EVM network identifier
  * @returns Chain ID number, or undefined if network not found
  */
-export function getEVMChainId(network: string): number | undefined {
+export function getEVMChainId(network: string): Optional<number> {
   return isEVMNetwork(network) ? EVM_CHAIN_IDS[network] : undefined;
 }
 
@@ -115,7 +117,7 @@ export function getEVMChainId(network: string): number | undefined {
  * @param network - EVM network identifier
  * @returns USDC token address string, or undefined if network not found
  */
-export function getEVMUSDCAddress(network: string): string | undefined {
+export function getEVMUSDCAddress(network: string): Optional<string> {
   return isEVMNetwork(network) ? EVM_USDC_ADDRESSES[network] : undefined;
 }
 
@@ -124,7 +126,7 @@ export function getEVMUSDCAddress(network: string): string | undefined {
  * @param network - Solana network identifier
  * @returns USDC mint address string, or undefined if network not found
  */
-export function getSolanaUSDCMint(network: string): string | undefined {
+export function getSolanaUSDCMint(network: string): Optional<string> {
   return isSolanaNetwork(network) ? SOLANA_USDC_MINTS[network] : undefined;
 }
 
@@ -133,7 +135,7 @@ export function getSolanaUSDCMint(network: string): string | undefined {
  * @param network - Network identifier
  * @returns RPC endpoint URL, or undefined if network not found
  */
-export function getDefaultRPCEndpoint(network: string): string | undefined {
+export function getDefaultRPCEndpoint(network: string): Optional<string> {
   return (DEFAULT_RPC_ENDPOINTS as Record<string, string>)[network];
 }
 

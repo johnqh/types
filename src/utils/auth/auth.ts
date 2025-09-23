@@ -3,6 +3,7 @@
  */
 
 import { AuthStatus } from '../../types/business/enums';
+import { Optional } from '../../types/common';
 
 /**
  * Generate an authentication message with a nonce
@@ -65,7 +66,7 @@ export function generateNonce(): string {
 /**
  * Extract nonce from an authentication message
  */
-export function extractNonceFromMessage(message: string): string | undefined {
+export function extractNonceFromMessage(message: string): Optional<string> {
   const match = message.match(/Nonce:\s*(.+)$/m);
   return match ? match[1].trim() : undefined;
 }

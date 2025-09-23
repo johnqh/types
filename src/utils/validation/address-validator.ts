@@ -8,6 +8,7 @@
 
 // Import ChainType from business enums
 import { ChainType } from '../../types/business/enums';
+import { Optional } from '../../types/common';
 
 export interface AddressValidationResult {
   isValid: boolean;
@@ -24,7 +25,7 @@ export interface AddressValidationResult {
 
 export interface BasicValidationResult {
   isValid: boolean;
-  addressType: ChainType;
+  addressType: Optional<ChainType>;
   normalizedAddress: string;
 }
 
@@ -146,7 +147,7 @@ export class AddressValidator {
     if (!address) {
       return {
         isValid: false,
-        addressType: ChainType.UNKNOWN,
+        addressType: undefined,
         normalizedAddress: address || '',
       };
     }
@@ -176,7 +177,7 @@ export class AddressValidator {
 
     return {
       isValid: false,
-      addressType: ChainType.UNKNOWN,
+      addressType: undefined,
       normalizedAddress: address,
     };
   }

@@ -2,6 +2,8 @@
  * String formatting and manipulation utilities
  */
 
+import { Optional } from '../../types/common';
+
 /**
  * Truncate a string to a maximum length with ellipsis
  */
@@ -79,14 +81,14 @@ export function normalizeWhitespace(str: string): string {
 /**
  * Check if a string is empty or only whitespace
  */
-export function isBlank(str: string | null | undefined): boolean {
+export function isBlank(str: Optional<string>): boolean {
   return !str || str.trim().length === 0;
 }
 
 /**
  * Check if a string is not empty and not only whitespace
  */
-export function isNotBlank(str: string | null | undefined): str is string {
+export function isNotBlank(str: Optional<string>): str is string {
   return !isBlank(str);
 }
 

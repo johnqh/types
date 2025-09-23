@@ -6,6 +6,7 @@
  */
 
 import { ChainType } from '../../types/business/enums';
+import { Optional } from '../../types/common';
 // Import base validation functions from common types
 import {
   isEvmAddress as isEvmAddressBase,
@@ -238,7 +239,7 @@ export function isValidSignature(
  */
 export function parseEmailAddress(
   email: string
-): ParsedEmailAddress | undefined {
+): Optional<ParsedEmailAddress> {
   if (!email || typeof email !== 'string') {
     return undefined;
   }
@@ -288,14 +289,16 @@ export function formatWalletAddress(address: string): string {
 /**
  * Get display name for a chain type
  */
-export function getChainDisplayName(chainType: ChainType): string {
+export function getChainDisplayName(chainType: Optional<ChainType>): string {
+  if (!chainType) {
+    return 'Unknown Chain';
+  }
+
   switch (chainType) {
     case ChainType.EVM:
       return 'EVM Chain';
     case ChainType.SOLANA:
       return 'Solana';
-    case ChainType.UNKNOWN:
-      return 'Unknown Chain';
     default:
       return 'Blockchain';
   }

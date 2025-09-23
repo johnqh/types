@@ -2,6 +2,8 @@
  * Date formatting utilities
  */
 
+import { Optional } from '../../types/common';
+
 /**
  * Format a date for display in email list
  */
@@ -113,7 +115,7 @@ export function formatRelativeTime(date: Date | string | number): string {
 /**
  * Parse a date string safely
  */
-export function parseDate(dateString: string): Date | null {
+export function parseDate(dateString: string): Optional<Date> {
   try {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) {

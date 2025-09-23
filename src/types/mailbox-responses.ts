@@ -9,6 +9,8 @@
  * @author MailBox Protocol Team
  */
 
+import { Optional } from './common';
+
 import { ChainType } from './business/enums';
 
 // =======================
@@ -346,7 +348,7 @@ export interface MessageHistoryResponse {
  */
 export interface DelegationStatusResponse {
   /** Current delegation target (null if no delegation) */
-  currentDelegate: string | null;
+  currentDelegate: Optional<string>;
   /** Timestamp when delegation was set */
   delegatedAt?: number;
   /** Addresses that have delegated to this address */

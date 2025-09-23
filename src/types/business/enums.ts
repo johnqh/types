@@ -14,7 +14,6 @@ export enum AuthStatus {
 export enum ChainType {
   EVM = 'evm',
   SOLANA = 'solana',
-  UNKNOWN = 'unknown',
 }
 
 // Theme states

@@ -14,15 +14,13 @@ describe('Business Enums', () => {
     it('should have correct values', () => {
       expect(ChainType.EVM).toBe('evm');
       expect(ChainType.SOLANA).toBe('solana');
-      expect(ChainType.UNKNOWN).toBe('unknown');
     });
 
     it('should have all expected chain types', () => {
       const chainTypes = Object.values(ChainType);
       expect(chainTypes).toContain('evm');
       expect(chainTypes).toContain('solana');
-      expect(chainTypes).toContain('unknown');
-      expect(chainTypes).toHaveLength(3);
+      expect(chainTypes).toHaveLength(2);
     });
   });
 

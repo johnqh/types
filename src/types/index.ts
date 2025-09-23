@@ -1,3 +1,6 @@
+// Common utility types
+export * from './common';
+
 // API response types
 export * from './api';
 
