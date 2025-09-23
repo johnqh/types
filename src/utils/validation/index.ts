@@ -1,12 +1,11 @@
-// Address validation
+// Web3 username validation
 export type {
-  AddressValidationResult,
-  BasicValidationResult
-} from './address-validator';
+  AddressValidationResult
+} from './web3-username-validator';
 
 export {
-  AddressValidator
-} from './address-validator';
+  Web3UsernameValidator
+} from './web3-username-validator';
 
 // Type validation
 export type {

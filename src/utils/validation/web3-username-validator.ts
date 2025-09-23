@@ -11,25 +11,13 @@ import { ChainType } from '../../types/business/enums';
 import { Optional } from '../../types/common';
 
 export interface AddressValidationResult {
-  isValid: boolean;
-  addressType: string;
-  normalizedAddress: string;
-  formats: {
-    evm: boolean;
-    solana: boolean;
-    ens: boolean;
-    sns: boolean;
-  };
-  error?: string;
+  name: Optional<string>;
+  address: Optional<string>;
+  chainType: ChainType;
 }
 
-export interface BasicValidationResult {
-  isValid: boolean;
-  addressType: Optional<ChainType>;
-  normalizedAddress: string;
-}
 
-export class AddressValidator {
+export class Web3UsernameValidator {
   // Regex patterns for different address types
   private static readonly EVM_REGEX = /^0x[a-fA-F0-9]{40}$/;
   private static readonly BASE58_REGEX = /^[1-9A-HJ-NP-Za-km-z]+$/;
@@ -52,38 +40,22 @@ export class AddressValidator {
 
   /**
    * Comprehensive address validation for API endpoint
-   * Returns detailed validation results for all supported formats
+   * Returns AddressValidationResult for valid addresses, undefined for invalid ones
    */
-  static validateComprehensive(address: string): AddressValidationResult {
+  static validate(
+    address: string
+  ): Optional<AddressValidationResult> {
     if (!address) {
-      return {
-        isValid: false,
-        addressType: 'unknown',
-        normalizedAddress: address || '',
-        formats: { evm: false, solana: false, ens: false, sns: false },
-        error: 'Address parameter is required',
-      };
+      return undefined;
     }
-
-    const result: AddressValidationResult = {
-      isValid: false,
-      addressType: 'unknown',
-      normalizedAddress: address,
-      formats: {
-        evm: false,
-        solana: false,
-        ens: false,
-        sns: false,
-      },
-    };
 
     // 1. Check if it's a valid EVM address (0x + 40 hex characters)
     if (this.EVM_REGEX.test(address)) {
-      result.isValid = true;
-      result.addressType = 'evm';
-      result.normalizedAddress = address.toLowerCase();
-      result.formats.evm = true;
-      return result;
+      return {
+        name: null,
+        address: address.toLowerCase(),
+        chainType: ChainType.EVM,
+      };
     }
 
     // 2. Check if it's a valid Solana address (Base58, 32-44 characters, no 0x prefix)
@@ -93,11 +65,11 @@ export class AddressValidator {
       address.length <= 44 &&
       this.BASE58_REGEX.test(address)
     ) {
-      result.isValid = true;
-      result.addressType = 'solana';
-      result.normalizedAddress = address; // Keep case for Solana
-      result.formats.solana = true;
-      return result;
+      return {
+        name: null,
+        address: address, // Keep case for Solana
+        chainType: ChainType.SOLANA,
+      };
     }
 
     // 3. Check if it's a valid ENS name (.eth or .box)
@@ -107,11 +79,11 @@ export class AddressValidator {
       address.length >= 5 && // minimum: "a.eth" = 5 chars
       this.ENS_REGEX.test(address)
     ) {
-      result.isValid = true;
-      result.addressType = 'ens';
-      result.normalizedAddress = address.toLowerCase();
-      result.formats.ens = true;
-      return result;
+      return {
+        name: address.toLowerCase(),
+        address: null,
+        chainType: ChainType.EVM, // ENS resolves to EVM addresses
+      };
     }
 
     // 4. Check if it's a valid SNS name (Solana Name Service)
@@ -124,63 +96,19 @@ export class AddressValidator {
           this.SNS_NAME_REGEX.test(name) &&
           name.length >= 1
         ) {
-          result.isValid = true;
-          result.addressType = 'sns';
-          result.normalizedAddress = address.toLowerCase();
-          result.formats.sns = true;
-          return result;
+          return {
+            name: address.toLowerCase(),
+            address: null,
+            chainType: ChainType.SOLANA, // SNS resolves to Solana addresses
+          };
         }
       }
     }
 
-    // If no format matches, return invalid result with error
-    result.error =
-      'Invalid address format. Must be a valid EVM address (0x...), Solana address (Base58), ENS name (.eth/.box), or SNS name (.sol, etc.)';
-    return result;
+    // If no format matches, return undefined
+    return undefined;
   }
 
-  /**
-   * Basic address validation for signature verification
-   * Returns simplified result compatible with existing SignatureVerify interface
-   */
-  static validateBasic(address: string): BasicValidationResult {
-    if (!address) {
-      return {
-        isValid: false,
-        addressType: undefined,
-        normalizedAddress: address || '',
-      };
-    }
-
-    // Check EVM address
-    if (this.EVM_REGEX.test(address)) {
-      return {
-        isValid: true,
-        addressType: ChainType.EVM,
-        normalizedAddress: address.toLowerCase(),
-      };
-    }
-
-    // Check Solana address
-    if (
-      !address.startsWith('0x') &&
-      address.length >= 32 &&
-      address.length <= 44 &&
-      this.BASE58_REGEX.test(address)
-    ) {
-      return {
-        isValid: true,
-        addressType: ChainType.SOLANA,
-        normalizedAddress: address, // Keep case for Solana
-      };
-    }
-
-    return {
-      isValid: false,
-      addressType: undefined,
-      normalizedAddress: address,
-    };
-  }
 
   /**
    * Quick EVM address validation

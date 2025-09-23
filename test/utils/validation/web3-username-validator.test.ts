@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { ChainType } from '../../../src/types/business/enums';
-import { AddressValidator } from '../../../src/utils/validation/address-validator';
+import { Web3UsernameValidator } from '../../../src/utils/validation/web3-username-validator';
 
-describe('AddressValidator', () => {
-  describe('validateComprehensive', () => {
+describe('Web3UsernameValidator', () => {
+  describe('validate', () => {
     describe('EVM Address Validation', () => {
       it('should validate correct EVM addresses', () => {
         const validEVMAddresses = [
@@ -15,16 +15,12 @@ describe('AddressValidator', () => {
         ];
 
         validEVMAddresses.forEach((address) => {
-          const result = AddressValidator.validateComprehensive(address);
-          
-          expect(result.isValid).toBe(true);
-          expect(result.addressType).toBe('evm');
-          expect(result.normalizedAddress).toBe(address.toLowerCase());
-          expect(result.formats.evm).toBe(true);
-          expect(result.formats.solana).toBe(false);
-          expect(result.formats.ens).toBe(false);
-          expect(result.formats.sns).toBe(false);
-          expect(result.error).toBeUndefined();
+          const result = Web3UsernameValidator.validate(address);
+
+          expect(result).toBeDefined();
+          expect(result?.chainType).toBe(ChainType.EVM);
+          expect(result?.address).toBe(address.toLowerCase());
+          expect(result?.name).toBe(null);
         });
       });
 
@@ -38,10 +34,8 @@ describe('AddressValidator', () => {
         ];
 
         invalidEVMAddresses.forEach((address) => {
-          const result = AddressValidator.validateComprehensive(address);
-          expect(result.isValid).toBe(false);
-          expect(result.addressType).toBe('unknown');
-          expect(result.error).toContain('Invalid address format');
+          const result = Web3UsernameValidator.validate(address);
+          expect(result).toBeUndefined();
         });
       });
     });
@@ -57,16 +51,12 @@ describe('AddressValidator', () => {
         ];
 
         validSolanaAddresses.forEach((address) => {
-          const result = AddressValidator.validateComprehensive(address);
-          
-          expect(result.isValid).toBe(true);
-          expect(result.addressType).toBe('solana');
-          expect(result.normalizedAddress).toBe(address); // Keep case for Solana
-          expect(result.formats.evm).toBe(false);
-          expect(result.formats.solana).toBe(true);
-          expect(result.formats.ens).toBe(false);
-          expect(result.formats.sns).toBe(false);
-          expect(result.error).toBeUndefined();
+          const result = Web3UsernameValidator.validate(address);
+
+          expect(result).toBeDefined();
+          expect(result?.chainType).toBe(ChainType.SOLANA);
+          expect(result?.address).toBe(address); // Keep case for Solana
+          expect(result?.name).toBe(null);
         });
       });
 
@@ -81,9 +71,8 @@ describe('AddressValidator', () => {
         ];
 
         invalidSolanaAddresses.forEach((address) => {
-          const result = AddressValidator.validateComprehensive(address);
-          expect(result.isValid).toBe(false);
-          expect(result.addressType).toBe('unknown');
+          const result = Web3UsernameValidator.validate(address);
+          expect(result).toBeUndefined();
         });
       });
     });
@@ -102,16 +91,12 @@ describe('AddressValidator', () => {
         ];
 
         validENSNames.forEach((name) => {
-          const result = AddressValidator.validateComprehensive(name);
-          
-          expect(result.isValid).toBe(true);
-          expect(result.addressType).toBe('ens');
-          expect(result.normalizedAddress).toBe(name.toLowerCase());
-          expect(result.formats.evm).toBe(false);
-          expect(result.formats.solana).toBe(false);
-          expect(result.formats.ens).toBe(true);
-          expect(result.formats.sns).toBe(false);
-          expect(result.error).toBeUndefined();
+          const result = Web3UsernameValidator.validate(name);
+
+          expect(result).toBeDefined();
+          expect(result?.chainType).toBe(ChainType.EVM); // ENS resolves to EVM addresses
+          expect(result?.name).toBe(name.toLowerCase());
+          expect(result?.address).toBe(null);
         });
       });
 
@@ -129,9 +114,8 @@ describe('AddressValidator', () => {
         ];
 
         invalidENSNames.forEach((name) => {
-          const result = AddressValidator.validateComprehensive(name);
-          expect(result.isValid).toBe(false);
-          expect(result.addressType).toBe('unknown');
+          const result = Web3UsernameValidator.validate(name);
+          expect(result).toBeUndefined();
         });
       });
     });
@@ -152,16 +136,12 @@ describe('AddressValidator', () => {
         ];
 
         validSNSNames.forEach((name) => {
-          const result = AddressValidator.validateComprehensive(name);
-          
-          expect(result.isValid).toBe(true);
-          expect(result.addressType).toBe('sns');
-          expect(result.normalizedAddress).toBe(name.toLowerCase());
-          expect(result.formats.evm).toBe(false);
-          expect(result.formats.solana).toBe(false);
-          expect(result.formats.ens).toBe(false);
-          expect(result.formats.sns).toBe(true);
-          expect(result.error).toBeUndefined();
+          const result = Web3UsernameValidator.validate(name);
+
+          expect(result).toBeDefined();
+          expect(result?.chainType).toBe(ChainType.SOLANA); // SNS resolves to Solana addresses
+          expect(result?.name).toBe(name.toLowerCase());
+          expect(result?.address).toBe(null);
         });
       });
 
@@ -178,9 +158,8 @@ describe('AddressValidator', () => {
         ];
 
         invalidSNSNames.forEach((name) => {
-          const result = AddressValidator.validateComprehensive(name);
-          expect(result.isValid).toBe(false);
-          expect(result.addressType).toBe('unknown');
+          const result = Web3UsernameValidator.validate(name);
+          expect(result).toBeUndefined();
         });
       });
     });
@@ -188,82 +167,41 @@ describe('AddressValidator', () => {
     describe('Edge Cases', () => {
       it('should handle empty and null inputs', () => {
         const emptyInputs = ['', null, undefined];
-        
+
         emptyInputs.forEach((input) => {
-          const result = AddressValidator.validateComprehensive(input as any);
-          
-          expect(result.isValid).toBe(false);
-          expect(result.addressType).toBe('unknown');
-          expect(result.error).toBe('Address parameter is required');
-          expect(result.normalizedAddress).toBe(input || '');
+          const result = Web3UsernameValidator.validate(input as any);
+          expect(result).toBeUndefined();
         });
       });
 
       it('should handle whitespace inputs', () => {
         const whitespaceInputs = [' ', '  ', '\t', '\n'];
-        
+
         whitespaceInputs.forEach((input) => {
-          const result = AddressValidator.validateComprehensive(input);
-          expect(result.isValid).toBe(false);
-          expect(result.addressType).toBe('unknown');
+          const result = Web3UsernameValidator.validate(input);
+          expect(result).toBeUndefined();
         });
       });
 
       it('should prioritize EVM over other formats for ambiguous cases', () => {
         // This is a theoretical case - in practice, formats shouldn't overlap
         const evmAddress = '0x1234567890123456789012345678901234567890';
-        const result = AddressValidator.validateComprehensive(evmAddress);
-        
-        expect(result.addressType).toBe('evm');
-        expect(result.formats.evm).toBe(true);
+        const result = Web3UsernameValidator.validate(evmAddress);
+
+        expect(result).toBeDefined();
+        expect(result?.chainType).toBe(ChainType.EVM);
       });
 
       it('should handle mixed case correctly', () => {
         const mixedCaseEVM = '0xAbCdEf1234567890123456789012345678901234';
-        const result = AddressValidator.validateComprehensive(mixedCaseEVM);
-        
-        expect(result.isValid).toBe(true);
-        expect(result.normalizedAddress).toBe(mixedCaseEVM.toLowerCase());
+        const result = Web3UsernameValidator.validate(mixedCaseEVM);
+
+        expect(result).toBeDefined();
+        expect(result?.address).toBe(mixedCaseEVM.toLowerCase());
       });
     });
   });
 
-  describe('validateBasic', () => {
-    it('should validate EVM addresses for basic validation', () => {
-      const evmAddress = '0x1234567890123456789012345678901234567890';
-      const result = AddressValidator.validateBasic(evmAddress);
-      
-      expect(result.isValid).toBe(true);
-      expect(result.addressType).toBe(ChainType.EVM);
-      expect(result.normalizedAddress).toBe(evmAddress.toLowerCase());
-    });
-
-    it('should validate Solana addresses for basic validation', () => {
-      const solanaAddress = 'So11111111111111111111111111111112';
-      const result = AddressValidator.validateBasic(solanaAddress);
-      
-      expect(result.isValid).toBe(true);
-      expect(result.addressType).toBe(ChainType.SOLANA);
-      expect(result.normalizedAddress).toBe(solanaAddress);
-    });
-
-    it('should return UNKNOWN for invalid addresses', () => {
-      const invalidAddress = 'invalid-address';
-      const result = AddressValidator.validateBasic(invalidAddress);
-      
-      expect(result.isValid).toBe(false);
-      expect(result.addressType).toBeUndefined();
-      expect(result.normalizedAddress).toBe(invalidAddress);
-    });
-
-    it('should handle empty input', () => {
-      const result = AddressValidator.validateBasic('');
-      
-      expect(result.isValid).toBe(false);
-      expect(result.addressType).toBeUndefined();
-      expect(result.normalizedAddress).toBe('');
-    });
-  });
 
   describe('Quick Validation Methods', () => {
     describe('isValidEVMAddress', () => {
@@ -275,7 +213,7 @@ describe('AddressValidator', () => {
         ];
 
         validAddresses.forEach((address) => {
-          expect(AddressValidator.isValidEVMAddress(address)).toBe(true);
+          expect(Web3UsernameValidator.isValidEVMAddress(address)).toBe(true);
         });
       });
 
@@ -288,7 +226,7 @@ describe('AddressValidator', () => {
         ];
 
         invalidAddresses.forEach((address) => {
-          expect(AddressValidator.isValidEVMAddress(address)).toBe(false);
+          expect(Web3UsernameValidator.isValidEVMAddress(address)).toBe(false);
         });
       });
     });
@@ -302,7 +240,7 @@ describe('AddressValidator', () => {
         ];
 
         validAddresses.forEach((address) => {
-          expect(AddressValidator.isValidSolanaAddress(address)).toBe(true);
+          expect(Web3UsernameValidator.isValidSolanaAddress(address)).toBe(true);
         });
       });
 
@@ -315,7 +253,7 @@ describe('AddressValidator', () => {
         ];
 
         invalidAddresses.forEach((address) => {
-          expect(AddressValidator.isValidSolanaAddress(address)).toBe(false);
+          expect(Web3UsernameValidator.isValidSolanaAddress(address)).toBe(false);
         });
       });
     });
@@ -330,7 +268,7 @@ describe('AddressValidator', () => {
         ];
 
         validNames.forEach((name) => {
-          expect(AddressValidator.isValidENSName(name)).toBe(true);
+          expect(Web3UsernameValidator.isValidENSName(name)).toBe(true);
         });
       });
 
@@ -344,7 +282,7 @@ describe('AddressValidator', () => {
         ];
 
         invalidNames.forEach((name) => {
-          expect(AddressValidator.isValidENSName(name)).toBe(false);
+          expect(Web3UsernameValidator.isValidENSName(name)).toBe(false);
         });
       });
     });
@@ -363,7 +301,7 @@ describe('AddressValidator', () => {
         ];
 
         validNames.forEach((name) => {
-          expect(AddressValidator.isValidSNSName(name)).toBe(true);
+          expect(Web3UsernameValidator.isValidSNSName(name)).toBe(true);
         });
       });
 
@@ -377,7 +315,7 @@ describe('AddressValidator', () => {
         ];
 
         invalidNames.forEach((name) => {
-          expect(AddressValidator.isValidSNSName(name)).toBe(false);
+          expect(Web3UsernameValidator.isValidSNSName(name)).toBe(false);
         });
       });
     });
@@ -390,7 +328,7 @@ describe('AddressValidator', () => {
       // Test that all expected TLDs work
       expectedTLDs.forEach((tld) => {
         const testName = `test.${tld}`;
-        expect(AddressValidator.isValidSNSName(testName)).toBe(true);
+        expect(Web3UsernameValidator.isValidSNSName(testName)).toBe(true);
       });
     });
 
@@ -399,7 +337,7 @@ describe('AddressValidator', () => {
       
       invalidTLDs.forEach((tld) => {
         const testName = `test.${tld}`;
-        expect(AddressValidator.isValidSNSName(testName)).toBe(false);
+        expect(Web3UsernameValidator.isValidSNSName(testName)).toBe(false);
       });
     });
   });
@@ -407,39 +345,38 @@ describe('AddressValidator', () => {
   describe('Performance and Edge Cases', () => {
     it('should handle very long strings gracefully', () => {
       const veryLongString = 'a'.repeat(1000);
-      const result = AddressValidator.validateComprehensive(veryLongString);
-      
-      expect(result.isValid).toBe(false);
-      expect(result.addressType).toBe('unknown');
+      const result = Web3UsernameValidator.validate(veryLongString);
+
+      expect(result).toBeUndefined();
     });
 
     it('should handle special characters', () => {
       const specialChars = ['test@domain.eth', 'test#domain.sol', 'test$domain.abc'];
-      
+
       specialChars.forEach((address) => {
-        const result = AddressValidator.validateComprehensive(address);
-        expect(result.isValid).toBe(false);
+        const result = Web3UsernameValidator.validate(address);
+        expect(result).toBeUndefined();
       });
     });
 
     it('should be case insensitive for domain names', () => {
       const mixedCaseDomains = ['TEST.ETH', 'Example.BOX', 'User.SOL'];
-      
+
       mixedCaseDomains.forEach((domain) => {
-        const result = AddressValidator.validateComprehensive(domain);
-        if (result.isValid) {
-          expect(result.normalizedAddress).toBe(domain.toLowerCase());
+        const result = Web3UsernameValidator.validate(domain);
+        if (result) {
+          expect(result.name).toBe(domain.toLowerCase());
         }
       });
     });
 
     it('should handle unicode characters', () => {
       const unicodeNames = ['tëst.eth', 'exämple.sol', 'ùser.abc'];
-      
+
       unicodeNames.forEach((name) => {
-        const result = AddressValidator.validateComprehensive(name);
+        const result = Web3UsernameValidator.validate(name);
         // Unicode should be rejected by current implementation
-        expect(result.isValid).toBe(false);
+        expect(result).toBeUndefined();
       });
     });
   });
