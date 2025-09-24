@@ -8,6 +8,8 @@
  * @ai-usage Implement this interface to create analytics services for Firebase, Mixpanel, etc.
  */
 
+import { Optional } from '../common';
+
 /**
  * Flexible analytics event properties interface.
  *
@@ -16,7 +18,7 @@
  */
 export interface AnalyticsEventProperties {
   /** Flexible analytics properties supporting common data types */
-  [key: string]: string | number | boolean | undefined;
+  [key: string]: Optional<string | number | boolean>;
 }
 
 /**

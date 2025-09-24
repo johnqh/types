@@ -2,6 +2,8 @@
  * Environment configuration types for cross-platform applications
  */
 
+import { Optional } from '../common';
+
 /**
  * Environment variables interface with typed NODE_ENV and flexible additional properties.
  */
@@ -9,7 +11,7 @@ export interface EnvironmentVariables {
   /** Node.js environment setting with strict typing */
   NODE_ENV?: 'development' | 'production' | 'test';
   /** Additional environment variables with flexible string keys */
-  [key: string]: string | undefined;
+  [key: string]: Optional<string>;
 }
 
 /**
@@ -35,7 +37,7 @@ export interface EnvProvider {
   get<K extends keyof EnvironmentVariables>(
     key: K,
     defaultValue?: string
-  ): EnvironmentVariables[K] | string | undefined;
+  ): EnvironmentVariables[K] | Optional<string>;
 
   /**
    * Check if currently running in development environment.
