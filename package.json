@@ -1,7 +1,7 @@
 {
   "name": "@johnqh/types",
   "version": "1.6.2",
-  "description": "Common TypeScript types, interfaces, and enums for 0xmail.box projects",
+  "description": "Comprehensive TypeScript types, interfaces, and utilities for the 0xmail.box Web3 email ecosystem - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -45,14 +45,20 @@
   },
   "files": [
     "dist/**/*",
-    "README.md"
+    "README.md",
+    "CLAUDE.md"
   ],
   "keywords": [
     "typescript",
     "types",
     "interfaces",
     "0xmail",
-    "web3"
+    "web3",
+    "blockchain",
+    "email",
+    "ai-optimized",
+    "tree-shakeable",
+    "zero-dependencies"
   ],
   "author": "0xmail.box",
   "license": "MIT",
