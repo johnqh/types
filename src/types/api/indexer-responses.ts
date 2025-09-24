@@ -229,6 +229,35 @@ export interface SolanaTestTransactionData {
 export type SolanaTestTransactionResponse =
   ApiResponse<SolanaTestTransactionData>;
 
+// Error response type for API endpoints
+export interface ErrorResponse extends ApiResponse<never> {
+  success: false;
+  error: string;
+}
+
+// Helius webhook transaction structure for Solana
+export interface HeliusTransaction {
+  signature: string;
+  slot: number;
+  blockTime: number;
+  transaction: {
+    signatures: string[];
+    message: {
+      accountKeys: string[];
+      instructions: unknown[];
+    };
+  };
+  meta: {
+    logMessages: string[];
+    fee: number;
+    preBalances: number[];
+    postBalances: number[];
+  };
+  events?: {
+    [programId: string]: unknown[];
+  };
+}
+
 // Extended union type to include all response types
 export type IndexerApiResponse =
   | ValidationResponse

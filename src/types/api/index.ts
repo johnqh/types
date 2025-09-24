@@ -27,6 +27,9 @@ export type {
   SolanaStatusResponse,
   SolanaTestTransactionResponse,
   IndexerApiResponse,
+  // Shared endpoint types
+  ErrorResponse,
+  HeliusTransaction,
 } from './indexer-responses';
 
 // Export type guards
