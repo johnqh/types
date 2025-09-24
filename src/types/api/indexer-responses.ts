@@ -5,6 +5,7 @@
  */
 
 import { ChainType } from '../business/enums';
+import { WalletData } from '../common';
 
 // Base response types
 export interface BaseResponse {
@@ -44,18 +45,15 @@ export interface DomainAccount {
   verified?: boolean;
 }
 
-export interface WalletEmailAccounts {
-  walletAddress: string;
-  addressType: ChainType;
+export interface WalletEmailAccounts extends WalletData {
   isPrimary: boolean;
   primaryAccount: string; // Always walletAddress@0xmail.box
   domainAccounts: DomainAccount[]; // ENS/SNS emails for this wallet
   totalAccounts: number;
 }
 
-export interface EmailAccountsResponse extends BaseResponse {
+export interface EmailAccountsResponse extends BaseResponse, WalletData {
   requestedWallet: string;
-  addressType: ChainType;
   walletAccounts: WalletEmailAccounts[]; // First is requested wallet, rest are delegated
   totalWallets: number;
   totalAccounts: number;
@@ -63,9 +61,7 @@ export interface EmailAccountsResponse extends BaseResponse {
 }
 
 // Delegation types
-export interface DelegationInfo {
-  walletAddress: string;
-  addressType: ChainType;
+export interface DelegationInfo extends WalletData {
   delegatedAddress?: string;
   delegatedAddressType?: ChainType;
   chainId?: number;
@@ -76,9 +72,7 @@ export interface DelegationInfo {
   isActive: boolean;
 }
 
-export interface DelegationResponse extends BaseResponse {
-  walletAddress: string;
-  addressType: ChainType;
+export interface DelegationResponse extends BaseResponse, WalletData {
   delegatedAddress?: string;
   delegatedAddressType?: ChainType;
   chainId?: number;
@@ -100,9 +94,7 @@ export interface DelegatorInfo {
   isActive: boolean;
 }
 
-export interface DelegatorsResponse extends BaseResponse {
-  walletAddress: string;
-  addressType: ChainType;
+export interface DelegatorsResponse extends BaseResponse, WalletData {
   delegatedFrom: DelegatorInfo[];
   delegationDetails: {
     totalDelegators: number;
@@ -117,17 +109,13 @@ export interface DelegatorsResponse extends BaseResponse {
 }
 
 // Signature verification types
-export interface SignatureVerificationResponse extends BaseResponse {
-  walletAddress: string;
-  addressType: ChainType;
+export interface SignatureVerificationResponse extends BaseResponse, WalletData {
   isValid: boolean;
   message: string;
 }
 
 // Nonce types
-export interface NonceResponse extends BaseResponse {
-  walletAddress: string;
-  addressType: ChainType;
+export interface NonceResponse extends BaseResponse, WalletData {
   nonce: string;
   createdAt?: string;
   updatedAt?: string;
@@ -144,9 +132,7 @@ export interface EntitlementInfo {
   store?: string;
 }
 
-export interface EntitlementResponse extends BaseResponse {
-  walletAddress: string;
-  addressType: ChainType;
+export interface EntitlementResponse extends BaseResponse, WalletData {
   entitlement: EntitlementInfo;
   message: string;
   error?: string;
@@ -162,18 +148,14 @@ export interface PointsData {
   updatedAt?: string;
 }
 
-export interface PointsResponse extends SuccessResponse {
-  walletAddress: string;
-  addressType: ChainType;
+export interface PointsResponse extends SuccessResponse, WalletData {
   data: PointsData;
   verified: boolean;
 }
 
 // Message generation types
-export interface SimpleMessageResponse extends BaseResponse {
+export interface SimpleMessageResponse extends BaseResponse, WalletData {
   message: string;
-  walletAddress: string;
-  chainType: ChainType;
   chainId?: number;
 }
 

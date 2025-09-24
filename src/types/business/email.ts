@@ -1,4 +1,5 @@
-import { EmailFolder, StandardEmailFolder, ChainType } from './enums';
+import { EmailFolder, StandardEmailFolder } from './enums';
+import { WalletData } from '../common';
 
 export interface Email {
   id: string;
@@ -39,9 +40,7 @@ export interface User {
 }
 
 // WalletUserData interface for wallet-based user information
-export interface WalletUserData {
-  walletAddress: string;
-  chainType: ChainType;
+export interface WalletUserData extends WalletData {
   walletType?: string;
   displayName?: string;
   avatar?: string;
