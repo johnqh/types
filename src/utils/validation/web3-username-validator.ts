@@ -16,7 +16,6 @@ export interface AddressValidationResult {
   chainType: ChainType;
 }
 
-
 export class Web3UsernameValidator {
   // Regex patterns for different address types
   private static readonly EVM_REGEX = /^0x[a-fA-F0-9]{40}$/;
@@ -42,9 +41,7 @@ export class Web3UsernameValidator {
    * Comprehensive address validation for API endpoint
    * Returns AddressValidationResult for valid addresses, undefined for invalid ones
    */
-  static validate(
-    address: string
-  ): Optional<AddressValidationResult> {
+  static validate(address: string): Optional<AddressValidationResult> {
     if (!address) {
       return undefined;
     }
@@ -108,7 +105,6 @@ export class Web3UsernameValidator {
     // If no format matches, return undefined
     return undefined;
   }
-
 
   /**
    * Quick EVM address validation

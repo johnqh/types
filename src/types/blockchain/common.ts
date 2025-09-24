@@ -5,7 +5,11 @@
  * @version 1.4.2
  */
 
-import { ChainType } from '../business/enums';
+import { MessageBase, UnifiedError, Result } from '../common';
+import type { NetworkConfig } from '../../utils/blockchain/network-config';
+
+// Re-export network types from utils
+export type { NetworkConfig };
 
 // ============================================================================
 // CORE MESSAGING TYPES
@@ -26,15 +30,11 @@ export type MessageRecipient = string;
  * Core message structure used across all chains
  * @interface Message
  */
-export interface Message {
+export interface Message extends Omit<MessageBase, 'from' | 'to'> {
   /** Message sender address/pubkey */
   from: MessageRecipient;
   /** Message recipient address/pubkey */
   to: MessageRecipient;
-  /** Message subject line */
-  subject: string;
-  /** Message body content */
-  body: string;
   /** Block timestamp when sent */
   timestamp: number;
   /** Transaction hash/signature */
@@ -118,21 +118,6 @@ export interface ClaimableRevenue {
 // ============================================================================
 
 /**
- * Network configuration for different chains
- * @interface NetworkConfig
- */
-export interface NetworkConfig {
-  /** Chain type */
-  chainType: ChainType;
-  /** Network name (mainnet, testnet, devnet, etc.) */
-  network: string;
-  /** RPC endpoint URL */
-  rpcUrl: string;
-  /** Chain ID (for EVM) or Cluster (for Solana) */
-  chainId?: number | string;
-}
-
-/**
  * Contract/Program addresses for deployment
  * @interface DeploymentAddresses
  */
@@ -207,40 +192,22 @@ export interface TransactionResult {
  */
 export enum TransactionStatus {
   /** Transaction successful */
-  SUCCESS = 'success',
+  SUCCESS = 'success', // STATUS_VALUES.SUCCESS
   /** Transaction failed */
-  FAILED = 'failed',
+  FAILED = 'failed', // STATUS_VALUES.FAILED
   /** Transaction pending confirmation */
-  PENDING = 'pending',
+  PENDING = 'pending', // STATUS_VALUES.PENDING
 }
 
-/**
- * Error information for failed operations
- * @interface OperationError
- */
-export interface OperationError {
-  /** Error code */
-  code: string;
-  /** Human-readable error message */
-  message: string;
-  /** Optional transaction hash if available */
-  txHash?: string;
-  /** Optional underlying error details */
-  details?: unknown;
-}
+// Re-export unified error types from common
+export type { UnifiedError, Result };
+
+// Legacy alias for backward compatibility
+export type OperationError = UnifiedError;
 
 // ============================================================================
 // UTILITY TYPES
 // ============================================================================
-
-/**
- * Result type for operations that can succeed or fail
- * @template T Success result type
- * @template E Error type (defaults to OperationError)
- */
-export type Result<T, E = OperationError> =
-  | { success: true; data: T }
-  | { success: false; error: E };
 
 /**
  * Options for sending messages
@@ -258,18 +225,12 @@ export interface SendMessageOptions {
   confirmations?: number;
 }
 
-/**
- * Pagination options for querying
- * @interface PaginationOptions
- */
-export interface PaginationOptions {
-  /** Number of items per page */
-  limit: number;
-  /** Offset from start */
-  offset: number;
-  /** Sort order */
-  sortOrder?: 'asc' | 'desc';
-}
+// Re-export unified pagination types from common
+export type {
+  PaginationOptions,
+  PaginationInfo,
+  PaginatedResponse,
+} from '../common';
 
 /**
  * Query filters for messages
@@ -362,38 +323,5 @@ export const PROTOCOL_CONSTANTS = {
   },
 } as const;
 
-/**
- * Default network configurations
- */
-export const DEFAULT_NETWORKS: Record<string, NetworkConfig> = {
-  ethereumMainnet: {
-    chainType: ChainType.EVM,
-    network: 'mainnet',
-    rpcUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_KEY',
-    chainId: 1,
-  },
-  ethereumSepolia: {
-    chainType: ChainType.EVM,
-    network: 'sepolia',
-    rpcUrl: 'https://sepolia.infura.io/v3/YOUR_INFURA_KEY',
-    chainId: 11155111,
-  },
-  solanaMainnet: {
-    chainType: ChainType.SOLANA,
-    network: 'mainnet-beta',
-    rpcUrl: 'https://api.mainnet-beta.solana.com',
-    chainId: 'mainnet-beta',
-  },
-  solanaDevnet: {
-    chainType: ChainType.SOLANA,
-    network: 'devnet',
-    rpcUrl: 'https://api.devnet.solana.com',
-    chainId: 'devnet',
-  },
-  hardhatLocal: {
-    chainType: ChainType.EVM,
-    network: 'hardhat',
-    rpcUrl: 'http://127.0.0.1:8545',
-    chainId: 1337,
-  },
-} as const;
+// Re-export network configurations from utils
+export { DEFAULT_NETWORKS } from '../../utils/blockchain/network-config';

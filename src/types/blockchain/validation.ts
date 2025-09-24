@@ -3,6 +3,7 @@
  */
 
 import { ChainType } from '../business/enums';
+import { isValidWalletAddress } from '../../utils/blockchain/address';
 
 export function validateDomain(domain: string): boolean {
   if (!domain || domain.length === 0) {
@@ -44,20 +45,8 @@ export function validateAddress(
     throw new Error('Address cannot be empty');
   }
 
-  if (chainType === ChainType.EVM) {
-    const evmRegex = /^0x[a-fA-F0-9]{40}$/;
-    if (!evmRegex.test(address)) {
-      throw new Error('Invalid EVM address format');
-    }
-  } else if (chainType === ChainType.SOLANA) {
-    // Solana addresses are base58 encoded, typically 32-44 characters
-    // Base58 alphabet excludes 0, O, I, l to avoid confusion
-    const solanaRegex = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
-    if (!solanaRegex.test(address)) {
-      throw new Error('Invalid Solana address format');
-    }
-  } else {
-    throw new Error(`Unsupported chain type: ${chainType}`);
+  if (!isValidWalletAddress(address, chainType)) {
+    throw new Error(`Invalid ${chainType} address format`);
   }
 
   return true;

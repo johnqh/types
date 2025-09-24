@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { StandardEmailFolder, ChainType } from '../../../src/types/business/enums';
+import { ChainType, MailboxType } from '../../../src/types/business/enums';
 import { EmailFolder, type WalletUserData } from '../../../src/types/business/email';
 
 describe('Email Types', () => {
@@ -99,20 +99,20 @@ describe('Email Types', () => {
   });
 
   describe('Email Folder Re-exports', () => {
-    it('should re-export StandardEmailFolder enum correctly', () => {
-      expect(StandardEmailFolder.INBOX).toBe('inbox');
-      expect(StandardEmailFolder.SENT).toBe('sent');
-      expect(StandardEmailFolder.DRAFTS).toBe('drafts');
-      expect(StandardEmailFolder.SPAM).toBe('spam');
-      expect(StandardEmailFolder.TRASH).toBe('trash');
-      expect(StandardEmailFolder.STARRED).toBe('starred');
-      expect(StandardEmailFolder.SNOOZED).toBe('snoozed');
-      expect(StandardEmailFolder.ARCHIVE).toBe('archive');
+    it('should use MailboxType enum values correctly', () => {
+      expect(MailboxType.INBOX).toBe('inbox');
+      expect(MailboxType.SENT).toBe('sent');
+      expect(MailboxType.DRAFTS).toBe('drafts');
+      expect(MailboxType.SPAM).toBe('spam');
+      expect(MailboxType.TRASH).toBe('trash');
+      expect(MailboxType.STARRED).toBe('starred');
+      expect(MailboxType.SNOOZED).toBe('snoozed');
+      expect(MailboxType.ARCHIVE).toBe('archive');
     });
 
     it('should allow EmailFolder type to accept standard and custom folders', () => {
-      // EmailFolder is a type union: StandardEmailFolder | string
-      const standardFolder: EmailFolder = StandardEmailFolder.INBOX;
+      // EmailFolder is a type union: MailboxType | string
+      const standardFolder: EmailFolder = MailboxType.INBOX;
       const customFolder: EmailFolder = 'my-custom-folder';
 
       expect(standardFolder).toBe('inbox');
@@ -121,8 +121,8 @@ describe('Email Types', () => {
 
     it('should work with EmailFolder type assignments', () => {
       const folders: EmailFolder[] = [
-        StandardEmailFolder.INBOX,
-        StandardEmailFolder.SENT,
+        MailboxType.INBOX,
+        MailboxType.SENT,
         'custom-folder-1',
         'custom-folder-2',
       ];

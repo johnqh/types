@@ -4,6 +4,21 @@
  */
 
 import { Optional } from '../../types/common';
+import { ChainType } from '../../types/business/enums';
+
+/**
+ * Network configuration interface for different chains
+ */
+export interface NetworkConfig {
+  /** Chain type */
+  chainType: ChainType;
+  /** Network name (mainnet, testnet, devnet, etc.) */
+  network: string;
+  /** RPC endpoint URL */
+  rpcUrl: string;
+  /** Chain ID (for EVM) or Cluster (for Solana) */
+  chainId?: number | string;
+}
 
 // Network identifiers for multi-chain support
 export const NETWORK_IDENTIFIERS = {
@@ -180,3 +195,39 @@ export function getAllEVMChainIds(): EVMChainId[] {
 export function getAllChainIds(): ChainId[] {
   return [...getAllSolanaChainIds(), ...getAllEVMChainIds()];
 }
+
+/**
+ * Default network configurations
+ */
+export const DEFAULT_NETWORKS: Record<string, NetworkConfig> = {
+  ethereumMainnet: {
+    chainType: ChainType.EVM,
+    network: 'mainnet',
+    rpcUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_KEY',
+    chainId: 1,
+  },
+  ethereumSepolia: {
+    chainType: ChainType.EVM,
+    network: 'sepolia',
+    rpcUrl: 'https://sepolia.infura.io/v3/YOUR_INFURA_KEY',
+    chainId: 11155111,
+  },
+  solanaMainnet: {
+    chainType: ChainType.SOLANA,
+    network: 'mainnet-beta',
+    rpcUrl: 'https://api.mainnet-beta.solana.com',
+    chainId: 'mainnet-beta',
+  },
+  solanaDevnet: {
+    chainType: ChainType.SOLANA,
+    network: 'devnet',
+    rpcUrl: 'https://api.devnet.solana.com',
+    chainId: 'devnet',
+  },
+  hardhatLocal: {
+    chainType: ChainType.EVM,
+    network: 'hardhat',
+    rpcUrl: 'http://127.0.0.1:8545',
+    chainId: 1337,
+  },
+} as const;

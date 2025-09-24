@@ -7,5 +7,5 @@ export {
   getAuthStatusText,
   isAuthExpired,
   isAuthStatusConnected,
-  isValidNonce
+  isValidNonce,
 } from './auth';

@@ -1,7 +1,5 @@
 // Address utilities
-export type {
-  ParsedEmailAddress
-} from './address';
+export type { ParsedEmailAddress } from './address';
 
 export {
   AddressType,
@@ -9,18 +7,19 @@ export {
   getAddressType,
   getChainDisplayName,
   isENSName,
-  isEVMAddress,
   isSNSName,
-  isSolanaAddressString,
   isValidSignature,
   isValidWalletAddress,
-  parseEmailAddress
+  parseEmailAddress,
 } from './address';
+
+// Export address validation functions from common.ts
+export { isEvmAddress, isSolanaAddress } from '../../types/blockchain/common';
 
 // Event helper utilities
 export type {
   MultiChainIdGenerator,
-  UserChainIdGenerator
+  UserChainIdGenerator,
 } from './event-helpers';
 
 export {
@@ -32,7 +31,7 @@ export {
   isTestNet,
   isZeroAddress,
   normalizeAddress,
-  validateEventArgs
+  validateEventArgs,
 } from './event-helpers';
 
 // Network configuration utilities
@@ -42,7 +41,7 @@ export type {
   EVMNetwork,
   NetworkIdentifier,
   SolanaChainId,
-  SolanaNetwork
+  SolanaNetwork,
 } from './network-config';
 
 export {
@@ -62,5 +61,5 @@ export {
   isEVMChainId,
   isEVMNetwork,
   isSolanaChainId,
-  isSolanaNetwork
+  isSolanaNetwork,
 } from './network-config';

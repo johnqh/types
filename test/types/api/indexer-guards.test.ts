@@ -44,10 +44,10 @@ describe('Indexer Type Guards', () => {
 
   describe('isIndexerErrorResponse', () => {
     it('should identify error responses correctly', () => {
-      const errorResponse: ErrorResponse = {
-        timestamp: mockTimestamp,
+      const errorResponse = {
+        success: false,
         error: 'Test error message',
-        statusCode: 400,
+        timestamp: mockTimestamp,
       };
 
       expect(isIndexerErrorResponse(errorResponse)).toBe(true);

@@ -44,8 +44,18 @@ export enum AnalyticsEvent {
   EMAIL_SENT = 'email_sent',
   /** User received a new email message */
   EMAIL_RECEIVED = 'email_received',
-  /** User opened an email message */
+  /** User opened an email message (consolidated from EMAIL_OPENED and EMAIL_OPEN) */
   EMAIL_OPENED = 'email_opened',
+  /** User replied to an email message */
+  EMAIL_REPLY = 'email_reply',
+  /** User forwarded an email message */
+  EMAIL_FORWARD = 'email_forward',
+  /** User deleted an email message */
+  EMAIL_DELETE = 'email_delete',
+  /** User starred an email message */
+  EMAIL_STAR = 'email_star',
+  /** User composed a new email */
+  EMAIL_COMPOSE = 'email_compose',
   /** User clicked a link within an email */
   EMAIL_CLICKED = 'email_clicked',
 
@@ -53,9 +63,26 @@ export enum AnalyticsEvent {
   PAGE_VIEW = 'page_view',
   /** User viewed a mobile screen */
   SCREEN_VIEW = 'screen_view',
+  /** User switched between folders */
+  FOLDER_SWITCH = 'folder_switch',
 
+  /** User viewed subscription options */
+  SUBSCRIPTION_VIEW = 'subscription_view',
+  /** User purchased a subscription */
+  SUBSCRIPTION_PURCHASE = 'subscription_purchase',
+  /** User cancelled a subscription */
+  SUBSCRIPTION_CANCEL = 'subscription_cancel',
+
+  /** User performed a search */
+  SEARCH_PERFORMED = 'search_performed',
+  /** User changed application settings */
+  SETTINGS_CHANGED = 'settings_changed',
   /** An application error occurred */
   ERROR_OCCURRED = 'error_occurred',
+  /** User viewed an A/B test variant */
+  AB_TEST_VIEWED = 'ab_test_viewed',
+  /** User converted on an A/B test */
+  AB_TEST_CONVERTED = 'ab_test_converted',
 
   /** Custom application-specific event */
   CUSTOM_EVENT = 'custom_event',

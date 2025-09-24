@@ -1,10 +1,7 @@
 // Enums and utilities
-export type {
-  EmailFolder
-} from './enums';
+export type { EmailFolder } from './enums';
 
 export {
-  AppAnalyticsEvent,
   AuthStatus,
   ChainType,
   ConnectionState,
@@ -22,14 +19,12 @@ export {
   MailboxType,
   MediumView,
   MobileView,
-  NetworkStatus,
   NotificationType,
   PlatformType,
   RequestStatus,
   SortOrder,
-  StandardEmailFolder,
   SubscriptionAction,
-  Theme
+  Theme,
 } from './enums';
 
 // Email types
@@ -38,23 +33,17 @@ export type {
   EmailAddress,
   Folder,
   User,
-  WalletUserData
+  WalletUserData,
 } from './email';
 
 // Mailbox types
-export type {
-  DefaultFolder,
-  MailBox
-} from './mailbox';
+export type { DefaultFolder, MailBox } from './mailbox';
 
 // Wallet status utilities
-export type {
-  WalletStatus
-} from './wallet-status';
+export type { WalletStatus } from './wallet-status';
 
 export {
-  WalletConnectionState,
   getWalletConnectionState,
   isWalletConnected,
-  isWalletVerified
+  isWalletVerified,
 } from './wallet-status';

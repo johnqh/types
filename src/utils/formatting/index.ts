@@ -3,7 +3,7 @@ export {
   CLAIM_PERIOD_DAYS,
   USDC_DECIMALS,
   formatUSDC,
-  parseUSDC
+  parseUSDC,
 } from './currency';
 
 // Date formatting
@@ -14,7 +14,7 @@ export {
   formatRelativeTime,
   formatTimestamp,
   isDateInRange,
-  parseDate
+  parseDate,
 } from './date';
 
 // String formatting
@@ -34,5 +34,5 @@ export {
   toKebabCase,
   toSnakeCase,
   toTitleCase,
-  truncate
+  truncate,
 } from './string';

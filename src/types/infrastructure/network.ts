@@ -3,6 +3,8 @@
  * Platform-agnostic HTTP client interface
  */
 
+import { BaseResponse } from '../common';
+
 interface NetworkRequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   headers?: Record<string, string>;
@@ -11,11 +13,10 @@ interface NetworkRequestOptions {
   timeout?: number;
 }
 
-interface NetworkResponse<T = unknown> {
+interface NetworkResponse<T = unknown> extends BaseResponse<T> {
   ok: boolean;
   status: number;
   statusText: string;
-  data: T;
   headers: Record<string, string>;
 }
 

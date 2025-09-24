@@ -6,20 +6,9 @@
 
 import { ChainType } from '../business/enums';
 import { WalletData } from '../common';
+import { ApiResponse } from '../infrastructure/api';
 
-// Base response types
-export interface BaseResponse {
-  timestamp: string;
-}
-
-export interface ErrorResponse extends BaseResponse {
-  error: string;
-  statusCode?: number;
-}
-
-export interface SuccessResponse extends BaseResponse {
-  success: boolean;
-}
+// Note: Using ApiResponse<T> from infrastructure/api for consistency
 
 // Address validation types
 export interface AddressFormats {
@@ -28,14 +17,15 @@ export interface AddressFormats {
   original: string;
 }
 
-export interface ValidationResponse extends BaseResponse {
+export interface ValidationData {
   isValid: boolean;
   address: string;
   addressType?: ChainType;
   normalizedAddress?: string;
   formats?: AddressFormats;
-  error?: string;
 }
+
+export type ValidationResponse = ApiResponse<ValidationData>;
 
 // Email addresses types
 export interface DomainAccount {
@@ -52,7 +42,7 @@ export interface WalletEmailAccounts extends WalletData {
   totalAccounts: number;
 }
 
-export interface EmailAccountsResponse extends BaseResponse, WalletData {
+export interface EmailAccountsData extends WalletData {
   requestedWallet: string;
   walletAccounts: WalletEmailAccounts[]; // First is requested wallet, rest are delegated
   totalWallets: number;
@@ -60,10 +50,12 @@ export interface EmailAccountsResponse extends BaseResponse, WalletData {
   verified: boolean;
 }
 
+export type EmailAccountsResponse = ApiResponse<EmailAccountsData>;
+
 // Delegation types
 export interface DelegationInfo extends WalletData {
   delegatedAddress?: string;
-  delegatedAddressType?: ChainType;
+  delegatedChainType?: ChainType;
   chainId?: number;
   chainName?: string;
   transactionHash?: string;
@@ -72,9 +64,9 @@ export interface DelegationInfo extends WalletData {
   isActive: boolean;
 }
 
-export interface DelegationResponse extends BaseResponse, WalletData {
+export interface DelegationData extends WalletData {
   delegatedAddress?: string;
-  delegatedAddressType?: ChainType;
+  delegatedChainType?: ChainType;
   chainId?: number;
   chainName?: string;
   transactionHash?: string;
@@ -83,9 +75,11 @@ export interface DelegationResponse extends BaseResponse, WalletData {
   verified: boolean;
 }
 
+export type DelegationResponse = ApiResponse<DelegationData>;
+
 export interface DelegatorInfo {
   delegatedFrom: string;
-  delegatedFromType: ChainType;
+  delegatedFromChainType: ChainType;
   chainId: number;
   chainName: string;
   transactionHash: string;
@@ -94,7 +88,7 @@ export interface DelegatorInfo {
   isActive: boolean;
 }
 
-export interface DelegatorsResponse extends BaseResponse, WalletData {
+export interface DelegatorsData extends WalletData {
   delegatedFrom: DelegatorInfo[];
   delegationDetails: {
     totalDelegators: number;
@@ -108,19 +102,26 @@ export interface DelegatorsResponse extends BaseResponse, WalletData {
   totalDelegators: number;
 }
 
+export type DelegatorsResponse = ApiResponse<DelegatorsData>;
+
 // Signature verification types
-export interface SignatureVerificationResponse extends BaseResponse, WalletData {
+export interface SignatureVerificationData extends WalletData {
   isValid: boolean;
   message: string;
 }
 
+export type SignatureVerificationResponse =
+  ApiResponse<SignatureVerificationData>;
+
 // Nonce types
-export interface NonceResponse extends BaseResponse, WalletData {
+export interface NonceData extends WalletData {
   nonce: string;
   createdAt?: string;
   updatedAt?: string;
   message: string;
 }
+
+export type NonceResponse = ApiResponse<NonceData>;
 
 // Entitlement types
 export interface EntitlementInfo {
@@ -132,15 +133,16 @@ export interface EntitlementInfo {
   store?: string;
 }
 
-export interface EntitlementResponse extends BaseResponse, WalletData {
+export interface EntitlementData extends WalletData {
   entitlement: EntitlementInfo;
   message: string;
-  error?: string;
   verified: boolean;
 }
 
-// Points types
-export interface PointsData {
+export type EntitlementResponse = ApiResponse<EntitlementData>;
+
+// Points types - consolidated user points data
+export interface UserPointsData {
   walletAddress: string;
   pointsEarned: string;
   lastActivityDate?: string;
@@ -148,32 +150,33 @@ export interface PointsData {
   updatedAt?: string;
 }
 
-export interface PointsResponse extends SuccessResponse, WalletData {
-  data: PointsData;
+// Legacy alias for backward compatibility
+export type PointsData = UserPointsData;
+
+export interface PointsResponseData extends WalletData {
+  data: UserPointsData;
   verified: boolean;
 }
 
+export type PointsResponse = ApiResponse<PointsResponseData>;
+
 // Message generation types
-export interface SimpleMessageResponse extends BaseResponse, WalletData {
+export interface SimpleMessageData extends WalletData {
   message: string;
   chainId?: number;
 }
 
+export type SimpleMessageResponse = ApiResponse<SimpleMessageData>;
+
 // Points API response types
-export interface LeaderboardUser {
-  walletAddress: string;
-  pointsEarned: string;
-  lastActivityDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
+export type LeaderboardUser = UserPointsData;
+
+export interface LeaderboardData {
+  leaderboard: LeaderboardUser[];
+  count: number;
 }
 
-export interface LeaderboardResponse extends SuccessResponse {
-  data: {
-    leaderboard: LeaderboardUser[];
-    count: number;
-  };
-}
+export type LeaderboardResponse = ApiResponse<LeaderboardData>;
 
 export interface SiteStatsData {
   totalPoints: string;
@@ -183,15 +186,15 @@ export interface SiteStatsData {
   message?: string;
 }
 
-export interface SiteStatsResponse extends SuccessResponse {
-  data: SiteStatsData;
-}
+export type SiteStatsResponse = ApiResponse<SiteStatsData>;
 
 // Solana API response types
-export interface SolanaWebhookResponse extends SuccessResponse {
+export interface SolanaWebhookData {
   processed: number;
   total: number;
 }
+
+export type SolanaWebhookResponse = ApiResponse<SolanaWebhookData>;
 
 export interface SolanaSetupResult {
   chainId: string;
@@ -199,9 +202,11 @@ export interface SolanaSetupResult {
   error?: string;
 }
 
-export interface SolanaSetupResponse extends SuccessResponse {
+export interface SolanaSetupData {
   results: SolanaSetupResult[];
 }
+
+export type SolanaSetupResponse = ApiResponse<SolanaSetupData>;
 
 export interface SolanaIndexerStatus {
   chainId: number;
@@ -209,15 +214,20 @@ export interface SolanaIndexerStatus {
   networkName: string;
 }
 
-export interface SolanaStatusResponse {
+export interface SolanaStatusData {
   solanaIndexers: SolanaIndexerStatus[];
   totalIndexers: number;
   configured: boolean;
 }
 
-export interface SolanaTestTransactionResponse extends SuccessResponse {
+export type SolanaStatusResponse = ApiResponse<SolanaStatusData>;
+
+export interface SolanaTestTransactionData {
   message: string;
 }
+
+export type SolanaTestTransactionResponse =
+  ApiResponse<SolanaTestTransactionData>;
 
 // Extended union type to include all response types
 export type IndexerApiResponse =
@@ -235,5 +245,4 @@ export type IndexerApiResponse =
   | SolanaWebhookResponse
   | SolanaSetupResponse
   | SolanaStatusResponse
-  | SolanaTestTransactionResponse
-  | ErrorResponse;
+  | SolanaTestTransactionResponse;

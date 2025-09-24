@@ -5,7 +5,6 @@
  */
 
 import type {
-  ErrorResponse,
   PointsResponse,
   ValidationResponse,
   EmailAccountsResponse,
@@ -26,8 +25,14 @@ import type {
 // Basic type guards for indexer responses
 export function isIndexerErrorResponse(
   response: unknown
-): response is ErrorResponse {
-  return !!(response && typeof response === 'object' && 'error' in response);
+): response is { success: false; error: string } {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'error' in response &&
+    'success' in response &&
+    !(response as { success: boolean }).success
+  );
 }
 
 export function isIndexerSuccessResponse(

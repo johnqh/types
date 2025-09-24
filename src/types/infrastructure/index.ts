@@ -3,13 +3,10 @@ export type {
   AnalyticsConfig,
   AnalyticsEventProperties,
   AnalyticsService,
-  EmailAnalyticsService
+  EmailAnalyticsService,
 } from './analytics';
 
-export {
-  AnalyticsEvent,
-  AnalyticsEventBuilder
-} from './analytics';
+export { AnalyticsEvent, AnalyticsEventBuilder } from './analytics';
 
 // API types
 export type {
@@ -28,23 +25,19 @@ export type {
   StatisticsEntity,
   SupportedChainId,
   UserChainId,
-  UserStatisticsEntity
+  UserStatisticsEntity,
 } from './api';
 
-export {
-  ChainType
-} from './api';
+export { ChainType } from './api';
 
 // Network types
 export type {
   NetworkClient,
   NetworkRequestOptions,
-  NetworkResponse
+  NetworkResponse,
 } from './network';
 
-export {
-  NetworkError
-} from './network';
+export { NetworkError } from './network';
 
 // Navigation types
 export type {
@@ -53,10 +46,8 @@ export type {
   UINavigationHook,
   UINavigationOptions,
   UINavigationService,
-  UINavigationState
+  UINavigationState,
 } from './navigation';
 
 // Wallet types
-export {
-  WalletType
-} from './wallet';
+export { WalletType } from './wallet';

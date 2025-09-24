@@ -105,34 +105,40 @@ describe('Indexer Response Types', () => {
   describe('ValidationResponse', () => {
     it('should handle valid EVM address validation', () => {
       const response: ValidationResponse = {
+        success: true,
         timestamp: mockTimestamp,
-        isValid: true,
-        address: mockWalletAddress,
-        addressType: ChainType.EVM,
-        normalizedAddress: mockWalletAddress.toLowerCase(),
-        formats: {
-          normalized: mockWalletAddress.toLowerCase(),
-          checksum: mockWalletAddress,
-          original: mockWalletAddress,
+        data: {
+          isValid: true,
+          address: mockWalletAddress,
+          addressType: ChainType.EVM,
+          normalizedAddress: mockWalletAddress.toLowerCase(),
+          formats: {
+            normalized: mockWalletAddress.toLowerCase(),
+            checksum: mockWalletAddress,
+            original: mockWalletAddress,
+          },
         },
       };
 
-      expect(response.isValid).toBe(true);
-      expect(response.addressType).toBe(ChainType.EVM);
-      expect(response.formats).toBeDefined();
+      expect(response.data?.isValid).toBe(true);
+      expect(response.data?.addressType).toBe(ChainType.EVM);
+      expect(response.data?.formats).toBeDefined();
     });
 
     it('should handle invalid address validation', () => {
       const response: ValidationResponse = {
+        success: false,
         timestamp: mockTimestamp,
-        isValid: false,
-        address: 'invalid-address',
         error: 'Invalid address format',
+        data: {
+          isValid: false,
+          address: 'invalid-address',
+        },
       };
 
-      expect(response.isValid).toBe(false);
+      expect(response.data?.isValid).toBe(false);
       expect(response.error).toBe('Invalid address format');
-      expect(response.addressType).toBeUndefined();
+      expect(response.data?.addressType).toBeUndefined();
     });
   });
 
@@ -166,7 +172,7 @@ describe('Indexer Response Types', () => {
     it('should define wallet email structure', () => {
       const walletAccounts: WalletEmailAccounts = {
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         isPrimary: true,
         primaryAccount: `${mockWalletAddress}@0xmail.box`,
         domainAccounts: [
@@ -192,11 +198,11 @@ describe('Indexer Response Types', () => {
       const response: EmailAccountsResponse = {
         timestamp: mockTimestamp,
         requestedWallet: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         walletAccounts: [
           {
             walletAddress: mockWalletAddress,
-            addressType: ChainType.EVM,
+            chainType: ChainType.EVM,
             isPrimary: true,
             primaryAccount: `${mockWalletAddress}@0xmail.box`,
             domainAccounts: [],
@@ -219,12 +225,12 @@ describe('Indexer Response Types', () => {
       const response: DelegationResponse = {
         timestamp: mockTimestamp,
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         delegatedAddress: mockSolanaAddress,
-        delegatedAddressType: ChainType.SOLANA,
+        delegatedChainType: ChainType.SOLANA,
         chainId: 1,
         chainName: 'Ethereum',
-        transactionHash: '0xabcdef123456',
+        txHash: '0xabcdef123456',
         blockNumber: '12345678',
         isActive: true,
         verified: true,
@@ -242,14 +248,14 @@ describe('Indexer Response Types', () => {
       const response: DelegatorsResponse = {
         timestamp: mockTimestamp,
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         delegatedFrom: [
           {
             delegatedFrom: mockSolanaAddress,
-            delegatedFromType: ChainType.SOLANA,
+            delegatedFromChainType: ChainType.SOLANA,
             chainId: 1,
             chainName: 'Ethereum',
-            transactionHash: '0xabcdef123456',
+            txHash: '0xabcdef123456',
             blockNumber: '12345678',
             timestamp: mockTimestamp,
             isActive: true,
@@ -280,7 +286,7 @@ describe('Indexer Response Types', () => {
       const response: SignatureVerificationResponse = {
         timestamp: mockTimestamp,
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         isValid: true,
         message: 'Signature verification successful',
       };
@@ -296,7 +302,7 @@ describe('Indexer Response Types', () => {
       const response: NonceResponse = {
         timestamp: mockTimestamp,
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         nonce: 'random-nonce-12345',
         createdAt: mockTimestamp,
         updatedAt: mockTimestamp,
@@ -313,7 +319,7 @@ describe('Indexer Response Types', () => {
       const response: EntitlementResponse = {
         timestamp: mockTimestamp,
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         entitlement: {
           type: 'nameservice',
           hasEntitlement: true,
@@ -338,7 +344,7 @@ describe('Indexer Response Types', () => {
         timestamp: mockTimestamp,
         success: true,
         walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
         data: {
           walletAddress: mockWalletAddress,
           pointsEarned: '1000',
@@ -501,7 +507,7 @@ describe('Indexer Response Types', () => {
         timestamp: mockTimestamp,
         isValid: true,
         address: mockWalletAddress,
-        addressType: ChainType.EVM,
+        chainType: ChainType.EVM,
       };
 
       expect(response.timestamp).toBe(mockTimestamp);

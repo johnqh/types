@@ -8,5 +8,5 @@ export {
   createSearchParams,
   searchParamsToString,
   parseSearchParams,
-  type URLSearchParamsLike
+  type URLSearchParamsLike,
 } from './url-params';

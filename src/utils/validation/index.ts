@@ -1,16 +1,10 @@
 // Web3 username validation
-export type {
-  AddressValidationResult
-} from './web3-username-validator';
+export type { AddressValidationResult } from './web3-username-validator';
 
-export {
-  Web3UsernameValidator
-} from './web3-username-validator';
+export { Web3UsernameValidator } from './web3-username-validator';
 
 // Type validation
-export type {
-  ValidationResult
-} from './type-validation';
+export type { ValidationResult } from './type-validation';
 
 export {
   createAssertion,
@@ -30,5 +24,5 @@ export {
   isValidDate,
   optional,
   parseJson,
-  validateArray
+  validateArray,
 } from './type-validation';

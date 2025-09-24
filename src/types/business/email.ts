@@ -1,12 +1,8 @@
-import { EmailFolder, StandardEmailFolder } from './enums';
-import { WalletData } from '../common';
+import { EmailFolder } from './enums';
+import { WalletData, FolderBase, MessageBase } from '../common';
 
-export interface Email {
+export interface Email extends MessageBase {
   id: string;
-  from: string;
-  to: string;
-  subject: string;
-  body: string;
   date: Date;
   read: boolean;
   starred: boolean;
@@ -16,11 +12,7 @@ export interface Email {
   attachments?: string[];
 }
 
-export interface Folder {
-  name: string;
-  count: number;
-  unreadCount: number;
-}
+export interface Folder extends FolderBase {}
 
 export interface EmailAddress {
   id: string;
@@ -48,4 +40,4 @@ export interface WalletUserData extends WalletData {
 }
 
 // Export the types that were imported from enums
-export type { EmailFolder, StandardEmailFolder };
+export type { EmailFolder };

@@ -1,15 +1,7 @@
 // Environment configuration
-export type {
-  EnvProvider,
-  EnvironmentVariables
-} from './environment';
+export type { EnvProvider, EnvironmentVariables } from './environment';
 
-export {
-  StorageType
-} from './environment';
+export { StorageType } from './environment';
 
 // Application configuration
-export type {
-  AppConfig,
-  FirebaseConfig
-} from './app-config';
+export type { AppConfig, FirebaseConfig } from './app-config';

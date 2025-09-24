@@ -2,12 +2,11 @@
  * Mailbox related types
  */
 
-export interface MailBox {
+import { FolderBase } from '../common';
+
+export interface MailBox extends FolderBase {
   id: string;
-  name: string;
   icon: string;
-  count: number;
-  unreadCount: number;
   path?: string;
   specialUse?: string;
   subscribed?: boolean;

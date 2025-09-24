@@ -21,5 +21,9 @@ export {
   WALLET_NAMES,
   NETWORK_IDS,
   ANIMATION,
-  Z_INDEX
+  Z_INDEX,
 } from './application';
+
+// Status value constants
+export { STATUS_VALUES } from './status-values';
+export type { StatusValue } from './status-values';

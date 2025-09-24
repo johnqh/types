@@ -1,8 +1,5 @@
 // Export all response types as named exports
 export type {
-  BaseResponse,
-  ErrorResponse,
-  SuccessResponse,
   AddressFormats,
   ValidationResponse,
   DomainAccount,
@@ -29,7 +26,7 @@ export type {
   SolanaIndexerStatus,
   SolanaStatusResponse,
   SolanaTestTransactionResponse,
-  IndexerApiResponse
+  IndexerApiResponse,
 } from './indexer-responses';
 
 // Export type guards
@@ -50,5 +47,5 @@ export {
   isSolanaStatusResponse,
   isSolanaTestTransactionResponse,
   isSolanaWebhookResponse,
-  isValidationResponse
+  isValidationResponse,
 } from './indexer-guards';

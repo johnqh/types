@@ -27,7 +27,8 @@
       "Bash(for file in src/types/business/*.ts)",
       "Bash(do [ \"$file\" != \"src/types/business/index.ts\" ])",
       "Bash(done)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

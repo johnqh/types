@@ -30,37 +30,23 @@ export enum FontSize {
   LARGE = 'large',
 }
 
-// Standard email folder types (users can also create custom folders)
-export enum StandardEmailFolder {
-  INBOX = 'inbox',
-  SENT = 'sent',
-  DRAFTS = 'drafts',
-  SPAM = 'spam',
-  TRASH = 'trash',
-  STARRED = 'starred',
-  SNOOZED = 'snoozed',
-  ARCHIVE = 'archive',
-}
-
-// Helper type that allows both standard folders and custom folder names
-export type EmailFolder = StandardEmailFolder | string;
+// Helper type that allows both standard mailbox types and custom folder names
+export type EmailFolder = MailboxType | string;
 
 // Utility functions for working with email folders
 export const EmailFolderUtils = {
   /**
-   * Check if a folder name is one of the standard folders
+   * Check if a folder name is one of the standard mailbox types
    */
-  isStandardFolder(folder: string): folder is StandardEmailFolder {
-    return Object.values(StandardEmailFolder).includes(
-      folder as StandardEmailFolder
-    );
+  isStandardFolder(folder: string): folder is MailboxType {
+    return Object.values(MailboxType).includes(folder as MailboxType);
   },
 
   /**
    * Get all standard folder names
    */
-  getStandardFolders(): StandardEmailFolder[] {
-    return Object.values(StandardEmailFolder);
+  getStandardFolders(): MailboxType[] {
+    return Object.values(MailboxType);
   },
 
   /**
@@ -100,28 +86,6 @@ export enum MediumView {
   RIGHT = 'right',
 }
 
-// App-specific analytics events (extends @johnqh/di AnalyticsEvent)
-export enum AppAnalyticsEvent {
-  USER_LOGIN = 'user_login',
-  USER_LOGOUT = 'user_logout',
-  EMAIL_OPEN = 'email_open',
-  EMAIL_REPLY = 'email_reply',
-  EMAIL_FORWARD = 'email_forward',
-  EMAIL_DELETE = 'email_delete',
-  EMAIL_STAR = 'email_star',
-  EMAIL_COMPOSE = 'email_compose',
-  PAGE_VIEW = 'page_view',
-  FOLDER_SWITCH = 'folder_switch',
-  SUBSCRIPTION_VIEW = 'subscription_view',
-  SUBSCRIPTION_PURCHASE = 'subscription_purchase',
-  SUBSCRIPTION_CANCEL = 'subscription_cancel',
-  SEARCH_PERFORMED = 'search_performed',
-  SETTINGS_CHANGED = 'settings_changed',
-  ERROR_OCCURRED = 'error_occurred',
-  AB_TEST_VIEWED = 'ab_test_viewed',
-  AB_TEST_CONVERTED = 'ab_test_converted',
-}
-
 // Email actions
 export enum EmailAction {
   OPEN = 'open',
@@ -146,16 +110,16 @@ export enum SubscriptionAction {
 export enum RequestStatus {
   IDLE = 'idle',
   LOADING = 'loading',
-  SUCCESS = 'success',
-  ERROR = 'error',
+  SUCCESS = 'success', // STATUS_VALUES.SUCCESS
+  ERROR = 'error', // STATUS_VALUES.ERROR
 }
 
 // Notification types
 export enum NotificationType {
   INFO = 'info',
-  SUCCESS = 'success',
+  SUCCESS = 'success', // STATUS_VALUES.SUCCESS
   WARNING = 'warning',
-  ERROR = 'error',
+  ERROR = 'error', // STATUS_VALUES.ERROR
 }
 
 // Email address types
@@ -180,23 +144,17 @@ export enum EmailSortCriteria {
   SIZE = 'size',
 }
 
-// Mailbox types
+// Mailbox types (consolidated from StandardEmailFolder and MailboxType)
 export enum MailboxType {
   INBOX = 'inbox',
   SENT = 'sent',
   DRAFTS = 'drafts',
-  TRASH = 'trash',
   SPAM = 'spam',
+  TRASH = 'trash',
+  STARRED = 'starred',
+  SNOOZED = 'snoozed',
   ARCHIVE = 'archive',
   CUSTOM = 'custom',
-}
-
-// Network status
-export enum NetworkStatus {
-  UNKNOWN = 'unknown',
-  CONNECTED = 'connected',
-  DISCONNECTED = 'disconnected',
-  LIMITED = 'limited',
 }
 
 // Connection types
@@ -211,12 +169,15 @@ export enum ConnectionType {
   ETHERNET = 'ethernet',
 }
 
-// Connection states
+// Connection states (consolidated from WalletConnectionState, NetworkStatus, and ConnectionState)
 export enum ConnectionState {
+  UNKNOWN = 'unknown',
   DISCONNECTED = 'disconnected',
   CONNECTING = 'connecting',
   CONNECTED = 'connected',
   RECONNECTING = 'reconnecting',
+  VERIFIED = 'verified',
+  LIMITED = 'limited',
   ERROR = 'error',
 }
 
@@ -231,7 +192,7 @@ export enum PlatformType {
 export enum EmailValidationState {
   VALID = 'valid',
   INVALID = 'invalid',
-  PENDING = 'pending',
+  PENDING = 'pending', // STATUS_VALUES.PENDING
   UNKNOWN = 'unknown',
 }
 

@@ -11,5 +11,5 @@ export {
   apiLogger,
   contractLogger,
   ensLogger,
-  storageLogger
+  storageLogger,
 } from './logger';

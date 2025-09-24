@@ -8,10 +8,7 @@
 import { ChainType } from '../../types/business/enums';
 import { Optional } from '../../types/common';
 // Import base validation functions from common types
-import {
-  isEvmAddress as isEvmAddressBase,
-  isSolanaAddress as isSolanaAddressBase,
-} from '../../types/blockchain/common';
+import { isEvmAddress, isSolanaAddress } from '../../types/blockchain/common';
 
 /**
  * Address type enumeration
@@ -36,19 +33,8 @@ export type ParsedEmailAddress = {
   type: AddressType;
 };
 
-/**
- * Check if address is an EVM address (string version)
- */
-export function isEVMAddress(address: string): boolean {
-  return isEvmAddressBase(address);
-}
-
-/**
- * Check if address is a Solana address (string version)
- */
-export function isSolanaAddressString(address: string): boolean {
-  return isSolanaAddressBase(address);
-}
+// Address validation functions are now imported directly from common.ts
+// Use isEvmAddress and isSolanaAddress from '../../types/blockchain/common'
 
 /**
  * Check if address is an ENS name (.eth or .box)
@@ -164,12 +150,12 @@ export function getAddressType(address: string): AddressType {
   }
 
   // Check for EVM address (0x followed by 40 hex characters)
-  if (isEVMAddress(trimmedAddress)) {
+  if (isEvmAddress(trimmedAddress)) {
     return AddressType.EVMAddress;
   }
 
   // Check for Solana address (base58 encoded, 32-44 characters)
-  if (isSolanaAddressString(trimmedAddress)) {
+  if (isSolanaAddress(trimmedAddress)) {
     return AddressType.SolanaAddress;
   }
 
@@ -237,9 +223,7 @@ export function isValidSignature(
 /**
  * Parse an email address into its components
  */
-export function parseEmailAddress(
-  email: string
-): Optional<ParsedEmailAddress> {
+export function parseEmailAddress(email: string): Optional<ParsedEmailAddress> {
   if (!email || typeof email !== 'string') {
     return undefined;
   }

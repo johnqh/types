@@ -81,13 +81,12 @@ export type {
   EntitlementResponse,
   PointsResponse,
   SimpleMessageResponse,
-  ErrorResponse,
   LeaderboardResponse,
   SiteStatsResponse,
   SolanaWebhookResponse,
   SolanaSetupResponse,
   SolanaStatusResponse,
-  SolanaTestTransactionResponse
+  SolanaTestTransactionResponse,
 } from './types';
 
 // Export the most commonly used enums
@@ -96,7 +95,6 @@ export {
   AuthStatus,
   Theme,
   FontSize,
-  StandardEmailFolder,
   EmailComposeType,
   MobileView,
   RequestStatus,

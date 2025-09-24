@@ -1,7 +1,7 @@
 /**
  * WildDuck API Request Types
  * Generated from WildDuck Joi schemas
- * 
+ *
  * @fileoverview TypeScript interfaces for WildDuck API requests
  * Based on schemas from wildduck/lib/schemas and API route definitions
  */
@@ -358,7 +358,9 @@ export interface PaginationRequest {
 }
 
 /** Get mailboxes request */
-export interface GetMailboxesRequest extends BaseSessionFields, PaginationRequest {
+export interface GetMailboxesRequest
+  extends BaseSessionFields,
+    PaginationRequest {
   specialUse?: boolean; // Include special use flags
   showHidden?: boolean; // Include hidden mailboxes
   counters?: boolean; // Include message counts
@@ -366,7 +368,9 @@ export interface GetMailboxesRequest extends BaseSessionFields, PaginationReques
 }
 
 /** Get messages request */
-export interface GetMessagesRequest extends BaseSessionFields, PaginationRequest {
+export interface GetMessagesRequest
+  extends BaseSessionFields,
+    PaginationRequest {
   order?: 'asc' | 'desc'; // Sort order
   unseen?: boolean; // Filter unseen messages
   flagged?: boolean; // Filter flagged messages
@@ -376,7 +380,9 @@ export interface GetMessagesRequest extends BaseSessionFields, PaginationRequest
 }
 
 /** Get addresses request */
-export interface GetAddressesRequest extends BaseSessionFields, PaginationRequest {
+export interface GetAddressesRequest
+  extends BaseSessionFields,
+    PaginationRequest {
   tags?: string[]; // Filter by tags
   requiredTags?: string[]; // Required tags filter
 }

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   ChainType,
   EmailFolder,
-  StandardEmailFolder,
+  MailboxType,
   SortOrder,
   Theme,
   NotificationType,
@@ -25,9 +25,9 @@ describe('Business Enums', () => {
   });
 
   describe('EmailFolder', () => {
-    it('should be a type that includes StandardEmailFolder', () => {
+    it('should be a type that includes MailboxType', () => {
       // EmailFolder is a type union, not an enum, so we test with values
-      const standardFolder: EmailFolder = StandardEmailFolder.INBOX;
+      const standardFolder: EmailFolder = MailboxType.INBOX;
       const customFolder: EmailFolder = 'custom-folder';
 
       expect(standardFolder).toBe('inbox');
@@ -42,20 +42,20 @@ describe('Business Enums', () => {
     });
   });
 
-  describe('StandardEmailFolder', () => {
+  describe('MailboxType (consolidated from StandardEmailFolder)', () => {
     it('should have correct values', () => {
-      expect(StandardEmailFolder.INBOX).toBe('inbox');
-      expect(StandardEmailFolder.SENT).toBe('sent');
-      expect(StandardEmailFolder.DRAFTS).toBe('drafts');
-      expect(StandardEmailFolder.SPAM).toBe('spam');
-      expect(StandardEmailFolder.TRASH).toBe('trash');
-      expect(StandardEmailFolder.STARRED).toBe('starred');
-      expect(StandardEmailFolder.SNOOZED).toBe('snoozed');
-      expect(StandardEmailFolder.ARCHIVE).toBe('archive');
+      expect(MailboxType.INBOX).toBe('inbox');
+      expect(MailboxType.SENT).toBe('sent');
+      expect(MailboxType.DRAFTS).toBe('drafts');
+      expect(MailboxType.SPAM).toBe('spam');
+      expect(MailboxType.TRASH).toBe('trash');
+      expect(MailboxType.STARRED).toBe('starred');
+      expect(MailboxType.SNOOZED).toBe('snoozed');
+      expect(MailboxType.ARCHIVE).toBe('archive');
     });
 
     it('should have all expected standard folders', () => {
-      const folders = Object.values(StandardEmailFolder);
+      const folders = Object.values(MailboxType);
       expect(folders).toContain('inbox');
       expect(folders).toContain('sent');
       expect(folders).toContain('drafts');
@@ -64,7 +64,7 @@ describe('Business Enums', () => {
       expect(folders).toContain('starred');
       expect(folders).toContain('snoozed');
       expect(folders).toContain('archive');
-      expect(folders).toHaveLength(8);
+      expect(folders).toHaveLength(9); // Added CUSTOM to consolidated enum
     });
   });
 

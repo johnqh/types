@@ -4,6 +4,7 @@
  */
 
 import { Optional } from '../common';
+import { ConnectionState } from './enums';
 
 /**
  * Wallet status interface representing the current state of wallet connection
@@ -18,21 +19,14 @@ export interface WalletStatus {
 }
 
 /**
- * Wallet connection state enum
- */
-export enum WalletConnectionState {
-  DISCONNECTED = 'disconnected',
-  CONNECTED = 'connected',
-  VERIFIED = 'verified',
-}
-
-/**
  * Type guard to check if wallet status is defined
  */
 export const isWalletConnected = (
   status: Optional<WalletStatus>
 ): status is WalletStatus => {
-  return status !== undefined && status !== null && Boolean(status.walletAddress);
+  return (
+    status !== undefined && status !== null && Boolean(status.walletAddress)
+  );
 };
 
 /**
@@ -53,14 +47,14 @@ export const isWalletVerified = (
  */
 export const getWalletConnectionState = (
   status: Optional<WalletStatus>
-): WalletConnectionState => {
+): ConnectionState => {
   if (!isWalletConnected(status)) {
-    return WalletConnectionState.DISCONNECTED;
+    return ConnectionState.DISCONNECTED;
   }
 
   if (isWalletVerified(status)) {
-    return WalletConnectionState.VERIFIED;
+    return ConnectionState.VERIFIED;
   }
 
-  return WalletConnectionState.CONNECTED;
+  return ConnectionState.CONNECTED;
 };

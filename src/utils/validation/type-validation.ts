@@ -5,16 +5,10 @@
  * for validating API responses and external data.
  */
 
-export type ValidationResult<T = unknown> =
-  | {
-      isValid: true;
-      data: T;
-    }
-  | {
-      isValid: false;
-      error: string;
-      data?: never;
-    };
+import type { ValidationResult } from '../../types/common';
+
+// Re-export unified ValidationResult from common
+export type { ValidationResult };
 
 /**
  * Creates a validation function that safely checks if a value matches expected type

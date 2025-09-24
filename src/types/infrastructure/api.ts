@@ -9,25 +9,17 @@
  * - Database entity interfaces
  */
 
-import { Optional } from '../common';
+import { Optional, BaseResponse, PaginationInfo } from '../common';
 
 // Re-export ChainType from business enums
 export { ChainType } from '../business/enums';
 
+// Re-export unified response type
+export type ApiResponse<T = unknown> = BaseResponse<T>;
+
 // ========================================
 // API REQUEST/RESPONSE TYPES
 // ========================================
-
-/**
- * Standard API response wrapper
- * @template T The data type being returned
- */
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  timestamp: string;
-}
 
 /**
  * Signature-protected API request base interface
@@ -46,12 +38,7 @@ export interface SignatureProtectedRequest {
  */
 export interface GraphQLResult<T> {
   items: T[];
-  pageInfo?: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor?: string;
-    endCursor?: string;
-  };
+  pageInfo?: PaginationInfo;
 }
 
 // ========================================
@@ -83,7 +70,7 @@ export interface ChainMetadata {
   chainId: number;
   blockNumber: bigint;
   blockHash: string;
-  transactionHash: string;
+  txHash: string;
   logIndex: number;
   timestamp: bigint;
 }

@@ -9,8 +9,13 @@
  * @author MailBox Protocol Team
  */
 
-import { Optional } from './common';
-
+import {
+  Optional,
+  BaseResponse,
+  PaginatedResponse,
+  MessageBase,
+  UnifiedError,
+} from './common';
 import { ChainType } from './business/enums';
 
 // =======================
@@ -278,23 +283,12 @@ export interface SolanaTransactionResponse extends TransactionReceipt {
 /**
  * Unified client response for cross-chain operations
  */
-export interface UnifiedClientResponse<T = unknown> {
-  /** Success status */
-  success: boolean;
-  /** Response data */
-  data?: T;
-  /** Error information */
-  error?: {
-    message: string;
-    code?: string;
-    details?: unknown;
-  };
+export interface UnifiedClientResponse<T = unknown> extends BaseResponse<T> {
   /** Chain where operation occurred */
   chainType: ChainType.EVM | ChainType.SOLANA;
   /** Request metadata */
   metadata?: {
     requestId?: string;
-    timestamp: number;
     duration?: number;
   };
 }
@@ -320,28 +314,21 @@ export interface BatchOperationResponse extends BaseTransactionResponse {
 // =======================
 
 /**
+ * Message history item structure
+ */
+export interface MessageHistoryItem extends MessageBase {
+  messageId: string;
+  transactionHash: string;
+  timestamp: number;
+  isPriority: boolean;
+  fee: bigint | number;
+}
+
+/**
  * Response for querying message history
  */
-export interface MessageHistoryResponse {
-  /** List of messages */
-  messages: Array<{
-    messageId: string;
-    transactionHash: string;
-    sender: string;
-    recipient: string;
-    subject: string;
-    body: string;
-    timestamp: number;
-    isPriority: boolean;
-    fee: bigint | number;
-  }>;
-  /** Total count of messages */
-  totalCount: number;
-  /** Whether there are more messages available */
-  hasMore: boolean;
-  /** Cursor for pagination */
-  nextCursor?: string;
-}
+export interface MessageHistoryResponse
+  extends PaginatedResponse<MessageHistoryItem> {}
 
 /**
  * Response for querying delegation status
@@ -361,24 +348,8 @@ export interface DelegationStatusResponse {
 // Error Types
 // =======================
 
-/**
- * Structured error response for contract operations
- */
-export interface ContractError {
-  /** Error type/code */
-  type: 'ValidationError' | 'InsufficientFunds' | 'Unauthorized' | 'ContractError' | 'NetworkError';
-  /** Human-readable error message */
-  message: string;
-  /** Additional error details */
-  details?: {
-    field?: string;
-    expectedValue?: unknown;
-    actualValue?: unknown;
-    transactionHash?: string;
-  };
-  /** Suggested user action */
-  suggestedAction?: string;
-}
+// Re-export unified error type
+export type ContractError = UnifiedError;
 
 // =======================
 // Type Guards
@@ -387,20 +358,28 @@ export interface ContractError {
 /**
  * Type guard to check if response is EVM-specific
  */
-export function isEVMResponse(response: TransactionReceipt): response is EVMTransactionResponse {
+export function isEVMResponse(
+  response: TransactionReceipt
+): response is EVMTransactionResponse {
   return response.chainType === ChainType.EVM;
 }
 
 /**
  * Type guard to check if response is Solana-specific
  */
-export function isSolanaResponse(response: TransactionReceipt): response is SolanaTransactionResponse {
+export function isSolanaResponse(
+  response: TransactionReceipt
+): response is SolanaTransactionResponse {
   return response.chainType === ChainType.SOLANA;
 }
 
 /**
  * Type guard to check if response contains an error
  */
-export function isMailboxErrorResponse(response: UnifiedClientResponse): response is UnifiedClientResponse & { error: NonNullable<UnifiedClientResponse['error']> } {
+export function isMailboxErrorResponse(
+  response: UnifiedClientResponse
+): response is UnifiedClientResponse & {
+  error: NonNullable<UnifiedClientResponse['error']>;
+} {
   return !response.success && response.error !== undefined;
 }

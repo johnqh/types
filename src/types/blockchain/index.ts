@@ -14,7 +14,7 @@ export type {
   Result,
   RpcConfig,
   SendMessageOptions,
-  TransactionResult
+  TransactionResult,
 } from './common';
 
 export {
@@ -25,7 +25,7 @@ export {
   isEvmAddress,
   isEvmRecipient,
   isSolanaAddress,
-  isSolanaRecipient
+  isSolanaRecipient,
 } from './common';
 
 // Validation types
@@ -33,5 +33,5 @@ export {
   validateAddress,
   validateAmount,
   validateDomain,
-  validateMessage
+  validateMessage,
 } from './validation';
