@@ -81,14 +81,14 @@ export function normalizeWhitespace(str: string): string {
 /**
  * Check if a string is empty or only whitespace
  */
-export function isBlank(str: Optional<string>): boolean {
+export function isBlank(str?: Optional<string>): boolean {
   return !str || str.trim().length === 0;
 }
 
 /**
  * Check if a string is not empty and not only whitespace
  */
-export function isNotBlank(str: Optional<string>): str is string {
+export function isNotBlank(str?: Optional<string>): str is string {
   return !isBlank(str);
 }
 
@@ -182,7 +182,7 @@ export function randomString(length: number, charset = 'alphanumeric'): string {
 export function pluralize(
   count: number,
   singular: string,
-  plural: Optional<string>
+  plural?: Optional<string>
 ): string {
   if (count === 1) {
     return singular;

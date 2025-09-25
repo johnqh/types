@@ -24,9 +24,9 @@ export interface FirebaseConfig {
   /** Firebase application ID */
   appId: string;
   /** Google Analytics measurement ID (optional) */
-  measurementId: Optional<string>;
+  measurementId?: Optional<string>;
   /** VAPID key for web push notifications (optional) */
-  vapidKey: Optional<string>;
+  vapidKey?: Optional<string>;
 }
 
 /**

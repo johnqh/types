@@ -13,16 +13,16 @@ export interface WalletStatus {
   /** The connected wallet address */
   walletAddress: string;
   /** Optional verification message (present when wallet is verified) */
-  message: Optional<string>;
+  message?: Optional<string>;
   /** Optional signature (present when wallet is verified) */
-  signature: Optional<string>;
+  signature?: Optional<string>;
 }
 
 /**
  * Type guard to check if wallet status is defined
  */
 export const isWalletConnected = (
-  status: Optional<WalletStatus>
+  status?: Optional<WalletStatus>
 ): status is WalletStatus => {
   return (
     status !== undefined && status !== null && Boolean(status.walletAddress)
@@ -33,7 +33,7 @@ export const isWalletConnected = (
  * Type guard to check if wallet is verified (has message and signature)
  */
 export const isWalletVerified = (
-  status: Optional<WalletStatus>
+  status?: Optional<WalletStatus>
 ): status is Required<WalletStatus> => {
   return (
     isWalletConnected(status) &&
@@ -46,7 +46,7 @@ export const isWalletVerified = (
  * Get current wallet connection state
  */
 export const getWalletConnectionState = (
-  status: Optional<WalletStatus>
+  status?: Optional<WalletStatus>
 ): ConnectionState => {
   if (!isWalletConnected(status)) {
     return ConnectionState.DISCONNECTED;

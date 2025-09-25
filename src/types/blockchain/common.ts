@@ -125,7 +125,7 @@ export interface DeploymentAddresses {
   /** Mailer contract/program address */
   mailer: string;
   /** MailService contract/program address (if applicable) */
-  mailService: Optional<string>;
+  mailService?: Optional<string>;
   /** USDC token mint/contract address */
   usdcToken: string;
 }
@@ -144,9 +144,9 @@ export interface ClientConfig {
   /** Contract/program addresses */
   addresses: DeploymentAddresses;
   /** Optional wallet private key for signing */
-  privateKey: Optional<string>;
+  privateKey?: Optional<string>;
   /** Optional custom RPC configuration */
-  rpcConfig: Optional<RpcConfig>;
+  rpcConfig?: Optional<RpcConfig>;
 }
 
 /**
@@ -155,11 +155,11 @@ export interface ClientConfig {
  */
 export interface RpcConfig {
   /** Request timeout in milliseconds */
-  timeout: Optional<number>;
+  timeout?: Optional<number>;
   /** Maximum retry attempts */
-  maxRetries: Optional<number>;
+  maxRetries?: Optional<number>;
   /** Rate limiting options */
-  rateLimit: Optional<{
+  rateLimit?: Optional<{
     requestsPerSecond: number;
     maxConcurrent: number;
   }>;
@@ -179,11 +179,11 @@ export interface TransactionResult {
   /** Block number/slot */
   block: number;
   /** Gas/compute units used */
-  gasUsed: Optional<bigint>;
+  gasUsed?: Optional<bigint>;
   /** Transaction status */
   status: TransactionStatus;
   /** Optional logs/events emitted */
-  logs: Optional<string[]>;
+  logs?: Optional<string[]>;
 }
 
 /**
@@ -215,14 +215,14 @@ export type OperationError = UnifiedError;
  */
 export interface SendMessageOptions {
   /** Message priority level */
-  priority: Optional<'standard' | 'priority'>;
+  priority?: Optional<'standard' | 'priority'>;
   /** Optional gas price/compute budget override */
-  gasConfig: Optional<{
-    gasPrice: Optional<bigint>;
-    gasLimit: Optional<bigint>;
+  gasConfig?: Optional<{
+    gasPrice?: Optional<bigint>;
+    gasLimit?: Optional<bigint>;
   }>;
   /** Optional confirmation requirements */
-  confirmations: Optional<number>;
+  confirmations?: Optional<number>;
 }
 
 // Re-export unified pagination types from common
@@ -238,13 +238,13 @@ export type {
  */
 export interface MessageFilter {
   /** Filter by sender */
-  from: Optional<MessageRecipient>;
+  from?: Optional<MessageRecipient>;
   /** Filter by recipient */
-  to: Optional<MessageRecipient>;
+  to?: Optional<MessageRecipient>;
   /** Filter by message type */
-  messageType: Optional<MessageType>;
+  messageType?: Optional<MessageType>;
   /** Filter by date range */
-  dateRange: Optional<{
+  dateRange?: Optional<{
     from: Date;
     to: Date;
   }>;

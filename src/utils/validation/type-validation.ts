@@ -94,7 +94,7 @@ export const isApiResponse = (data: unknown): data is { success: boolean } => {
 
 export const isSuccessResponse = <T>(
   data: unknown,
-  dataValidator: Optional<(value: unknown) => value is T>
+  dataValidator?: Optional<(value: unknown) => value is T>
 ): data is { success: true; data: T } => {
   if (!isApiResponse(data) || !data.success) return false;
   if (dataValidator && 'data' in data) {
@@ -164,7 +164,7 @@ export const createAssertion = <T>(
  */
 export const parseJson = <T>(
   jsonString: string,
-  validator: Optional<(data: unknown) => data is T>
+  validator?: Optional<(data: unknown) => data is T>
 ): ValidationResult<T> => {
   try {
     const parsed = JSON.parse(jsonString);

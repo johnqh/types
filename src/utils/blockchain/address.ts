@@ -273,7 +273,7 @@ export function formatWalletAddress(address: string): string {
 /**
  * Get display name for a chain type
  */
-export function getChainDisplayName(chainType: Optional<ChainType>): string {
+export function getChainDisplayName(chainType?: Optional<ChainType>): string {
   if (!chainType) {
     return 'Unknown Chain';
   }

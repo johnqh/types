@@ -38,7 +38,7 @@ export interface SignatureProtectedRequest {
  */
 export interface GraphQLResult<T> {
   items: T[];
-  pageInfo: Optional<PaginationInfo>;
+  pageInfo?: Optional<PaginationInfo>;
 }
 
 // ========================================
@@ -87,7 +87,7 @@ export interface MailEntity extends ChainMetadata {
   from: string; // Sender address (normalized lowercase)
   to: string; // Recipient address (normalized lowercase)
   subject: string; // Email subject line
-  body: Optional<string>; // Optional email body
+  body?: Optional<string>; // Optional email body
   contractAddress: string; // Mailer contract address
   feesPaid: bigint; // Total fees paid in wei/lamports
   priority: boolean; // Whether this is priority mail with revenue sharing
@@ -110,7 +110,7 @@ export interface PreparedMailEntity extends ChainMetadata {
 export interface DelegationEntity extends ChainMetadata {
   id: string; // Format: "{chainId}-{delegatorAddress}"
   delegator: string; // Delegating wallet address (normalized lowercase)
-  delegateTo: Optional<string>; // Delegated to address (null means cleared)
+  delegateTo?: Optional<string>; // Delegated to address (null means cleared)
   contractAddress: string; // MailService contract address
 }
 

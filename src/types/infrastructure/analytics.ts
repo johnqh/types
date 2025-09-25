@@ -135,7 +135,7 @@ export interface AnalyticsService {
    */
   trackEvent(
     event: AnalyticsEvent | string,
-    properties: Optional<AnalyticsEventProperties>
+    properties?: Optional<AnalyticsEventProperties>
   ): void;
 
   /**
@@ -185,7 +185,7 @@ export interface AnalyticsService {
    */
   trackScreen(
     screenName: string,
-    properties: Optional<AnalyticsEventProperties>
+    properties?: Optional<AnalyticsEventProperties>
   ): void;
 
   /**
@@ -207,7 +207,7 @@ export interface AnalyticsService {
    * }
    * ```
    */
-  trackError(error: Error, context: Optional<AnalyticsEventProperties>): void;
+  trackError(error: Error, context?: Optional<AnalyticsEventProperties>): void;
 
   /**
    * Track timing events for performance monitoring.
@@ -230,7 +230,7 @@ export interface AnalyticsService {
     category: string,
     variable: string,
     time: number,
-    label: Optional<string>
+    label?: Optional<string>
   ): void;
 
   /**
@@ -270,13 +270,13 @@ export interface AnalyticsService {
  */
 export interface AnalyticsConfig {
   /** API key for the analytics service (Firebase, Mixpanel, etc.) */
-  apiKey: Optional<string>;
+  apiKey?: Optional<string>;
 
   /** Application identifier for the analytics platform */
-  appId: Optional<string>;
+  appId?: Optional<string>;
 
   /** Google Analytics measurement ID (for Firebase Analytics) */
-  measurementId: Optional<string>;
+  measurementId?: Optional<string>;
 
   /** Whether analytics tracking is enabled */
   enabled: boolean;
@@ -285,7 +285,7 @@ export interface AnalyticsConfig {
   debugMode: boolean;
 
   /** Pre-set user ID for analytics (optional) */
-  userId: Optional<string>;
+  userId?: Optional<string>;
 }
 
 /**
@@ -329,7 +329,7 @@ export interface EmailAnalyticsService extends AnalyticsService {
   trackEmailAction(
     action: string,
     emailId: string,
-    properties: Optional<AnalyticsEventProperties>
+    properties?: Optional<AnalyticsEventProperties>
   ): void;
 
   /**
@@ -345,7 +345,7 @@ export interface EmailAnalyticsService extends AnalyticsService {
   trackNavigation(
     from: string,
     to: string,
-    properties: Optional<AnalyticsEventProperties>
+    properties?: Optional<AnalyticsEventProperties>
   ): void;
 
   /**
@@ -369,8 +369,8 @@ export interface EmailAnalyticsService extends AnalyticsService {
    */
   trackSubscription(
     action: string,
-    planType: Optional<string>,
-    properties: Optional<AnalyticsEventProperties>
+    planType?: Optional<string>,
+    properties?: Optional<AnalyticsEventProperties>
   ): void;
 
   /**
@@ -386,7 +386,7 @@ export interface EmailAnalyticsService extends AnalyticsService {
   trackSearch(
     query: string,
     resultsCount: number,
-    properties: Optional<AnalyticsEventProperties>
+    properties?: Optional<AnalyticsEventProperties>
   ): void;
 
   /**
@@ -413,7 +413,7 @@ export interface EmailAnalyticsService extends AnalyticsService {
     testName: string,
     variant: string,
     action: 'viewed' | 'converted',
-    conversionType: Optional<string>
+    conversionType?: Optional<string>
   ): void;
 }
 
@@ -450,7 +450,7 @@ export class AnalyticsEventBuilder {
   static emailAction(
     action: string,
     emailId: string,
-    folder: Optional<string>
+    folder?: Optional<string>
   ): AnalyticsEventProperties {
     return {
       action,
@@ -495,7 +495,7 @@ export class AnalyticsEventBuilder {
   static error(
     errorType: string,
     errorMessage: string,
-    pageName: Optional<string>
+    pageName?: Optional<string>
   ): AnalyticsEventProperties {
     return {
       error_type: errorType,
@@ -519,9 +519,9 @@ export class AnalyticsEventBuilder {
    */
   static subscription(
     action: string,
-    planType: Optional<string>,
-    amount: Optional<number>,
-    currency: Optional<string>
+    planType?: Optional<string>,
+    amount?: Optional<number>,
+    currency?: Optional<string>
   ): AnalyticsEventProperties {
     return {
       action,
@@ -546,7 +546,7 @@ export class AnalyticsEventBuilder {
   static engagement(
     feature: string,
     interaction: string,
-    duration: Optional<number>
+    duration?: Optional<number>
   ): AnalyticsEventProperties {
     return {
       feature,
@@ -570,7 +570,7 @@ export class AnalyticsEventBuilder {
   static performance(
     metric: string,
     value: number,
-    context: Optional<string>
+    context?: Optional<string>
   ): AnalyticsEventProperties {
     return {
       metric,

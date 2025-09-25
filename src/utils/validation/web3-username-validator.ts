@@ -11,8 +11,8 @@ import { ChainType } from '../../types/business/enums';
 import { Optional } from '../../types/common';
 
 export interface AddressValidationResult {
-  name: Optional<string>;
-  address: Optional<string>;
+  name?: Optional<string>;
+  address?: Optional<string>;
   chainType: ChainType;
 }
 

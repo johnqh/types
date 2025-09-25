@@ -8,7 +8,7 @@ import { Optional } from '../../types/common';
 /**
  * Generate an authentication message with a nonce
  */
-export function generateAuthMessage(nonce: Optional<string>): string {
+export function generateAuthMessage(nonce?: Optional<string>): string {
   const actualNonce =
     nonce || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   return `Authenticate with 0xMail\nNonce: ${actualNonce}`;
