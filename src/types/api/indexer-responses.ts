@@ -114,7 +114,9 @@ export type SignatureVerificationResponse =
   ApiResponse<SignatureVerificationData>;
 
 // Nonce types
-export interface NonceData extends WalletData {
+export interface NonceData {
+  username: string;
+  chainType: ChainType;
   nonce: string;
   createdAt?: Optional<string>;
   updatedAt?: Optional<string>;

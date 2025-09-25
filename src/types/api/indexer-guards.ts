@@ -109,8 +109,13 @@ export function isNonceResponse(response: unknown): response is NonceResponse {
   return !!(
     response &&
     typeof response === 'object' &&
-    'nonce' in response &&
-    'walletAddress' in response
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'nonce' in response.data &&
+    'username' in response.data &&
+    'chainType' in response.data &&
+    'message' in response.data
   );
 }
 

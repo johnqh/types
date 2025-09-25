@@ -29,11 +29,16 @@ export class Web3UsernameValidator {
   private static readonly VALID_SNS_TLDS = [
     'sol',
     'abc',
+    'backpack',
     'bonk',
-    'poor',
-    'gm',
+    'coin',
     'dao',
     'defi',
+    'gm',
+    'poor',
+    'pump',
+    'shdw',
+    'stepn',
     'web3',
   ];
 

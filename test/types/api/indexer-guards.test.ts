@@ -273,11 +273,16 @@ describe('Indexer Type Guards', () => {
   describe('isNonceResponse', () => {
     it('should identify nonce responses correctly', () => {
       const nonceResponse: NonceResponse = {
+        success: true,
+        data: {
+          username: mockWalletAddress,
+          chainType: ChainType.EVM,
+          nonce: 'random-nonce-12345',
+          createdAt: mockTimestamp,
+          updatedAt: mockTimestamp,
+          message: 'Nonce generated successfully',
+        },
         timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
-        nonce: 'random-nonce-12345',
-        message: 'Nonce generated successfully',
       };
 
       expect(isNonceResponse(nonceResponse)).toBe(true);
@@ -285,9 +290,14 @@ describe('Indexer Type Guards', () => {
 
     it('should reject responses missing required properties', () => {
       const incompleteResponse = {
+        success: true,
+        data: {
+          username: mockWalletAddress,
+          chainType: ChainType.EVM,
+          // missing nonce
+          message: 'Incomplete nonce data',
+        },
         timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        // missing nonce
       };
 
       expect(isNonceResponse(incompleteResponse)).toBe(false);

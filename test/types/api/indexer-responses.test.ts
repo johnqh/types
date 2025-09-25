@@ -300,17 +300,20 @@ describe('Indexer Response Types', () => {
   describe('NonceResponse', () => {
     it('should define nonce response structure', () => {
       const response: NonceResponse = {
+        success: true,
+        data: {
+          username: mockWalletAddress,
+          chainType: ChainType.EVM,
+          nonce: 'random-nonce-12345',
+          createdAt: mockTimestamp,
+          updatedAt: mockTimestamp,
+          message: 'Nonce generated successfully',
+        },
         timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        chainType: ChainType.EVM,
-        nonce: 'random-nonce-12345',
-        createdAt: mockTimestamp,
-        updatedAt: mockTimestamp,
-        message: 'Nonce generated successfully',
       };
 
-      expect(response.nonce).toBe('random-nonce-12345');
-      expect(response.message).toBe('Nonce generated successfully');
+      expect(response.data.nonce).toBe('random-nonce-12345');
+      expect(response.data.message).toBe('Nonce generated successfully');
     });
   });
 
