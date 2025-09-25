@@ -57,9 +57,9 @@ export interface BaseResponse<T = unknown> {
   /** Operation success status */
   success: boolean;
   /** Response data */
-  data?: T;
+  data: Optional<T>;
   /** Error message if operation failed */
-  error?: string;
+  error: Optional<string>;
   /** Response timestamp */
   timestamp: string;
 }
@@ -71,11 +71,11 @@ export interface PaginationOptions {
   /** Number of items per page */
   limit: number;
   /** Offset from start (for offset-based pagination) */
-  offset?: number;
+  offset: Optional<number>;
   /** Cursor for cursor-based pagination */
-  cursor?: string;
+  cursor: Optional<string>;
   /** Sort order */
-  sortOrder?: 'asc' | 'desc';
+  sortOrder: Optional<'asc' | 'desc'>;
 }
 
 /**
@@ -85,13 +85,13 @@ export interface PaginationInfo {
   /** Whether there are more items after current page */
   hasNextPage: boolean;
   /** Whether there are items before current page */
-  hasPreviousPage?: boolean;
+  hasPreviousPage: Optional<boolean>;
   /** Cursor to fetch next page */
-  nextCursor?: string;
+  nextCursor: Optional<string>;
   /** Cursor to fetch previous page */
-  previousCursor?: string;
+  previousCursor: Optional<string>;
   /** Total count of items (if available) */
-  totalCount?: number;
+  totalCount: Optional<number>;
   /** Current page size */
   pageSize: number;
 }
@@ -117,19 +117,19 @@ export interface UnifiedError {
     | 'NetworkError'
     | 'OperationError';
   /** Error code (optional, for more specific categorization) */
-  code?: string;
+  code: Optional<string>;
   /** Human-readable error message */
   message: string;
   /** Additional error details */
-  details?: {
-    field?: string;
-    expectedValue?: unknown;
-    actualValue?: unknown;
-    txHash?: string;
+  details: Optional<{
+    field: Optional<string>;
+    expectedValue: Optional<unknown>;
+    actualValue: Optional<unknown>;
+    txHash: Optional<string>;
     [key: string]: unknown;
-  };
+  }>;
   /** Suggested user action */
-  suggestedAction?: string;
+  suggestedAction: Optional<string>;
 }
 
 /**
@@ -147,4 +147,4 @@ export type Result<T, E = UnifiedError> =
  */
 export type ValidationResult<T = unknown> =
   | { isValid: true; data: T }
-  | { isValid: false; error: string; data?: never };
+  | { isValid: false; error: string; data: Optional<never> };

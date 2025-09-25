@@ -9,7 +9,7 @@ import { Optional } from '../common';
  */
 export interface EnvironmentVariables {
   /** Node.js environment setting with strict typing */
-  NODE_ENV?: 'development' | 'production' | 'test';
+  NODE_ENV: Optional<'development' | 'production' | 'test'>;
   /** Additional environment variables with flexible string keys */
   [key: string]: Optional<string>;
 }

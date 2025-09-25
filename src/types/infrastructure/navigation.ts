@@ -1,3 +1,5 @@
+import type { Optional } from '../common';
+
 /**
  * UI-level navigation state interface for web and mobile applications
  * This provides cross-platform navigation abstractions that work with different routing systems
@@ -5,22 +7,22 @@
 
 export interface UINavigationState {
   currentPath: string;
-  previousPath?: string;
+  previousPath: Optional<string>;
   params: Record<string, string>;
   searchParams: Record<string, string>;
 }
 
 export interface UINavigationOptions {
-  replace?: boolean;
-  state?: Record<string, unknown>;
-  preventScrollReset?: boolean;
+  replace: Optional<boolean>;
+  state: Optional<Record<string, unknown>>;
+  preventScrollReset: Optional<boolean>;
 }
 
 export interface UINavigationService {
-  navigate(path: string, options?: UINavigationOptions): void;
-  goBack(fallbackPath?: string): void;
+  navigate(path: string, options: Optional<UINavigationOptions>): void;
+  goBack(fallbackPath: Optional<string>): void;
   goForward(): void;
-  replace(path: string, options?: UINavigationOptions): void;
+  replace(path: string, options: Optional<UINavigationOptions>): void;
   getCurrentState(): UINavigationState;
   getCurrentPath(): string;
   getSearchParams(): Record<string, string>;
@@ -32,9 +34,9 @@ export interface UINavigationService {
 }
 
 export interface UINavigationHook {
-  navigate: (path: string, options?: UINavigationOptions) => void;
-  goBack: (fallbackPath?: string) => void;
-  replace: (path: string, options?: UINavigationOptions) => void;
+  navigate: (path: string, options: Optional<UINavigationOptions>) => void;
+  goBack: (fallbackPath: Optional<string>) => void;
+  replace: (path: string, options: Optional<UINavigationOptions>) => void;
   currentPath: string;
   searchParams: Record<string, string>;
   params: Record<string, string>;
@@ -52,9 +54,9 @@ export interface UILocationHook {
 }
 
 export interface UINavigationConfig {
-  enableBackGesture?: boolean; // React Native specific
-  enableSwipeGesture?: boolean; // React Native specific
-  animationType?: 'slide' | 'fade' | 'none'; // React Native specific
-  enableAnalytics?: boolean; // Track navigation events
-  fallbackPath?: string; // Default fallback path
+  enableBackGesture: Optional<boolean>; // React Native specific
+  enableSwipeGesture: Optional<boolean>; // React Native specific
+  animationType: Optional<'slide' | 'fade' | 'none'>; // React Native specific
+  enableAnalytics: Optional<boolean>; // Track navigation events
+  fallbackPath: Optional<string>; // Default fallback path
 }

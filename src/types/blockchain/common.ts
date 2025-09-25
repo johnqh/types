@@ -5,7 +5,7 @@
  * @version 1.4.2
  */
 
-import { MessageBase, UnifiedError, Result } from '../common';
+import { MessageBase, UnifiedError, Result, Optional } from '../common';
 import type { NetworkConfig } from '../../utils/blockchain/network-config';
 
 // Re-export network types from utils
@@ -125,7 +125,7 @@ export interface DeploymentAddresses {
   /** Mailer contract/program address */
   mailer: string;
   /** MailService contract/program address (if applicable) */
-  mailService?: string;
+  mailService: Optional<string>;
   /** USDC token mint/contract address */
   usdcToken: string;
 }
@@ -144,9 +144,9 @@ export interface ClientConfig {
   /** Contract/program addresses */
   addresses: DeploymentAddresses;
   /** Optional wallet private key for signing */
-  privateKey?: string;
+  privateKey: Optional<string>;
   /** Optional custom RPC configuration */
-  rpcConfig?: RpcConfig;
+  rpcConfig: Optional<RpcConfig>;
 }
 
 /**
@@ -155,14 +155,14 @@ export interface ClientConfig {
  */
 export interface RpcConfig {
   /** Request timeout in milliseconds */
-  timeout?: number;
+  timeout: Optional<number>;
   /** Maximum retry attempts */
-  maxRetries?: number;
+  maxRetries: Optional<number>;
   /** Rate limiting options */
-  rateLimit?: {
+  rateLimit: Optional<{
     requestsPerSecond: number;
     maxConcurrent: number;
-  };
+  }>;
 }
 
 // ============================================================================
@@ -179,11 +179,11 @@ export interface TransactionResult {
   /** Block number/slot */
   block: number;
   /** Gas/compute units used */
-  gasUsed?: bigint;
+  gasUsed: Optional<bigint>;
   /** Transaction status */
   status: TransactionStatus;
   /** Optional logs/events emitted */
-  logs?: string[];
+  logs: Optional<string[]>;
 }
 
 /**
@@ -215,14 +215,14 @@ export type OperationError = UnifiedError;
  */
 export interface SendMessageOptions {
   /** Message priority level */
-  priority?: 'standard' | 'priority';
+  priority: Optional<'standard' | 'priority'>;
   /** Optional gas price/compute budget override */
-  gasConfig?: {
-    gasPrice?: bigint;
-    gasLimit?: bigint;
-  };
+  gasConfig: Optional<{
+    gasPrice: Optional<bigint>;
+    gasLimit: Optional<bigint>;
+  }>;
   /** Optional confirmation requirements */
-  confirmations?: number;
+  confirmations: Optional<number>;
 }
 
 // Re-export unified pagination types from common
@@ -238,16 +238,16 @@ export type {
  */
 export interface MessageFilter {
   /** Filter by sender */
-  from?: MessageRecipient;
+  from: Optional<MessageRecipient>;
   /** Filter by recipient */
-  to?: MessageRecipient;
+  to: Optional<MessageRecipient>;
   /** Filter by message type */
-  messageType?: MessageType;
+  messageType: Optional<MessageType>;
   /** Filter by date range */
-  dateRange?: {
+  dateRange: Optional<{
     from: Date;
     to: Date;
-  };
+  }>;
 }
 
 // ============================================================================

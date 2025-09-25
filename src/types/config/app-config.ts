@@ -2,6 +2,8 @@
  * Application configuration types
  */
 
+import { Optional } from '../common';
+
 /**
  * Firebase service configuration interface.
  *
@@ -22,9 +24,9 @@ export interface FirebaseConfig {
   /** Firebase application ID */
   appId: string;
   /** Google Analytics measurement ID (optional) */
-  measurementId?: string;
+  measurementId: Optional<string>;
   /** VAPID key for web push notifications (optional) */
-  vapidKey?: string;
+  vapidKey: Optional<string>;
 }
 
 /**

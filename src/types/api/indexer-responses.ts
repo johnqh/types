@@ -5,7 +5,7 @@
  */
 
 import { ChainType } from '../business/enums';
-import { WalletData } from '../common';
+import { Optional, WalletData } from '../common';
 import { ApiResponse } from '../infrastructure/api';
 
 // Note: Using ApiResponse<T> from infrastructure/api for consistency
@@ -13,16 +13,16 @@ import { ApiResponse } from '../infrastructure/api';
 // Address validation types
 export interface AddressFormats {
   normalized: string;
-  checksum?: string;
+  checksum: Optional<string>;
   original: string;
 }
 
 export interface ValidationData {
   isValid: boolean;
   address: string;
-  addressType?: ChainType;
-  normalizedAddress?: string;
-  formats?: AddressFormats;
+  addressType: Optional<ChainType>;
+  normalizedAddress: Optional<string>;
+  formats: Optional<AddressFormats>;
 }
 
 export type ValidationResponse = ApiResponse<ValidationData>;
@@ -32,7 +32,7 @@ export interface DomainAccount {
   account: string;
   type: 'ens' | 'sns';
   domain: string;
-  verified?: boolean;
+  verified: Optional<boolean>;
 }
 
 export interface WalletEmailAccounts extends WalletData {
@@ -54,23 +54,23 @@ export type EmailAccountsResponse = ApiResponse<EmailAccountsData>;
 
 // Delegation types
 export interface DelegationInfo extends WalletData {
-  delegatedAddress?: string;
-  delegatedChainType?: ChainType;
-  chainId?: number;
-  chainName?: string;
-  transactionHash?: string;
-  blockNumber?: string;
-  timestamp?: string;
+  delegatedAddress: Optional<string>;
+  delegatedChainType: Optional<ChainType>;
+  chainId: Optional<number>;
+  chainName: Optional<string>;
+  transactionHash: Optional<string>;
+  blockNumber: Optional<string>;
+  timestamp: Optional<string>;
   isActive: boolean;
 }
 
 export interface DelegationData extends WalletData {
-  delegatedAddress?: string;
-  delegatedChainType?: ChainType;
-  chainId?: number;
-  chainName?: string;
-  transactionHash?: string;
-  blockNumber?: string;
+  delegatedAddress: Optional<string>;
+  delegatedChainType: Optional<ChainType>;
+  chainId: Optional<number>;
+  chainName: Optional<string>;
+  transactionHash: Optional<string>;
+  blockNumber: Optional<string>;
   isActive: boolean;
   verified: boolean;
 }
@@ -116,8 +116,8 @@ export type SignatureVerificationResponse =
 // Nonce types
 export interface NonceData extends WalletData {
   nonce: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: Optional<string>;
+  updatedAt: Optional<string>;
   message: string;
 }
 
@@ -128,9 +128,9 @@ export interface EntitlementInfo {
   type: 'nameservice';
   hasEntitlement: boolean;
   isActive: boolean;
-  productIdentifier?: string;
-  expiresDate?: string;
-  store?: string;
+  productIdentifier: Optional<string>;
+  expiresDate: Optional<string>;
+  store: Optional<string>;
 }
 
 export interface EntitlementData extends WalletData {
@@ -145,9 +145,9 @@ export type EntitlementResponse = ApiResponse<EntitlementData>;
 export interface UserPointsData {
   walletAddress: string;
   pointsEarned: string;
-  lastActivityDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  lastActivityDate: Optional<string>;
+  createdAt: Optional<string>;
+  updatedAt: Optional<string>;
 }
 
 // Legacy alias for backward compatibility
@@ -163,7 +163,7 @@ export type PointsResponse = ApiResponse<PointsResponseData>;
 // Message generation types
 export interface SimpleMessageData extends WalletData {
   message: string;
-  chainId?: number;
+  chainId: Optional<number>;
 }
 
 export type SimpleMessageResponse = ApiResponse<SimpleMessageData>;
@@ -181,9 +181,9 @@ export type LeaderboardResponse = ApiResponse<LeaderboardData>;
 export interface SiteStatsData {
   totalPoints: string;
   totalUsers: number;
-  lastUpdated?: string;
-  createdAt?: string;
-  message?: string;
+  lastUpdated: Optional<string>;
+  createdAt: Optional<string>;
+  message: Optional<string>;
 }
 
 export type SiteStatsResponse = ApiResponse<SiteStatsData>;
@@ -199,7 +199,7 @@ export type SolanaWebhookResponse = ApiResponse<SolanaWebhookData>;
 export interface SolanaSetupResult {
   chainId: string;
   status: 'success' | 'error';
-  error?: string;
+  error: Optional<string>;
 }
 
 export interface SolanaSetupData {
@@ -253,9 +253,9 @@ export interface HeliusTransaction {
     preBalances: number[];
     postBalances: number[];
   };
-  events?: {
+  events: Optional<{
     [programId: string]: unknown[];
-  };
+  }>;
 }
 
 // Extended union type to include all response types

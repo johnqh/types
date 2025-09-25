@@ -3,6 +3,8 @@
  * Provides consistent logging across the application with proper formatting
  */
 
+import { Optional } from '../../types/common';
+
 enum LogLevel {
   ERROR = 'error',
   WARN = 'warn',
@@ -13,8 +15,8 @@ enum LogLevel {
 interface LogEntry {
   level: LogLevel;
   message: string;
-  context?: string;
-  data?: unknown;
+  context: Optional<string>;
+  data: Optional<unknown>;
   timestamp: string;
 }
 
@@ -28,7 +30,7 @@ class Logger {
   private formatMessage(
     _level: LogLevel,
     message: string,
-    context?: string
+    context: Optional<string>
   ): string {
     const timestamp = this.formatTimestamp();
     const contextStr = context ? ` [${context}]` : '';
@@ -43,7 +45,11 @@ class Logger {
     return true;
   }
 
-  error(message: string, context?: string, data?: unknown): void {
+  error(
+    message: string,
+    context: Optional<string>,
+    data: Optional<unknown>
+  ): void {
     if (this.shouldLog(LogLevel.ERROR)) {
       console.error(this.formatMessage(LogLevel.ERROR, message, context));
       if (data) {
@@ -52,7 +58,11 @@ class Logger {
     }
   }
 
-  warn(message: string, context?: string, data?: unknown): void {
+  warn(
+    message: string,
+    context: Optional<string>,
+    data: Optional<unknown>
+  ): void {
     if (this.shouldLog(LogLevel.WARN)) {
       console.warn(this.formatMessage(LogLevel.WARN, message, context));
       if (data) {
@@ -61,7 +71,11 @@ class Logger {
     }
   }
 
-  info(message: string, context?: string, data?: unknown): void {
+  info(
+    message: string,
+    context: Optional<string>,
+    data: Optional<unknown>
+  ): void {
     if (this.shouldLog(LogLevel.INFO)) {
       console.log(this.formatMessage(LogLevel.INFO, message, context));
       if (data) {
@@ -70,7 +84,11 @@ class Logger {
     }
   }
 
-  debug(message: string, context?: string, data?: unknown): void {
+  debug(
+    message: string,
+    context: Optional<string>,
+    data: Optional<unknown>
+  ): void {
     if (this.shouldLog(LogLevel.DEBUG)) {
       console.log(this.formatMessage(LogLevel.DEBUG, message, context));
       if (data) {
@@ -84,13 +102,13 @@ class Logger {
    */
   withContext(context: string) {
     return {
-      error: (message: string, data?: unknown) =>
+      error: (message: string, data: Optional<unknown>) =>
         this.error(message, context, data),
-      warn: (message: string, data?: unknown) =>
+      warn: (message: string, data: Optional<unknown>) =>
         this.warn(message, context, data),
-      info: (message: string, data?: unknown) =>
+      info: (message: string, data: Optional<unknown>) =>
         this.info(message, context, data),
-      debug: (message: string, data?: unknown) =>
+      debug: (message: string, data: Optional<unknown>) =>
         this.debug(message, context, data),
     };
   }

@@ -25,7 +25,7 @@ interface URLSearchParamsLike {
 class SimpleURLSearchParams implements URLSearchParamsLike {
   private params: Map<string, string[]> = new Map();
 
-  constructor(init?: string | Record<string, string> | string[][]) {
+  constructor(init: Optional<string | Record<string, string> | string[][]>) {
     if (init) {
       if (typeof init === 'string') {
         this.parseString(init);
@@ -109,7 +109,7 @@ class SimpleURLSearchParams implements URLSearchParamsLike {
  * Create a URLSearchParams instance with cross-platform compatibility
  */
 function createURLSearchParams(
-  init?: string | Record<string, string> | string[][]
+  init: Optional<string | Record<string, string> | string[][]>
 ): URLSearchParamsLike {
   // Check if native URLSearchParams is available
   if (typeof URLSearchParams !== 'undefined') {
@@ -128,7 +128,7 @@ function createURLSearchParams(
 function createSearchParams(
   params: Record<string, string | number | boolean>
 ): URLSearchParamsLike {
-  const searchParams = createURLSearchParams();
+  const searchParams = createURLSearchParams(undefined);
 
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== null) {

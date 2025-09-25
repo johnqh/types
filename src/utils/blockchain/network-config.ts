@@ -17,7 +17,7 @@ export interface NetworkConfig {
   /** RPC endpoint URL */
   rpcUrl: string;
   /** Chain ID (for EVM) or Cluster (for Solana) */
-  chainId?: number | string;
+  chainId: Optional<number | string>;
 }
 
 // Network identifiers for multi-chain support

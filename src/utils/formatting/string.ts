@@ -182,7 +182,7 @@ export function randomString(length: number, charset = 'alphanumeric'): string {
 export function pluralize(
   count: number,
   singular: string,
-  plural?: string
+  plural: Optional<string>
 ): string {
   if (count === 1) {
     return singular;

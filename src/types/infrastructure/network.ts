@@ -3,14 +3,14 @@
  * Platform-agnostic HTTP client interface
  */
 
-import { BaseResponse } from '../common';
+import { BaseResponse, Optional } from '../common';
 
 interface NetworkRequestOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  headers?: Record<string, string>;
-  body?: string | FormData | Blob;
-  signal?: AbortSignal;
-  timeout?: number;
+  method: Optional<'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'>;
+  headers: Optional<Record<string, string>>;
+  body: Optional<string | FormData | Blob>;
+  signal: Optional<AbortSignal>;
+  timeout: Optional<number>;
 }
 
 interface NetworkResponse<T = unknown> extends BaseResponse<T> {
@@ -26,7 +26,7 @@ interface NetworkClient {
    */
   request<T = unknown>(
     url: string,
-    options?: NetworkRequestOptions
+    options: Optional<NetworkRequestOptions>
   ): Promise<NetworkResponse<T>>;
 
   /**
@@ -34,7 +34,7 @@ interface NetworkClient {
    */
   get<T = unknown>(
     url: string,
-    options?: Omit<NetworkRequestOptions, 'method' | 'body'>
+    options: Optional<Omit<NetworkRequestOptions, 'method' | 'body'>>
   ): Promise<NetworkResponse<T>>;
 
   /**
@@ -42,8 +42,8 @@ interface NetworkClient {
    */
   post<T = unknown>(
     url: string,
-    body?: unknown,
-    options?: Omit<NetworkRequestOptions, 'method'>
+    body: Optional<unknown>,
+    options: Optional<Omit<NetworkRequestOptions, 'method'>>
   ): Promise<NetworkResponse<T>>;
 
   /**
@@ -51,8 +51,8 @@ interface NetworkClient {
    */
   put<T = unknown>(
     url: string,
-    body?: unknown,
-    options?: Omit<NetworkRequestOptions, 'method'>
+    body: Optional<unknown>,
+    options: Optional<Omit<NetworkRequestOptions, 'method'>>
   ): Promise<NetworkResponse<T>>;
 
   /**
@@ -60,20 +60,20 @@ interface NetworkClient {
    */
   delete<T = unknown>(
     url: string,
-    options?: Omit<NetworkRequestOptions, 'method' | 'body'>
+    options: Optional<Omit<NetworkRequestOptions, 'method' | 'body'>>
   ): Promise<NetworkResponse<T>>;
 }
 
 class NetworkError extends Error {
   public readonly status: number;
   public readonly statusText: string;
-  public readonly response?: unknown;
+  public readonly response: Optional<unknown>;
 
   constructor(
     message: string,
     status: number,
     statusText: string,
-    response?: unknown
+    response: Optional<unknown>
   ) {
     super(message);
     this.name = 'NetworkError';

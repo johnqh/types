@@ -5,7 +5,7 @@
  * for validating API responses and external data.
  */
 
-import type { ValidationResult } from '../../types/common';
+import type { ValidationResult, Optional } from '../../types/common';
 
 // Re-export unified ValidationResult from common
 export type { ValidationResult };
@@ -22,11 +22,12 @@ export const createValidator = <T>(
       if (validationFn(data)) {
         return { isValid: true, data };
       }
-      return { isValid: false, error: `Invalid ${typeName}` };
+      return { isValid: false, error: `Invalid ${typeName}`, data: null };
     } catch (error) {
       return {
         isValid: false,
         error: `Validation error for ${typeName}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        data: null,
       };
     }
   };
@@ -93,7 +94,7 @@ export const isApiResponse = (data: unknown): data is { success: boolean } => {
 
 export const isSuccessResponse = <T>(
   data: unknown,
-  dataValidator?: (value: unknown) => value is T
+  dataValidator: Optional<(value: unknown) => value is T>
 ): data is { success: true; data: T } => {
   if (!isApiResponse(data) || !data.success) return false;
   if (dataValidator && 'data' in data) {
@@ -163,7 +164,7 @@ export const createAssertion = <T>(
  */
 export const parseJson = <T>(
   jsonString: string,
-  validator?: (data: unknown) => data is T
+  validator: Optional<(data: unknown) => data is T>
 ): ValidationResult<T> => {
   try {
     const parsed = JSON.parse(jsonString);
@@ -174,6 +175,7 @@ export const parseJson = <T>(
       return {
         isValid: false,
         error: 'Parsed JSON does not match expected type',
+        data: null,
       };
     }
     return { isValid: true, data: parsed as T };
@@ -181,6 +183,7 @@ export const parseJson = <T>(
     return {
       isValid: false,
       error: `JSON parse error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      data: null,
     };
   }
 };

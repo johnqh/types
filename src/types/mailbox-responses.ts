@@ -31,11 +31,11 @@ export interface BaseTransactionResponse {
   /** Blockchain type where transaction occurred */
   chainType: ChainType.EVM | ChainType.SOLANA;
   /** Timestamp when transaction was created (Unix timestamp in ms) */
-  timestamp?: number;
+  timestamp: Optional<number>;
   /** Whether the transaction was successful */
   success: boolean;
   /** Error message if transaction failed */
-  error?: string;
+  error: Optional<string>;
 }
 
 /**
@@ -43,13 +43,13 @@ export interface BaseTransactionResponse {
  */
 export interface TransactionReceipt extends BaseTransactionResponse {
   /** Block number (EVM) or slot (Solana) */
-  blockNumber?: number;
+  blockNumber: Optional<number>;
   /** Solana slot number */
-  slot?: number;
+  slot: Optional<number>;
   /** Gas used for EVM transactions */
-  gasUsed?: bigint;
+  gasUsed: Optional<bigint>;
   /** Transaction confirmation status */
-  confirmationStatus?: 'processed' | 'confirmed' | 'finalized';
+  confirmationStatus: Optional<'processed' | 'confirmed' | 'finalized'>;
 }
 
 // =======================
@@ -61,21 +61,21 @@ export interface TransactionReceipt extends BaseTransactionResponse {
  */
 export interface MessageSendResponse extends TransactionReceipt {
   /** Message identifier (if available) */
-  messageId?: string;
+  messageId: Optional<string>;
   /** Fee paid for sending the message */
   fee: bigint | number;
   /** Recipient address */
-  recipient?: string;
+  recipient: Optional<string>;
   /** Message subject */
-  subject?: string;
+  subject: Optional<string>;
   /** Message body */
-  body?: string;
+  body: Optional<string>;
   /** Whether this was a priority message */
   isPriority: boolean;
   /** Revenue share amount claimable by recipient (for priority messages) */
-  claimableRevenue?: bigint | number;
+  claimableRevenue: Optional<bigint | number>;
   /** Expiry timestamp for revenue claims */
-  claimExpiryTimestamp?: number;
+  claimExpiryTimestamp: Optional<number>;
 }
 
 /**
@@ -91,7 +91,7 @@ export interface PreparedMessageSendResponse extends TransactionReceipt {
   /** Whether this was a priority prepared message */
   isPriority: boolean;
   /** Revenue share amount claimable by recipient */
-  claimableRevenue?: bigint | number;
+  claimableRevenue: Optional<bigint | number>;
 }
 
 // =======================
@@ -191,7 +191,7 @@ export interface FeeInfo {
   /** Current delegation fee (in micro-USDC) */
   delegationFee: bigint | number;
   /** Current domain registration fee (in micro-USDC) */
-  registrationFee?: bigint | number;
+  registrationFee: Optional<bigint | number>;
   /** Last updated timestamp */
   lastUpdated: number;
 }
@@ -219,9 +219,9 @@ export interface PauseInfo {
   /** Whether the contract is currently paused */
   isPaused: boolean;
   /** Timestamp when pause was activated */
-  pausedAt?: number;
+  pausedAt: Optional<number>;
   /** Address that initiated the pause */
-  pausedBy?: string;
+  pausedBy: Optional<string>;
 }
 
 /**
@@ -231,7 +231,7 @@ export interface PauseResponse extends TransactionReceipt {
   /** New pause status */
   isPaused: boolean;
   /** Whether this was an emergency pause */
-  isEmergency?: boolean;
+  isEmergency: Optional<boolean>;
 }
 
 /**
@@ -258,9 +258,9 @@ export interface EVMTransactionResponse extends TransactionReceipt {
   /** Gas used */
   gasUsed: bigint;
   /** Gas price */
-  gasPrice?: bigint;
+  gasPrice: Optional<bigint>;
   /** Contract address for deployment transactions */
-  contractAddress?: string;
+  contractAddress: Optional<string>;
 }
 
 /**
@@ -271,9 +271,9 @@ export interface SolanaTransactionResponse extends TransactionReceipt {
   /** Solana slot number */
   slot: number;
   /** Compute units consumed */
-  computeUnitsConsumed?: number;
+  computeUnitsConsumed: Optional<number>;
   /** Transaction fee in lamports */
-  transactionFee?: number;
+  transactionFee: Optional<number>;
 }
 
 // =======================
@@ -287,10 +287,10 @@ export interface UnifiedClientResponse<T = unknown> extends BaseResponse<T> {
   /** Chain where operation occurred */
   chainType: ChainType.EVM | ChainType.SOLANA;
   /** Request metadata */
-  metadata?: {
-    requestId?: string;
-    duration?: number;
-  };
+  metadata: Optional<{
+    requestId: Optional<string>;
+    duration: Optional<number>;
+  }>;
 }
 
 /**
@@ -300,8 +300,8 @@ export interface BatchOperationResponse extends BaseTransactionResponse {
   /** Results for each operation in the batch */
   results: Array<{
     success: boolean;
-    data?: unknown;
-    error?: string;
+    data: Optional<unknown>;
+    error: Optional<string>;
   }>;
   /** Number of successful operations */
   successCount: number;
@@ -337,7 +337,7 @@ export interface DelegationStatusResponse {
   /** Current delegation target (null if no delegation) */
   currentDelegate: Optional<string>;
   /** Timestamp when delegation was set */
-  delegatedAt?: number;
+  delegatedAt: Optional<number>;
   /** Addresses that have delegated to this address */
   incomingDelegations: string[];
   /** Total delegation fee paid */

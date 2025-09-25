@@ -13,9 +13,9 @@ export interface WalletStatus {
   /** The connected wallet address */
   walletAddress: string;
   /** Optional verification message (present when wallet is verified) */
-  message?: string;
+  message: Optional<string>;
   /** Optional signature (present when wallet is verified) */
-  signature?: string;
+  signature: Optional<string>;
 }
 
 /**
