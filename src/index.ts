@@ -74,6 +74,8 @@ export type {
   ValidationResponse,
   EmailAccountsResponse,
   WalletEmailAccounts,
+  WalletAddresses,
+  EmailAddressesResult,
   DelegationResponse,
   DelegatorsResponse,
   SignatureVerificationResponse,

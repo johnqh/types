@@ -5,6 +5,8 @@ export type {
   DomainAccount,
   WalletEmailAccounts,
   EmailAccountsResponse,
+  WalletAddresses,
+  EmailAddressesResult,
   DelegationInfo,
   DelegationResponse,
   DelegatorInfo,

@@ -10,6 +10,17 @@ import { ApiResponse } from '../infrastructure/api';
 
 // Note: Using ApiResponse<T> from infrastructure/api for consistency
 
+// Email address aggregation types
+export interface WalletAddresses {
+  walletAddress: string;
+  names: string[];
+}
+
+// TODO: Move to @johnqh/types
+export interface EmailAddressesResult {
+  addresses: WalletAddresses[];
+}
+
 // Address validation types
 export interface AddressFormats {
   normalized: string;
