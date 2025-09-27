@@ -10,8 +10,7 @@ import { ApiResponse } from '../infrastructure/api';
 // Note: Using ApiResponse<T> from infrastructure/api for consistency
 
 // Email address aggregation types
-export interface WalletAccount {
-  walletAddress: WalletData;
+export interface WalletAccount extends WalletData {
   names: string[];
 }
 export interface EmailAccountsResult {
@@ -37,9 +36,8 @@ export interface RewardHistoryData {
 export type RewardsResponse = ApiResponse<RewardHistoryData>;
 
 // Address validation types
-export interface AddressValidationData {
+export interface AddressValidationData extends WalletData {
   name?: Optional<string>;
-  wallet?: WalletData;
 }
 
 export type AddressValidationResponse = ApiResponse<AddressValidationData>;
