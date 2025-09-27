@@ -13,6 +13,7 @@ import { ApiResponse } from '../infrastructure/api';
 // Email address aggregation types
 export interface WalletAddresses {
   walletAddress: string;
+  chainType: ChainType;
   names: string[];
 }
 
