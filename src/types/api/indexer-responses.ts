@@ -114,6 +114,12 @@ export interface SiteStatsData {
 
 export type SiteStatsResponse = ApiResponse<SiteStatsData>;
 
+// Error response type for API endpoints
+export interface ErrorResponse extends ApiResponse<never> {
+  success: false;
+  error: string;
+}
+
 // Extended union type to include all response types
 export type IndexerApiResponse =
   | AddressValidationResponse
@@ -125,4 +131,5 @@ export type IndexerApiResponse =
   | PointsResponse
   | SignInMessageResponse
   | LeaderboardResponse
-  | SiteStatsResponse;
+  | SiteStatsResponse
+  | ErrorResponse;

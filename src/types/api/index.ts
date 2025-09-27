@@ -45,6 +45,9 @@ export type {
   SiteStatsData,
   SiteStatsResponse,
 
+  // Error response types
+  ErrorResponse,
+
   // Generic response types
   IndexerApiResponse,
 } from './indexer-responses';
