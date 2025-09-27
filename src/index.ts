@@ -73,9 +73,9 @@ export type {
   // API Response types (commonly used)
   ValidationResponse,
   EmailAccountsResponse,
-  WalletEmailAccounts,
-  WalletAddresses,
-  EmailAddressesResult,
+  WalletAccount,
+  EmailAccountsResult,
+  RewardsResponse,
   DelegationResponse,
   DelegatorsResponse,
   SignatureVerificationResponse,

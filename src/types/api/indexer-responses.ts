@@ -11,16 +11,31 @@ import { ApiResponse } from '../infrastructure/api';
 // Note: Using ApiResponse<T> from infrastructure/api for consistency
 
 // Email address aggregation types
-export interface WalletAddresses {
-  walletAddress: string;
-  chainType: ChainType;
+export interface WalletAccount {
+  walletAddress: WalletData;
   names: string[];
 }
-
-// TODO: Move to @johnqh/types
-export interface EmailAddressesResult {
-  addresses: WalletAddresses[];
+export interface EmailAccountsResult {
+  accounts: WalletAccount[];
 }
+
+export type EmailAccountsResponse = ApiResponse<EmailAccountsResult>;
+
+// Rewards history record
+export interface RewardData {
+  walletAddress: string;
+  action: string;
+  points: number;
+  earningTime: string;
+}
+
+export interface RewardHistoryData {
+  rewards: RewardData[];
+  records: number;
+  points: number;
+}
+
+export type RewardsResponse = ApiResponse<RewardHistoryData>;
 
 // Address validation types
 export interface AddressFormats {
@@ -46,23 +61,6 @@ export interface DomainAccount {
   domain: string;
   verified?: Optional<boolean>;
 }
-
-export interface WalletEmailAccounts extends WalletData {
-  isPrimary: boolean;
-  primaryAccount: string; // Always walletAddress@0xmail.box
-  domainAccounts: DomainAccount[]; // ENS/SNS emails for this wallet
-  totalAccounts: number;
-}
-
-export interface EmailAccountsData extends WalletData {
-  requestedWallet: string;
-  walletAccounts: WalletEmailAccounts[]; // First is requested wallet, rest are delegated
-  totalWallets: number;
-  totalAccounts: number;
-  verified: boolean;
-}
-
-export type EmailAccountsResponse = ApiResponse<EmailAccountsData>;
 
 // Delegation types
 export interface DelegationInfo extends WalletData {
