@@ -3,40 +3,18 @@ import { ChainType } from '../../../src/types/business/enums';
 import {
   isIndexerErrorResponse,
   isIndexerSuccessResponse,
-  isValidationResponse,
+  isAddressValidationResponse,
   isEmailAccountsResponse,
-  isDelegationResponse,
-  isDelegatorsResponse,
-  isSignatureVerificationResponse,
+  isRewardsResponse,
+  isDelegatedToResponse,
+  isDelegatedFromResponse,
   isNonceResponse,
   isEntitlementResponse,
+  isSignInMessageResponse,
   isPointsResponse,
-  isSimpleMessageResponse,
   isLeaderboardResponse,
   isSiteStatsResponse,
-  isSolanaWebhookResponse,
-  isSolanaSetupResponse,
-  isSolanaStatusResponse,
-  isSolanaTestTransactionResponse,
 } from '../../../src/types/api/indexer-guards';
-import type {
-  ErrorResponse,
-  PointsResponse,
-  ValidationResponse,
-  EmailAccountsResponse,
-  DelegationResponse,
-  DelegatorsResponse,
-  SignatureVerificationResponse,
-  NonceResponse,
-  EntitlementResponse,
-  SimpleMessageResponse,
-  LeaderboardResponse,
-  SiteStatsResponse,
-  SolanaWebhookResponse,
-  SolanaSetupResponse,
-  SolanaStatusResponse,
-  SolanaTestTransactionResponse,
-} from '../../../src/types/api/indexer-responses';
 
 describe('Indexer Type Guards', () => {
   const mockTimestamp = '2023-01-01T00:00:00Z';
@@ -55,8 +33,9 @@ describe('Indexer Type Guards', () => {
 
     it('should reject non-error responses', () => {
       const successResponse = {
-        timestamp: mockTimestamp,
         success: true,
+        data: {},
+        timestamp: mockTimestamp,
       };
 
       expect(isIndexerErrorResponse(successResponse)).toBe(false);
@@ -67,21 +46,18 @@ describe('Indexer Type Guards', () => {
       expect(isIndexerErrorResponse(undefined)).toBe(false);
       expect(isIndexerErrorResponse({})).toBe(false);
       expect(isIndexerErrorResponse('string')).toBe(false);
+      expect(isIndexerErrorResponse(123)).toBe(false);
     });
   });
 
   describe('isIndexerSuccessResponse', () => {
     it('should identify success responses correctly', () => {
-      const successResponse: PointsResponse = {
-        timestamp: mockTimestamp,
+      const successResponse = {
         success: true,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
         data: {
           walletAddress: mockWalletAddress,
           pointsEarned: '1000',
         },
-        verified: true,
       };
 
       expect(isIndexerSuccessResponse(successResponse)).toBe(true);
@@ -91,6 +67,7 @@ describe('Indexer Type Guards', () => {
       const response = {
         timestamp: mockTimestamp,
         success: false,
+        data: {},
       };
 
       expect(isIndexerSuccessResponse(response)).toBe(false);
@@ -99,66 +76,79 @@ describe('Indexer Type Guards', () => {
     it('should reject responses without success property', () => {
       const response = {
         timestamp: mockTimestamp,
-        error: 'Some error',
+        data: {},
       };
 
       expect(isIndexerSuccessResponse(response)).toBe(false);
     });
   });
 
-  describe('isValidationResponse', () => {
+  describe('isAddressValidationResponse', () => {
     it('should identify validation responses correctly', () => {
-      const validationResponse: ValidationResponse = {
-        timestamp: mockTimestamp,
-        isValid: true,
-        address: mockWalletAddress,
-        addressType: ChainType.EVM,
-        normalizedAddress: mockWalletAddress.toLowerCase(),
+      const validationResponse = {
+        success: true,
+        data: {
+          name: 'test.eth',
+          wallet: {
+            walletAddress: mockWalletAddress,
+            chainType: ChainType.EVM,
+          },
+        },
       };
 
-      expect(isValidationResponse(validationResponse)).toBe(true);
+      expect(isAddressValidationResponse(validationResponse)).toBe(true);
     });
 
-    it('should reject responses missing required properties', () => {
-      const incompleteResponse = {
-        timestamp: mockTimestamp,
-        isValid: true,
-        address: mockWalletAddress,
-        // missing addressType
-      };
-
-      expect(isValidationResponse(incompleteResponse)).toBe(false);
-    });
-
-    it('should handle responses with only isValid', () => {
+    it('should accept responses with only name', () => {
       const response = {
-        isValid: false,
-        // missing addressType
+        success: true,
+        data: {
+          name: 'test.eth',
+        },
       };
 
-      expect(isValidationResponse(response)).toBe(false);
+      expect(isAddressValidationResponse(response)).toBe(true);
+    });
+
+    it('should accept responses with only wallet', () => {
+      const response = {
+        success: true,
+        data: {
+          wallet: {
+            walletAddress: mockWalletAddress,
+            chainType: ChainType.EVM,
+          },
+        },
+      };
+
+      expect(isAddressValidationResponse(response)).toBe(true);
+    });
+
+    it('should reject responses missing both name and wallet', () => {
+      const incompleteResponse = {
+        success: true,
+        data: {},
+      };
+
+      expect(isAddressValidationResponse(incompleteResponse)).toBe(false);
     });
   });
 
   describe('isEmailAccountsResponse', () => {
     it('should identify email accounts responses correctly', () => {
-      const emailResponse: EmailAccountsResponse = {
-        timestamp: mockTimestamp,
-        requestedWallet: mockWalletAddress,
-        addressType: ChainType.EVM,
-        walletAccounts: [
-          {
-            walletAddress: mockWalletAddress,
-            addressType: ChainType.EVM,
-            isPrimary: true,
-            primaryAccount: `${mockWalletAddress}@0xmail.box`,
-            domainAccounts: [],
-            totalAccounts: 1,
-          },
-        ],
-        totalWallets: 1,
-        totalAccounts: 1,
-        verified: true,
+      const emailResponse = {
+        success: true,
+        data: {
+          accounts: [
+            {
+              walletAddress: {
+                walletAddress: mockWalletAddress,
+                chainType: ChainType.EVM,
+              },
+              names: ['test@0xmail.box'],
+            },
+          ],
+        },
       };
 
       expect(isEmailAccountsResponse(emailResponse)).toBe(true);
@@ -166,123 +156,127 @@ describe('Indexer Type Guards', () => {
 
     it('should reject responses missing required properties', () => {
       const incompleteResponse = {
-        timestamp: mockTimestamp,
-        requestedWallet: mockWalletAddress,
-        walletAccounts: [],
-        // missing totalWallets
+        success: true,
+        data: {
+          // missing accounts
+        },
       };
 
       expect(isEmailAccountsResponse(incompleteResponse)).toBe(false);
     });
   });
 
-  describe('isDelegationResponse', () => {
-    it('should identify delegation responses correctly', () => {
-      const delegationResponse: DelegationResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
-        isActive: true,
-        verified: true,
-      };
-
-      expect(isDelegationResponse(delegationResponse)).toBe(true);
-    });
-
-    it('should reject responses missing required properties', () => {
-      const incompleteResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        isActive: true,
-        // missing verified
-      };
-
-      expect(isDelegationResponse(incompleteResponse)).toBe(false);
-    });
-  });
-
-  describe('isDelegatorsResponse', () => {
-    it('should identify delegators responses correctly', () => {
-      const delegatorsResponse: DelegatorsResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
-        delegatedFrom: [],
-        delegationDetails: {
-          totalDelegators: 0,
-          activeChains: [],
-          chainDetails: [],
+  describe('isRewardsResponse', () => {
+    it('should identify rewards responses correctly', () => {
+      const rewardsResponse = {
+        success: true,
+        data: {
+          rewards: [
+            {
+              walletAddress: mockWalletAddress,
+              action: 'signup',
+              points: 100,
+              earningTime: mockTimestamp,
+            },
+          ],
+          records: 1,
+          points: 100,
         },
-        totalDelegators: 0,
       };
 
-      expect(isDelegatorsResponse(delegatorsResponse)).toBe(true);
+      expect(isRewardsResponse(rewardsResponse)).toBe(true);
     });
 
     it('should reject responses missing required properties', () => {
       const incompleteResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        delegatedFrom: [],
-        // missing delegationDetails
+        success: true,
+        data: {
+          rewards: [],
+          // missing records and points
+        },
       };
 
-      expect(isDelegatorsResponse(incompleteResponse)).toBe(false);
+      expect(isRewardsResponse(incompleteResponse)).toBe(false);
     });
   });
 
-  describe('isSignatureVerificationResponse', () => {
-    it('should identify signature verification responses correctly', () => {
-      const signatureResponse: SignatureVerificationResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
-        isValid: true,
-        message: 'Signature verified successfully',
+  describe('isDelegatedToResponse', () => {
+    it('should identify delegated-to responses correctly', () => {
+      const delegationResponse = {
+        success: true,
+        data: {
+          walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
+          chainId: 1,
+          txHash: '0xabc123',
+        },
       };
 
-      expect(isSignatureVerificationResponse(signatureResponse)).toBe(true);
+      expect(isDelegatedToResponse(delegationResponse)).toBe(true);
     });
 
-    it('should reject nonce responses (which also have isValid)', () => {
-      const nonceResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
-        isValid: true,
-        message: 'Test message',
-        nonce: 'some-nonce', // This makes it a nonce response
+    it('should reject responses missing required properties', () => {
+      const incompleteResponse = {
+        success: true,
+        data: {
+          walletAddress: mockWalletAddress,
+          // missing chainType
+        },
       };
 
-      expect(isSignatureVerificationResponse(nonceResponse)).toBe(false);
+      expect(isDelegatedToResponse(incompleteResponse)).toBe(false);
+    });
+  });
+
+  describe('isDelegatedFromResponse', () => {
+    it('should identify delegated-from responses correctly', () => {
+      const delegatorsResponse = {
+        success: true,
+        data: {
+          from: [
+            {
+              walletAddress: mockWalletAddress,
+              chainType: ChainType.EVM,
+              chainId: 1,
+              txHash: '0xabc123',
+            },
+          ],
+        },
+      };
+
+      expect(isDelegatedFromResponse(delegatorsResponse)).toBe(true);
     });
 
-    it('should reject validation responses (which also have isValid)', () => {
-      const validationResponse = {
-        timestamp: mockTimestamp,
-        isValid: true,
-        message: 'Test message',
-        addressType: ChainType.EVM,
-        nonce: 'some-nonce', // This combination makes it ambiguous
+    it('should reject responses missing required properties', () => {
+      const incompleteResponse = {
+        success: true,
+        data: {
+          // missing from
+        },
       };
 
-      expect(isSignatureVerificationResponse(validationResponse)).toBe(false);
+      expect(isDelegatedFromResponse(incompleteResponse)).toBe(false);
+    });
+
+    it('should reject responses with non-array from field', () => {
+      const invalidResponse = {
+        success: true,
+        data: {
+          from: 'not an array',
+        },
+      };
+
+      expect(isDelegatedFromResponse(invalidResponse)).toBe(false);
     });
   });
 
   describe('isNonceResponse', () => {
     it('should identify nonce responses correctly', () => {
-      const nonceResponse: NonceResponse = {
+      const nonceResponse = {
         success: true,
         data: {
-          username: mockWalletAddress,
-          chainType: ChainType.EVM,
-          nonce: 'random-nonce-12345',
-          createdAt: mockTimestamp,
-          updatedAt: mockTimestamp,
-          message: 'Nonce generated successfully',
+          nonce: 'test-nonce-123',
         },
-        timestamp: mockTimestamp,
       };
 
       expect(isNonceResponse(nonceResponse)).toBe(true);
@@ -292,12 +286,8 @@ describe('Indexer Type Guards', () => {
       const incompleteResponse = {
         success: true,
         data: {
-          username: mockWalletAddress,
-          chainType: ChainType.EVM,
           // missing nonce
-          message: 'Incomplete nonce data',
         },
-        timestamp: mockTimestamp,
       };
 
       expect(isNonceResponse(incompleteResponse)).toBe(false);
@@ -306,17 +296,19 @@ describe('Indexer Type Guards', () => {
 
   describe('isEntitlementResponse', () => {
     it('should identify entitlement responses correctly', () => {
-      const entitlementResponse: EntitlementResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
-        entitlement: {
-          type: 'nameservice',
-          hasEntitlement: true,
-          isActive: true,
+      const entitlementResponse = {
+        success: true,
+        data: {
+          walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
+          entitlement: {
+            type: 'nameservice',
+            hasEntitlement: true,
+            isActive: true,
+          },
+          message: 'Entitlement verified',
+          verified: true,
         },
-        message: 'Entitlement verified',
-        verified: true,
       };
 
       expect(isEntitlementResponse(entitlementResponse)).toBe(true);
@@ -324,32 +316,72 @@ describe('Indexer Type Guards', () => {
 
     it('should reject responses missing required properties', () => {
       const incompleteResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        entitlement: {
-          type: 'nameservice',
-          hasEntitlement: true,
-          isActive: true,
+        success: true,
+        data: {
+          entitlement: {
+            type: 'nameservice',
+            hasEntitlement: true,
+            isActive: true,
+          },
+          // missing verified
         },
-        // missing verified
       };
 
       expect(isEntitlementResponse(incompleteResponse)).toBe(false);
     });
   });
 
+  describe('isSignInMessageResponse', () => {
+    it('should identify sign-in message responses correctly', () => {
+      const signInResponse = {
+        success: true,
+        data: {
+          message: 'Sign this message to authenticate',
+          walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
+          chainId: 1,
+        },
+      };
+
+      expect(isSignInMessageResponse(signInResponse)).toBe(true);
+    });
+
+    it('should handle responses without optional chainId', () => {
+      const signInResponse = {
+        success: true,
+        data: {
+          message: 'Sign this message to authenticate',
+          walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
+        },
+      };
+
+      expect(isSignInMessageResponse(signInResponse)).toBe(true);
+    });
+
+    it('should reject responses missing required properties', () => {
+      const incompleteResponse = {
+        success: true,
+        data: {
+          message: 'Sign this message',
+          // missing walletAddress
+        },
+      };
+
+      expect(isSignInMessageResponse(incompleteResponse)).toBe(false);
+    });
+  });
+
   describe('isPointsResponse', () => {
     it('should identify points responses correctly', () => {
-      const pointsResponse: PointsResponse = {
-        timestamp: mockTimestamp,
+      const pointsResponse = {
         success: true,
-        walletAddress: mockWalletAddress,
-        addressType: ChainType.EVM,
         data: {
-          walletAddress: mockWalletAddress,
           pointsEarned: '1000',
+          walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
+          lastActivityDate: mockTimestamp,
         },
-        verified: true,
       };
 
       expect(isPointsResponse(pointsResponse)).toBe(true);
@@ -357,10 +389,10 @@ describe('Indexer Type Guards', () => {
 
     it('should reject responses without pointsEarned in data', () => {
       const incompleteResponse = {
-        timestamp: mockTimestamp,
         success: true,
         data: {
           walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
           // missing pointsEarned
         },
       };
@@ -369,216 +401,71 @@ describe('Indexer Type Guards', () => {
     });
 
     it('should reject responses without data property', () => {
-      const incompleteResponse = {
-        timestamp: mockTimestamp,
+      const response = {
         success: true,
         // missing data
       };
 
-      expect(isPointsResponse(incompleteResponse)).toBe(false);
+      expect(isPointsResponse(response)).toBe(false);
     });
   });
 
-  describe('isSimpleMessageResponse', () => {
-    it('should identify simple message responses correctly', () => {
-      const messageResponse: SimpleMessageResponse = {
-        timestamp: mockTimestamp,
-        message: 'Simple authentication message',
-        walletAddress: mockWalletAddress,
-        chainType: ChainType.EVM,
-        chainId: 1,
-      };
-
-      expect(isSimpleMessageResponse(messageResponse)).toBe(true);
-    });
-
-    it('should handle responses without optional chainId', () => {
-      const messageResponse: SimpleMessageResponse = {
-        timestamp: mockTimestamp,
-        message: 'Simple authentication message',
-        walletAddress: mockWalletAddress,
-        chainType: ChainType.SOLANA,
-      };
-
-      expect(isSimpleMessageResponse(messageResponse)).toBe(true);
-    });
-
-    it('should reject responses missing required properties', () => {
-      const incompleteResponse = {
-        timestamp: mockTimestamp,
-        walletAddress: mockWalletAddress,
-        // missing message and chainType
-      };
-
-      expect(isSimpleMessageResponse(incompleteResponse)).toBe(false);
-    });
-  });
-
-  describe('isLeaderboardResponse', () => {
-    it('should identify leaderboard responses correctly', () => {
-      const leaderboardResponse: LeaderboardResponse = {
-        timestamp: mockTimestamp,
-        success: true,
-        data: {
-          leaderboard: [
-            {
-              walletAddress: mockWalletAddress,
-              pointsEarned: '1000',
-            },
-          ],
-          count: 1,
-        },
-      };
-
-      expect(isLeaderboardResponse(leaderboardResponse)).toBe(true);
-    });
-
-    it('should reject responses without leaderboard in data', () => {
-      const incompleteResponse = {
-        success: true,
-        data: {
-          count: 1,
-          // missing leaderboard
-        },
-      };
-
-      expect(isLeaderboardResponse(incompleteResponse)).toBe(false);
-    });
-  });
-
-  describe('isSiteStatsResponse', () => {
-    it('should identify site stats responses correctly', () => {
-      const statsResponse: SiteStatsResponse = {
-        timestamp: mockTimestamp,
-        success: true,
-        data: {
-          totalPoints: '50000',
-          totalUsers: 100,
-        },
-      };
-
-      expect(isSiteStatsResponse(statsResponse)).toBe(true);
-    });
-
-    it('should reject responses without totalPoints in data', () => {
-      const incompleteResponse = {
-        success: true,
-        data: {
-          totalUsers: 100,
-          // missing totalPoints
-        },
-      };
-
-      expect(isSiteStatsResponse(incompleteResponse)).toBe(false);
-    });
-  });
-
-  describe('Solana API Response Guards', () => {
-    describe('isSolanaWebhookResponse', () => {
-      it('should identify solana webhook responses correctly', () => {
-        const webhookResponse: SolanaWebhookResponse = {
-          timestamp: mockTimestamp,
+  describe('Points API Response Guards', () => {
+    describe('isLeaderboardResponse', () => {
+      it('should identify leaderboard responses correctly', () => {
+        const leaderboardResponse = {
           success: true,
-          processed: 10,
-          total: 15,
+          data: {
+            leaderboard: [
+              {
+                walletAddress: mockWalletAddress,
+                chainType: ChainType.EVM,
+                pointsEarned: '1000',
+                lastActivityDate: mockTimestamp,
+              },
+            ],
+          },
         };
 
-        expect(isSolanaWebhookResponse(webhookResponse)).toBe(true);
+        expect(isLeaderboardResponse(leaderboardResponse)).toBe(true);
+      });
+
+      it('should reject responses without leaderboard array', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            // missing leaderboard
+          },
+        };
+
+        expect(isLeaderboardResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isSiteStatsResponse', () => {
+      it('should identify site stats responses correctly', () => {
+        const statsResponse = {
+          success: true,
+          data: {
+            totalPoints: '1000000',
+            totalUsers: 500,
+            lastUpdated: mockTimestamp,
+          },
+        };
+
+        expect(isSiteStatsResponse(statsResponse)).toBe(true);
       });
 
       it('should reject responses missing required properties', () => {
         const incompleteResponse = {
           success: true,
-          processed: 10,
-          // missing total
+          data: {
+            totalUsers: 500,
+            // missing totalPoints
+          },
         };
 
-        expect(isSolanaWebhookResponse(incompleteResponse)).toBe(false);
-      });
-    });
-
-    describe('isSolanaSetupResponse', () => {
-      it('should identify solana setup responses correctly', () => {
-        const setupResponse: SolanaSetupResponse = {
-          timestamp: mockTimestamp,
-          success: true,
-          results: [
-            {
-              chainId: 'mainnet-beta',
-              status: 'success',
-            },
-          ],
-        };
-
-        expect(isSolanaSetupResponse(setupResponse)).toBe(true);
-      });
-
-      it('should reject responses missing results', () => {
-        const incompleteResponse = {
-          success: true,
-          // missing results
-        };
-
-        expect(isSolanaSetupResponse(incompleteResponse)).toBe(false);
-      });
-    });
-
-    describe('isSolanaStatusResponse', () => {
-      it('should identify solana status responses correctly', () => {
-        const statusResponse: SolanaStatusResponse = {
-          solanaIndexers: [
-            {
-              chainId: -101,
-              initialized: true,
-              networkName: 'mainnet-beta',
-            },
-          ],
-          totalIndexers: 1,
-          configured: true,
-        };
-
-        expect(isSolanaStatusResponse(statusResponse)).toBe(true);
-      });
-
-      it('should reject responses missing required properties', () => {
-        const incompleteResponse = {
-          solanaIndexers: [],
-          totalIndexers: 0,
-          // missing configured
-        };
-
-        expect(isSolanaStatusResponse(incompleteResponse)).toBe(false);
-      });
-    });
-
-    describe('isSolanaTestTransactionResponse', () => {
-      it('should identify solana test transaction responses correctly', () => {
-        const testResponse: SolanaTestTransactionResponse = {
-          timestamp: mockTimestamp,
-          success: true,
-          message: 'Test transaction successful',
-        };
-
-        expect(isSolanaTestTransactionResponse(testResponse)).toBe(true);
-      });
-
-      it('should reject responses with data property (distinguishes from other success responses)', () => {
-        const responseWithData = {
-          success: true,
-          message: 'Test message',
-          data: { someData: 'value' }, // This makes it not a test transaction response
-        };
-
-        expect(isSolanaTestTransactionResponse(responseWithData)).toBe(false);
-      });
-
-      it('should reject responses missing message', () => {
-        const incompleteResponse = {
-          success: true,
-          // missing message
-        };
-
-        expect(isSolanaTestTransactionResponse(incompleteResponse)).toBe(false);
+        expect(isSiteStatsResponse(incompleteResponse)).toBe(false);
       });
     });
   });
@@ -588,53 +475,52 @@ describe('Indexer Type Guards', () => {
       const guards = [
         isIndexerErrorResponse,
         isIndexerSuccessResponse,
-        isValidationResponse,
+        isAddressValidationResponse,
         isEmailAccountsResponse,
-        isDelegationResponse,
-        isDelegatorsResponse,
-        isSignatureVerificationResponse,
+        isRewardsResponse,
+        isDelegatedToResponse,
+        isDelegatedFromResponse,
         isNonceResponse,
         isEntitlementResponse,
+        isSignInMessageResponse,
         isPointsResponse,
-        isSimpleMessageResponse,
         isLeaderboardResponse,
         isSiteStatsResponse,
-        isSolanaWebhookResponse,
-        isSolanaSetupResponse,
-        isSolanaStatusResponse,
-        isSolanaTestTransactionResponse,
       ];
 
       guards.forEach((guard) => {
         expect(guard(null)).toBe(false);
         expect(guard(undefined)).toBe(false);
         expect(guard({})).toBe(false);
+        expect(guard('')).toBe(false);
+        expect(guard(0)).toBe(false);
+        expect(guard([])).toBe(false);
       });
     });
 
     it('should handle primitive inputs', () => {
-      const primitives = ['string', 123, true, false];
-
+      const primitives = ['string', 123, true, false, Symbol('test')];
       primitives.forEach((primitive) => {
         expect(isIndexerErrorResponse(primitive)).toBe(false);
-        expect(isValidationResponse(primitive)).toBe(false);
+        expect(isAddressValidationResponse(primitive)).toBe(false);
         expect(isPointsResponse(primitive)).toBe(false);
       });
     });
 
     it('should correctly distinguish between similar response types', () => {
-      // Object that could match multiple guards
       const ambiguousResponse = {
-        timestamp: mockTimestamp,
         success: true,
-        isValid: true,
-        message: 'Test message',
-        data: { pointsEarned: '100' },
+        data: {
+          pointsEarned: '1000',
+          walletAddress: mockWalletAddress,
+          chainType: ChainType.EVM,
+          message: 'Test message',
+        },
       };
 
       // Should be identified as points response due to data.pointsEarned
       expect(isPointsResponse(ambiguousResponse)).toBe(true);
-      expect(isSignatureVerificationResponse(ambiguousResponse)).toBe(true);
+      expect(isSignInMessageResponse(ambiguousResponse)).toBe(true); // Also has message and walletAddress
       expect(isIndexerSuccessResponse(ambiguousResponse)).toBe(true);
     });
   });

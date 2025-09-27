@@ -1,32 +1,26 @@
 // Export all response types as named exports
 export type {
-  // Address validation types
-  AddressFormats,
-  ValidationData,
-  ValidationResponse,
-
   // Email account types
   WalletAccount,
   EmailAccountsResult,
   EmailAccountsResponse,
-  DomainAccount,
 
   // Rewards types
   RewardData,
   RewardHistoryData,
   RewardsResponse,
 
-  // Delegation types
-  DelegationInfo,
-  DelegationData,
-  DelegationResponse,
-  DelegatorInfo,
-  DelegatorsData,
-  DelegatorsResponse,
+  // Address validation types
+  AddressValidationData,
+  AddressValidationResponse,
 
-  // Signature and nonce types
-  SignatureVerificationData,
-  SignatureVerificationResponse,
+  // Delegation types
+  DelegateData,
+  DelegatedToResponse,
+  DelegatedFromData,
+  DelegatedFromResponse,
+
+  // Nonce types
   NonceData,
   NonceResponse,
 
@@ -35,18 +29,15 @@ export type {
   EntitlementData,
   EntitlementResponse,
 
+  // Sign-in message types
+  SignInMessageData,
+  SignInMessageResponse,
+
   // Points types
-  UserPointsData,
   PointsData,
-  PointsResponseData,
   PointsResponse,
 
-  // Message types
-  SimpleMessageData,
-  SimpleMessageResponse,
-
   // Leaderboard types
-  LeaderboardUser,
   LeaderboardData,
   LeaderboardResponse,
 
@@ -54,41 +45,23 @@ export type {
   SiteStatsData,
   SiteStatsResponse,
 
-  // Solana types
-  SolanaWebhookData,
-  SolanaWebhookResponse,
-  SolanaSetupResult,
-  SolanaSetupData,
-  SolanaSetupResponse,
-  SolanaIndexerStatus,
-  SolanaStatusData,
-  SolanaStatusResponse,
-  SolanaTestTransactionData,
-  SolanaTestTransactionResponse,
-
   // Generic response types
   IndexerApiResponse,
-  ErrorResponse,
-  HeliusTransaction,
 } from './indexer-responses';
 
 // Export type guards
 export {
-  isDelegationResponse,
-  isDelegatorsResponse,
+  isAddressValidationResponse,
   isEmailAccountsResponse,
+  isRewardsResponse,
+  isDelegatedToResponse,
+  isDelegatedFromResponse,
+  isNonceResponse,
   isEntitlementResponse,
+  isSignInMessageResponse,
+  isPointsResponse,
+  isLeaderboardResponse,
+  isSiteStatsResponse,
   isIndexerErrorResponse,
   isIndexerSuccessResponse,
-  isLeaderboardResponse,
-  isNonceResponse,
-  isPointsResponse,
-  isSignatureVerificationResponse,
-  isSimpleMessageResponse,
-  isSiteStatsResponse,
-  isSolanaSetupResponse,
-  isSolanaStatusResponse,
-  isSolanaTestTransactionResponse,
-  isSolanaWebhookResponse,
-  isValidationResponse,
 } from './indexer-guards';

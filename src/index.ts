@@ -71,24 +71,19 @@ export type {
   ContractError,
 
   // API Response types (commonly used)
-  ValidationResponse,
+  AddressValidationResponse,
   EmailAccountsResponse,
   WalletAccount,
   EmailAccountsResult,
   RewardsResponse,
-  DelegationResponse,
-  DelegatorsResponse,
-  SignatureVerificationResponse,
+  DelegatedToResponse,
+  DelegatedFromResponse,
+  SignInMessageResponse,
   NonceResponse,
   EntitlementResponse,
   PointsResponse,
-  SimpleMessageResponse,
   LeaderboardResponse,
   SiteStatsResponse,
-  SolanaWebhookResponse,
-  SolanaSetupResponse,
-  SolanaStatusResponse,
-  SolanaTestTransactionResponse,
 } from './types';
 
 // Export the most commonly used enums

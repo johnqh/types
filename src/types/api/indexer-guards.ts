@@ -5,21 +5,17 @@
  */
 
 import type {
-  PointsResponse,
-  ValidationResponse,
+  AddressValidationResponse,
   EmailAccountsResponse,
-  DelegationResponse,
-  DelegatorsResponse,
-  SignatureVerificationResponse,
+  RewardsResponse,
+  DelegatedToResponse,
+  DelegatedFromResponse,
   NonceResponse,
   EntitlementResponse,
-  SimpleMessageResponse,
+  SignInMessageResponse,
+  PointsResponse,
   LeaderboardResponse,
   SiteStatsResponse,
-  SolanaWebhookResponse,
-  SolanaSetupResponse,
-  SolanaStatusResponse,
-  SolanaTestTransactionResponse,
 } from './indexer-responses';
 
 // Basic type guards for indexer responses
@@ -37,24 +33,28 @@ export function isIndexerErrorResponse(
 
 export function isIndexerSuccessResponse(
   response: unknown
-): response is PointsResponse {
+): response is { success: true; data: unknown } {
   return !!(
     response &&
     typeof response === 'object' &&
     'success' in response &&
-    response.success === true
+    response.success === true &&
+    'data' in response
   );
 }
 
 // Specific response type guards
-export function isValidationResponse(
+export function isAddressValidationResponse(
   response: unknown
-): response is ValidationResponse {
+): response is AddressValidationResponse {
   return !!(
     response &&
     typeof response === 'object' &&
-    'isValid' in response &&
-    'addressType' in response
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    ('name' in response.data || 'wallet' in response.data)
   );
 }
 
@@ -64,44 +64,58 @@ export function isEmailAccountsResponse(
   return !!(
     response &&
     typeof response === 'object' &&
-    'requestedWallet' in response &&
-    'walletAccounts' in response &&
-    'totalWallets' in response
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'accounts' in response.data &&
+    Array.isArray(response.data.accounts)
   );
 }
 
-export function isDelegationResponse(
+export function isRewardsResponse(
   response: unknown
-): response is DelegationResponse {
+): response is RewardsResponse {
   return !!(
     response &&
     typeof response === 'object' &&
-    'walletAddress' in response &&
-    'isActive' in response &&
-    'verified' in response
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'rewards' in response.data &&
+    'records' in response.data &&
+    'points' in response.data
   );
 }
 
-export function isDelegatorsResponse(
+export function isDelegatedToResponse(
   response: unknown
-): response is DelegatorsResponse {
+): response is DelegatedToResponse {
   return !!(
     response &&
     typeof response === 'object' &&
-    'delegatedFrom' in response &&
-    'delegationDetails' in response
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'walletAddress' in response.data &&
+    'chainType' in response.data
   );
 }
 
-export function isSignatureVerificationResponse(
+export function isDelegatedFromResponse(
   response: unknown
-): response is SignatureVerificationResponse {
+): response is DelegatedFromResponse {
   return !!(
     response &&
     typeof response === 'object' &&
-    'isValid' in response &&
-    'message' in response &&
-    !('addressType' in response && 'nonce' in response)
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'from' in response.data &&
+    Array.isArray(response.data.from)
   );
 }
 
@@ -109,13 +123,11 @@ export function isNonceResponse(response: unknown): response is NonceResponse {
   return !!(
     response &&
     typeof response === 'object' &&
+    'success' in response &&
     'data' in response &&
     response.data &&
     typeof response.data === 'object' &&
-    'nonce' in response.data &&
-    'username' in response.data &&
-    'chainType' in response.data &&
-    'message' in response.data
+    'nonce' in response.data
   );
 }
 
@@ -125,8 +137,27 @@ export function isEntitlementResponse(
   return !!(
     response &&
     typeof response === 'object' &&
-    'entitlement' in response &&
-    'verified' in response
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'entitlement' in response.data &&
+    'verified' in response.data
+  );
+}
+
+export function isSignInMessageResponse(
+  response: unknown
+): response is SignInMessageResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'message' in response.data &&
+    'walletAddress' in response.data
   );
 }
 
@@ -136,22 +167,12 @@ export function isPointsResponse(
   return !!(
     response &&
     typeof response === 'object' &&
+    'success' in response &&
     'data' in response &&
     response.data &&
     typeof response.data === 'object' &&
-    'pointsEarned' in response.data
-  );
-}
-
-export function isSimpleMessageResponse(
-  response: unknown
-): response is SimpleMessageResponse {
-  return !!(
-    response &&
-    typeof response === 'object' &&
-    'message' in response &&
-    'walletAddress' in response &&
-    'chainType' in response
+    'pointsEarned' in response.data &&
+    'walletAddress' in response.data
   );
 }
 
@@ -184,50 +205,3 @@ export function isSiteStatsResponse(
   );
 }
 
-// Solana API response type guards
-export function isSolanaWebhookResponse(
-  response: unknown
-): response is SolanaWebhookResponse {
-  return !!(
-    response &&
-    typeof response === 'object' &&
-    'success' in response &&
-    'processed' in response &&
-    'total' in response
-  );
-}
-
-export function isSolanaSetupResponse(
-  response: unknown
-): response is SolanaSetupResponse {
-  return !!(
-    response &&
-    typeof response === 'object' &&
-    'success' in response &&
-    'results' in response
-  );
-}
-
-export function isSolanaStatusResponse(
-  response: unknown
-): response is SolanaStatusResponse {
-  return !!(
-    response &&
-    typeof response === 'object' &&
-    'solanaIndexers' in response &&
-    'totalIndexers' in response &&
-    'configured' in response
-  );
-}
-
-export function isSolanaTestTransactionResponse(
-  response: unknown
-): response is SolanaTestTransactionResponse {
-  return !!(
-    response &&
-    typeof response === 'object' &&
-    'success' in response &&
-    'message' in response &&
-    !('data' in response)
-  );
-}
