@@ -115,24 +115,26 @@ export interface SiteStatsData {
 export type SiteStatsResponse = ApiResponse<SiteStatsData>;
 
 // Referral code types
-export interface ReferralCodeData extends WalletData {
+export interface ReferralCodeData {
+  /** Wallet address (EVM 0x format or Solana Base58) */
+  walletAddress: string;
   referralCode: string;
-  totalRedemptions: number;
-  lastUsedAt?: Optional<string>;
   createdAt: string;
 }
 
 export type ReferralCodeResponse = ApiResponse<ReferralCodeData>;
 
-export interface ReferredWallet extends WalletData {
+export interface ReferralConsumptionData {
+  /** Wallet address (EVM 0x format or Solana Base58) */
+  walletAddress: string;
+  /** Can be "" if no referral code is used */
+  referralCode: string;
   createdAt: string;
-  ipAddress?: Optional<string>;
 }
 
-export interface ReferralStatsData extends WalletData {
-  referralCode: string;
-  totalReferred: number;
-  referredWallets: ReferredWallet[];
+export interface ReferralStatsData {
+  total: number;
+  consumptions: ReferralConsumptionData[];
 }
 
 export type ReferralStatsResponse = ApiResponse<ReferralStatsData>;

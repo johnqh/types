@@ -48,7 +48,7 @@ export type {
   // Referral code types
   ReferralCodeData,
   ReferralCodeResponse,
-  ReferredWallet,
+  ReferralConsumptionData,
   ReferralStatsData,
   ReferralStatsResponse,
 
