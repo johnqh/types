@@ -84,6 +84,9 @@ export type {
   PointsResponse,
   LeaderboardResponse,
   SiteStatsResponse,
+  ReferralCodeResponse,
+  ReferralStatsResponse,
+  ErrorResponse,
 } from './types';
 
 // Export the most commonly used enums

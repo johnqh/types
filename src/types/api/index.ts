@@ -45,6 +45,13 @@ export type {
   SiteStatsData,
   SiteStatsResponse,
 
+  // Referral code types
+  ReferralCodeData,
+  ReferralCodeResponse,
+  ReferredWallet,
+  ReferralStatsData,
+  ReferralStatsResponse,
+
   // Error response types
   ErrorResponse,
 

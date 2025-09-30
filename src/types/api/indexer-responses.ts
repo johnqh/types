@@ -114,6 +114,29 @@ export interface SiteStatsData {
 
 export type SiteStatsResponse = ApiResponse<SiteStatsData>;
 
+// Referral code types
+export interface ReferralCodeData extends WalletData {
+  referralCode: string;
+  totalRedemptions: number;
+  lastUsedAt?: Optional<string>;
+  createdAt: string;
+}
+
+export type ReferralCodeResponse = ApiResponse<ReferralCodeData>;
+
+export interface ReferredWallet extends WalletData {
+  createdAt: string;
+  ipAddress?: Optional<string>;
+}
+
+export interface ReferralStatsData extends WalletData {
+  referralCode: string;
+  totalReferred: number;
+  referredWallets: ReferredWallet[];
+}
+
+export type ReferralStatsResponse = ApiResponse<ReferralStatsData>;
+
 // Error response type for API endpoints
 export interface ErrorResponse extends ApiResponse<never> {
   success: false;
@@ -132,4 +155,6 @@ export type IndexerApiResponse =
   | SignInMessageResponse
   | LeaderboardResponse
   | SiteStatsResponse
+  | ReferralCodeResponse
+  | ReferralStatsResponse
   | ErrorResponse;
