@@ -7,6 +7,7 @@
 
 import { Chain, ChainType } from '../../types/business/enums';
 import { Optional } from '../../types/common';
+import type { ChainConfig } from '../../types/blockchain/common';
 
 /**
  * Blockchain API keys configuration
@@ -830,6 +831,44 @@ export class RpcHelpers {
     }
 
     return mainnetChains;
+  }
+
+  /**
+   * Derive all chain information from a ChainConfig
+   * @param config - Chain configuration with API keys
+   * @returns Object with all derived chain information
+   * @example
+   * ```typescript
+   * const config: ChainConfig = {
+   *   chain: Chain.ETH_MAINNET,
+   *   alchemyApiKey: 'your-alchemy-key',
+   *   etherscanApiKey: 'your-etherscan-key'
+   * };
+   *
+   * const info = RpcHelpers.getChainInfo(config);
+   * // Returns: {
+   * //   chain: Chain.ETH_MAINNET,
+   * //   chainId: 1,
+   * //   chainType: ChainType.EVM,
+   * //   name: 'Ethereum',
+   * //   rpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/your-alchemy-key',
+   * //   explorerApiUrl: 'https://api.etherscan.io/api?apikey=your-etherscan-key',
+   * //   explorerUrl: 'https://etherscan.io',
+   * //   usdcAddress: '0xA0b86a33E6441146a8A8e27c01f0D9B1F5E42E92'
+   * // }
+   * ```
+   */
+  static getChainInfo(config: ChainConfig) {
+    return {
+      chain: config.chain,
+      chainId: this.getChainId(config.chain),
+      chainType: this.getChainType(config.chain),
+      name: this.getUserFriendlyName(config.chain),
+      rpcUrl: this.getRpcUrl(config.alchemyApiKey, config.chain),
+      explorerApiUrl: this.getExplorerApiUrl(config.etherscanApiKey, config.chain),
+      explorerUrl: this.getBlockExplorerUrl(config.chain),
+      usdcAddress: this.getUSDCAddress(config.chain),
+    };
   }
 
   /**

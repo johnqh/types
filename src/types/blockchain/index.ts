@@ -1,5 +1,6 @@
 // Common blockchain types
 export type {
+  ChainConfig,
   ClaimableRevenue,
   ClientConfig,
   DeploymentAddresses,

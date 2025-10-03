@@ -34,6 +34,7 @@ export type {
   EnvironmentVariables,
 
   // Blockchain types
+  ChainConfig,
   Message,
   MessageRecipient,
   TransactionResult,

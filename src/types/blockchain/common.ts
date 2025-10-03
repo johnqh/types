@@ -6,6 +6,25 @@
  */
 
 import { MessageBase, UnifiedError, Result, Optional } from '../common';
+import { Chain } from '../business/enums';
+
+// ============================================================================
+// NETWORK CONFIGURATION TYPES
+// ============================================================================
+
+/**
+ * Chain configuration with API keys
+ * All other chain information (RPC URLs, chain ID, USDC addresses, etc.)
+ * can be derived using RpcHelpers
+ */
+export interface ChainConfig {
+  /** Chain identifier */
+  chain: Chain;
+  /** Alchemy API key for RPC access */
+  alchemyApiKey: string;
+  /** Etherscan Multichain API key for block explorer access */
+  etherscanApiKey: string;
+}
 
 // ============================================================================
 // CORE MESSAGING TYPES
