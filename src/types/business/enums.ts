@@ -87,9 +87,27 @@ export enum Chain {
   NEXUS_MAINNET = 'nexus-mainnet',
   NEXUS_TESTNET = 'nexus-testnet',
 
-  // Hyperliquid
-  HYPERLIQUID_MAINNET = 'hyperliquid-mainnet',
-  HYPERLIQUID_TESTNET = 'hyperliquid-testnet',
+  // HyperEVM
+  HYPEREVM_MAINNET = 'hyperevm-mainnet',
+  HYPEREVM_TESTNET = 'hyperevm-testnet',
+
+  // Sonic (gaming-focused chain)
+  SONIC_MAINNET = 'sonic-mainnet',
+  SONIC_TESTNET = 'sonic-testnet',
+  SONIC_BLAZE = 'sonic-blaze',
+
+  // Unichain (Uniswap L2)
+  UNICHAIN_MAINNET = 'unichain-mainnet',
+  UNICHAIN_SEPOLIA = 'unichain-sepolia',
+
+  // World Chain (Worldcoin L2)
+  WORLD_MAINNET = 'world-mainnet',
+
+  // XDC Network
+  XDC_MAINNET = 'xdc-mainnet',
+
+  // Ink
+  INK_TESTNET = 'ink-testnet',
 
   // AI-focused chains
   // Bittensor (TAO) - Substrate-based, not EVM

@@ -93,9 +93,27 @@ const ALCHEMY_NETWORK_MAP: Record<Chain, string> = {
   [Chain.NEXUS_MAINNET]: '',
   [Chain.NEXUS_TESTNET]: '',
 
-  // Hyperliquid
-  [Chain.HYPERLIQUID_MAINNET]: '',
-  [Chain.HYPERLIQUID_TESTNET]: '',
+  // HyperEVM
+  [Chain.HYPEREVM_MAINNET]: '',
+  [Chain.HYPEREVM_TESTNET]: '',
+
+  // Sonic
+  [Chain.SONIC_MAINNET]: '',
+  [Chain.SONIC_TESTNET]: '',
+  [Chain.SONIC_BLAZE]: '',
+
+  // Unichain
+  [Chain.UNICHAIN_MAINNET]: '',
+  [Chain.UNICHAIN_SEPOLIA]: '',
+
+  // World Chain
+  [Chain.WORLD_MAINNET]: '',
+
+  // XDC Network
+  [Chain.XDC_MAINNET]: '',
+
+  // Ink
+  [Chain.INK_TESTNET]: '',
 
   // Fetch.ai
   [Chain.FETCH_MAINNET]: '',
@@ -192,9 +210,27 @@ const EXPLORER_DOMAIN_MAP: Record<Chain, string> = {
   [Chain.NEXUS_MAINNET]: '',
   [Chain.NEXUS_TESTNET]: '',
 
-  // Hyperliquid
-  [Chain.HYPERLIQUID_MAINNET]: '',
-  [Chain.HYPERLIQUID_TESTNET]: '',
+  // HyperEVM
+  [Chain.HYPEREVM_MAINNET]: '',
+  [Chain.HYPEREVM_TESTNET]: '',
+
+  // Sonic
+  [Chain.SONIC_MAINNET]: '',
+  [Chain.SONIC_TESTNET]: '',
+  [Chain.SONIC_BLAZE]: '',
+
+  // Unichain
+  [Chain.UNICHAIN_MAINNET]: '',
+  [Chain.UNICHAIN_SEPOLIA]: '',
+
+  // World Chain
+  [Chain.WORLD_MAINNET]: '',
+
+  // XDC Network
+  [Chain.XDC_MAINNET]: '',
+
+  // Ink
+  [Chain.INK_TESTNET]: '',
 
   // Fetch.ai
   [Chain.FETCH_MAINNET]: '',
@@ -291,9 +327,27 @@ const EXPLORER_BROWSER_MAP: Record<Chain, string> = {
   [Chain.NEXUS_MAINNET]: 'explorer.nexus.xyz',
   [Chain.NEXUS_TESTNET]: 'testnet.explorer.nexus.xyz',
 
-  // Hyperliquid
-  [Chain.HYPERLIQUID_MAINNET]: 'app.hyperliquid.xyz/explorer',
-  [Chain.HYPERLIQUID_TESTNET]: 'app.hyperliquid-testnet.xyz/explorer',
+  // HyperEVM
+  [Chain.HYPEREVM_MAINNET]: 'app.hyperliquid.xyz/explorer',
+  [Chain.HYPEREVM_TESTNET]: 'app.hyperliquid-testnet.xyz/explorer',
+
+  // Sonic
+  [Chain.SONIC_MAINNET]: 'sonicscan.org',
+  [Chain.SONIC_TESTNET]: 'testnet.sonicscan.org',
+  [Chain.SONIC_BLAZE]: 'blaze.sonicscan.org',
+
+  // Unichain
+  [Chain.UNICHAIN_MAINNET]: 'uniscan.xyz',
+  [Chain.UNICHAIN_SEPOLIA]: 'sepolia.uniscan.xyz',
+
+  // World Chain
+  [Chain.WORLD_MAINNET]: 'worldscan.org',
+
+  // XDC Network
+  [Chain.XDC_MAINNET]: 'xdcscan.io',
+
+  // Ink
+  [Chain.INK_TESTNET]: 'explorer.inkonchain.com',
 
   // Fetch.ai
   [Chain.FETCH_MAINNET]: 'explore.fetch.ai',
@@ -358,8 +412,16 @@ const EVM_CHAINS = new Set<Chain>([
   Chain.PLUME_TESTNET,
   Chain.NEXUS_MAINNET,
   Chain.NEXUS_TESTNET,
-  Chain.HYPERLIQUID_MAINNET,
-  Chain.HYPERLIQUID_TESTNET,
+  Chain.HYPEREVM_MAINNET,
+  Chain.HYPEREVM_TESTNET,
+  Chain.SONIC_MAINNET,
+  Chain.SONIC_TESTNET,
+  Chain.SONIC_BLAZE,
+  Chain.UNICHAIN_MAINNET,
+  Chain.UNICHAIN_SEPOLIA,
+  Chain.WORLD_MAINNET,
+  Chain.XDC_MAINNET,
+  Chain.INK_TESTNET,
   Chain.FETCH_MAINNET,
   Chain.FETCH_TESTNET,
   Chain.GENSYN_MAINNET,
@@ -453,9 +515,27 @@ const CHAIN_ID_MAP: Record<Chain, number> = {
   [Chain.NEXUS_MAINNET]: 9999, // TBD - placeholder
   [Chain.NEXUS_TESTNET]: 9998, // TBD - placeholder
 
-  // Hyperliquid
-  [Chain.HYPERLIQUID_MAINNET]: 998, // Hyperliquid L1
-  [Chain.HYPERLIQUID_TESTNET]: 997, // Hyperliquid testnet
+  // HyperEVM
+  [Chain.HYPEREVM_MAINNET]: 998, // HyperEVM L1
+  [Chain.HYPEREVM_TESTNET]: 997, // HyperEVM testnet
+
+  // Sonic
+  [Chain.SONIC_MAINNET]: 146, // Sonic mainnet
+  [Chain.SONIC_TESTNET]: 64165, // Sonic testnet (S)
+  [Chain.SONIC_BLAZE]: 57054, // Sonic Blaze testnet (deprecated soon)
+
+  // Unichain
+  [Chain.UNICHAIN_MAINNET]: 1, // TBD - mainnet not launched yet, placeholder
+  [Chain.UNICHAIN_SEPOLIA]: 1301, // Unichain Sepolia testnet
+
+  // World Chain
+  [Chain.WORLD_MAINNET]: 480, // World Chain mainnet
+
+  // XDC Network
+  [Chain.XDC_MAINNET]: 50, // XDC Network mainnet
+
+  // Ink
+  [Chain.INK_TESTNET]: 763373, // Ink testnet (Sepolia)
 
   // Fetch.ai (Cosmos-based but supports EVM)
   [Chain.FETCH_MAINNET]: 2154, // Fetch.ai EVM
@@ -526,8 +606,8 @@ const USDC_ADDRESS_MAP: Record<Chain, string> = {
   [Chain.CELO_MAINNET]: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
   [Chain.CELO_ALFAJORES]: '0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B',
 
-  // zkSync
-  [Chain.ZKSYNC_MAINNET]: '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4',
+  // zkSync - Official Circle USDC
+  [Chain.ZKSYNC_MAINNET]: '0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4',
   [Chain.ZKSYNC_SEPOLIA]: '0x',
 
   // Linea
@@ -547,16 +627,34 @@ const USDC_ADDRESS_MAP: Record<Chain, string> = {
   [Chain.STORY_TESTNET]: '0x',
 
   // Plume Network
-  [Chain.PLUME_MAINNET]: '0x',
-  [Chain.PLUME_TESTNET]: '0x',
+  [Chain.PLUME_MAINNET]: '0x222365EF19F7947e5484218551B56bb3965Aa7aF',
+  [Chain.PLUME_TESTNET]: '0xcB5f30e335672893c7eb944B374c196392C19D18',
 
   // Nexus
   [Chain.NEXUS_MAINNET]: '0x',
   [Chain.NEXUS_TESTNET]: '0x',
 
-  // Hyperliquid
-  [Chain.HYPERLIQUID_MAINNET]: '0x',
-  [Chain.HYPERLIQUID_TESTNET]: '0x',
+  // HyperEVM
+  [Chain.HYPEREVM_MAINNET]: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
+  [Chain.HYPEREVM_TESTNET]: '0x2B3370eE501B4a559b57D449569354196457D8Ab',
+
+  // Sonic
+  [Chain.SONIC_MAINNET]: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
+  [Chain.SONIC_TESTNET]: '0x0BA304580ee7c9a980CF72e55f5Ed2E9fd30Bc51',
+  [Chain.SONIC_BLAZE]: '0xA4879Fed32Ecbef99399e5cbC247E533421C4eC6',
+
+  // Unichain
+  [Chain.UNICHAIN_MAINNET]: '0x078D782b760474a361dDA0AF3839290b0EF57AD6',
+  [Chain.UNICHAIN_SEPOLIA]: '0x31d0220469e10c4E71834a79b1f276E153D00a2D',
+
+  // World Chain
+  [Chain.WORLD_MAINNET]: '0x79A02482A880bCe3F13E09da970dC34dB4cD24D1',
+
+  // XDC Network
+  [Chain.XDC_MAINNET]: '0x',
+
+  // Ink
+  [Chain.INK_TESTNET]: '0xFabab97dCE620294D2B0b0e46C68964e326300Ac',
 
   // Fetch.ai
   [Chain.FETCH_MAINNET]: '0x',
@@ -653,9 +751,27 @@ const CHAIN_NAME_MAP: Record<Chain, string> = {
   [Chain.NEXUS_MAINNET]: 'Nexus',
   [Chain.NEXUS_TESTNET]: 'Nexus Testnet',
 
-  // Hyperliquid
-  [Chain.HYPERLIQUID_MAINNET]: 'Hyperliquid',
-  [Chain.HYPERLIQUID_TESTNET]: 'Hyperliquid Testnet',
+  // HyperEVM
+  [Chain.HYPEREVM_MAINNET]: 'HyperEVM',
+  [Chain.HYPEREVM_TESTNET]: 'HyperEVM Testnet',
+
+  // Sonic
+  [Chain.SONIC_MAINNET]: 'Sonic',
+  [Chain.SONIC_TESTNET]: 'Sonic Testnet',
+  [Chain.SONIC_BLAZE]: 'Sonic Blaze',
+
+  // Unichain
+  [Chain.UNICHAIN_MAINNET]: 'Unichain',
+  [Chain.UNICHAIN_SEPOLIA]: 'Unichain Sepolia',
+
+  // World Chain
+  [Chain.WORLD_MAINNET]: 'World Chain',
+
+  // XDC Network
+  [Chain.XDC_MAINNET]: 'XDC Network',
+
+  // Ink
+  [Chain.INK_TESTNET]: 'Ink Testnet',
 
   // Fetch.ai
   [Chain.FETCH_MAINNET]: 'Fetch.ai',
