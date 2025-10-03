@@ -146,6 +146,14 @@ export interface ReferralStatsData {
 
 export type ReferralStatsResponse = ApiResponse<ReferralStatsData>;
 
+// Authentication status types
+export interface AuthenticationStatusData {
+  authenticated: boolean;
+  datetime?: Optional<string>;
+}
+
+export type AuthenticationStatusResponse = ApiResponse<AuthenticationStatusData>;
+
 // Error response type for API endpoints
 export interface ErrorResponse extends ApiResponse<never> {
   success: false;
@@ -166,4 +174,5 @@ export type IndexerApiResponse =
   | SiteStatsResponse
   | ReferralCodeResponse
   | ReferralStatsResponse
+  | AuthenticationStatusResponse
   | ErrorResponse;

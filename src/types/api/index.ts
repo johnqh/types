@@ -53,6 +53,10 @@ export type {
   ReferralStatsData,
   ReferralStatsResponse,
 
+  // Authentication status types
+  AuthenticationStatusData,
+  AuthenticationStatusResponse,
+
   // Error response types
   ErrorResponse,
 
