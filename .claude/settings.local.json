@@ -28,7 +28,8 @@
       "Bash(do [ \"$file\" != \"src/types/business/index.ts\" ])",
       "Bash(done)",
       "Bash(find:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

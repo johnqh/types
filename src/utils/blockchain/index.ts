@@ -63,3 +63,7 @@ export {
   isSolanaChainId,
   isSolanaNetwork,
 } from './network-config';
+
+// RPC helper utilities
+export type { BlockchainApis } from './rpc-helpers';
+export { RpcHelpers } from './rpc-helpers';

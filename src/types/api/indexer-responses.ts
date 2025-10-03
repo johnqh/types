@@ -9,9 +9,16 @@ import { ApiResponse } from '../infrastructure/api';
 
 // Note: Using ApiResponse<T> from infrastructure/api for consistency
 
+// Name service acccount
+
+export interface NameServiceAccount {
+  name: string;
+  entitled: boolean;
+}
+
 // Email address aggregation types
 export interface WalletAccount extends WalletData {
-  names: string[];
+  names: NameServiceAccount[];
 }
 export interface EmailAccountsResult {
   accounts: WalletAccount[];

@@ -3,6 +3,7 @@ export type { EmailFolder } from './enums';
 
 export {
   AuthStatus,
+  Chain,
   ChainType,
   ConnectionState,
   ConnectionType,

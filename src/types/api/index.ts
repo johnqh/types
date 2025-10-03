@@ -1,6 +1,7 @@
 // Export all response types as named exports
 export type {
   // Email account types
+  NameServiceAccount,
   WalletAccount,
   EmailAccountsResult,
   EmailAccountsResponse,

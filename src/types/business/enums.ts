@@ -16,6 +16,39 @@ export enum ChainType {
   SOLANA = 'solana',
 }
 
+// Supported blockchain networks
+export enum Chain {
+  // Ethereum
+  ETH_MAINNET = 'eth-mainnet',
+  ETH_SEPOLIA = 'eth-sepolia',
+  ETH_GOERLI = 'eth-goerli',
+
+  // Polygon
+  POLYGON_MAINNET = 'polygon-mainnet',
+  POLYGON_MUMBAI = 'polygon-mumbai',
+  POLYGON_AMOY = 'polygon-amoy',
+
+  // Optimism
+  OPTIMISM_MAINNET = 'optimism-mainnet',
+  OPTIMISM_SEPOLIA = 'optimism-sepolia',
+  OPTIMISM_GOERLI = 'optimism-goerli',
+
+  // Arbitrum
+  ARBITRUM_MAINNET = 'arbitrum-mainnet',
+  ARBITRUM_SEPOLIA = 'arbitrum-sepolia',
+  ARBITRUM_GOERLI = 'arbitrum-goerli',
+
+  // Base
+  BASE_MAINNET = 'base-mainnet',
+  BASE_SEPOLIA = 'base-sepolia',
+  BASE_GOERLI = 'base-goerli',
+
+  // Solana
+  SOLANA_MAINNET = 'solana-mainnet',
+  SOLANA_DEVNET = 'solana-devnet',
+  SOLANA_TESTNET = 'solana-testnet',
+}
+
 // Theme states
 export enum Theme {
   LIGHT = 'light',

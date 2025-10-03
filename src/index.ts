@@ -89,10 +89,15 @@ export type {
   ErrorResponse,
 } from './types';
 
+// Export RPC helpers and types (via utils -> blockchain)
+export type { BlockchainApis } from './utils';
+export { RpcHelpers } from './utils';
+
 // Export the most commonly used enums
 export {
   // Business enums
   AuthStatus,
+  Chain,
   Theme,
   FontSize,
   EmailComposeType,
