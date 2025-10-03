@@ -1,6 +1,6 @@
 {
   "name": "@johnqh/types",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for the 0xmail.box Web3 email ecosystem - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
