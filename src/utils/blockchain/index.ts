@@ -34,36 +34,6 @@ export {
   validateEventArgs,
 } from './event-helpers';
 
-// Network configuration utilities
-export type {
-  ChainId,
-  EVMChainId,
-  EVMNetwork,
-  NetworkIdentifier,
-  SolanaChainId,
-  SolanaNetwork,
-} from './network-config';
-
-export {
-  DEFAULT_RPC_ENDPOINTS,
-  EVM_CHAIN_IDS,
-  EVM_USDC_ADDRESSES,
-  NETWORK_IDENTIFIERS,
-  SOLANA_CHAIN_IDS,
-  SOLANA_USDC_MINTS,
-  getAllChainIds,
-  getAllEVMChainIds,
-  getAllSolanaChainIds,
-  getDefaultRPCEndpoint,
-  getEVMChainId,
-  getEVMUSDCAddress,
-  getSolanaUSDCMint,
-  isEVMChainId,
-  isEVMNetwork,
-  isSolanaChainId,
-  isSolanaNetwork,
-} from './network-config';
-
 // RPC helper utilities
 export type { BlockchainApis } from './rpc-helpers';
 export { RpcHelpers } from './rpc-helpers';

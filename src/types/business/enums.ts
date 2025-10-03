@@ -43,10 +43,78 @@ export enum Chain {
   BASE_SEPOLIA = 'base-sepolia',
   BASE_GOERLI = 'base-goerli',
 
+  // Avalanche
+  AVALANCHE_MAINNET = 'avalanche-mainnet',
+  AVALANCHE_FUJI = 'avalanche-fuji',
+
+  // BNB Chain (formerly Binance Smart Chain)
+  BNB_MAINNET = 'bnb-mainnet',
+  BNB_TESTNET = 'bnb-testnet',
+
+  // Gnosis Chain (formerly xDai)
+  GNOSIS_MAINNET = 'gnosis-mainnet',
+  GNOSIS_CHIADO = 'gnosis-chiado',
+
+  // Celo
+  CELO_MAINNET = 'celo-mainnet',
+  CELO_ALFAJORES = 'celo-alfajores',
+
+  // zkSync
+  ZKSYNC_MAINNET = 'zksync-mainnet',
+  ZKSYNC_SEPOLIA = 'zksync-sepolia',
+
+  // Linea
+  LINEA_MAINNET = 'linea-mainnet',
+  LINEA_SEPOLIA = 'linea-sepolia',
+
+  // Scroll
+  SCROLL_MAINNET = 'scroll-mainnet',
+  SCROLL_SEPOLIA = 'scroll-sepolia',
+
+  // Monad
+  MONAD_MAINNET = 'monad-mainnet',
+  MONAD_TESTNET = 'monad-testnet',
+
+  // Story Protocol
+  STORY_MAINNET = 'story-mainnet',
+  STORY_TESTNET = 'story-testnet',
+
+  // Plume Network
+  PLUME_MAINNET = 'plume-mainnet',
+  PLUME_TESTNET = 'plume-testnet',
+
+  // Nexus
+  NEXUS_MAINNET = 'nexus-mainnet',
+  NEXUS_TESTNET = 'nexus-testnet',
+
+  // Hyperliquid
+  HYPERLIQUID_MAINNET = 'hyperliquid-mainnet',
+  HYPERLIQUID_TESTNET = 'hyperliquid-testnet',
+
+  // AI-focused chains
+  // Bittensor (TAO) - Substrate-based, not EVM
+  // Fetch.ai
+  FETCH_MAINNET = 'fetch-mainnet',
+  FETCH_TESTNET = 'fetch-testnet',
+
+  // Akash Network - Cosmos-based, not EVM
+
+  // Gensyn - AI compute chain
+  GENSYN_MAINNET = 'gensyn-mainnet',
+  GENSYN_TESTNET = 'gensyn-testnet',
+
+  // Ritual - AI inference chain
+  RITUAL_MAINNET = 'ritual-mainnet',
+  RITUAL_TESTNET = 'ritual-testnet',
+
   // Solana
   SOLANA_MAINNET = 'solana-mainnet',
   SOLANA_DEVNET = 'solana-devnet',
   SOLANA_TESTNET = 'solana-testnet',
+
+  // Local development
+  EVM_LOCAL = 'evm-local',
+  SOLANA_LOCAL = 'solana-local',
 }
 
 // Theme states

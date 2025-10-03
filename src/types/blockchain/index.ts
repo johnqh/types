@@ -7,7 +7,6 @@ export type {
   Message,
   MessageFilter,
   MessageRecipient,
-  NetworkConfig,
   OperationError,
   PaginationOptions,
   PreparedMessage,
@@ -18,7 +17,6 @@ export type {
 } from './common';
 
 export {
-  DEFAULT_NETWORKS,
   MessageType,
   PROTOCOL_CONSTANTS,
   TransactionStatus,

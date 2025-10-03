@@ -6,10 +6,6 @@
  */
 
 import { MessageBase, UnifiedError, Result, Optional } from '../common';
-import type { NetworkConfig } from '../../utils/blockchain/network-config';
-
-// Re-export network types from utils
-export type { NetworkConfig };
 
 // ============================================================================
 // CORE MESSAGING TYPES
@@ -139,8 +135,10 @@ export interface DeploymentAddresses {
  * @interface ClientConfig
  */
 export interface ClientConfig {
-  /** Network configuration */
-  network: NetworkConfig;
+  /** RPC endpoint URL */
+  rpcUrl: string;
+  /** Chain ID */
+  chainId: number;
   /** Contract/program addresses */
   addresses: DeploymentAddresses;
   /** Optional wallet private key for signing */
@@ -322,6 +320,3 @@ export const PROTOCOL_CONSTANTS = {
     MAIL_ID: 100,
   },
 } as const;
-
-// Re-export network configurations from utils
-export { DEFAULT_NETWORKS } from '../../utils/blockchain/network-config';

@@ -36,7 +36,6 @@ export type {
   // Blockchain types
   Message,
   MessageRecipient,
-  NetworkConfig,
   TransactionResult,
 
   // Infrastructure types
