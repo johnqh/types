@@ -482,34 +482,35 @@ const CHAIN_ID_MAP: Record<Chain, number> = {
 /**
  * USDC address/mint mappings
  * EVM chains have contract addresses, Solana chains have mint addresses
+ * Source: https://developers.circle.com/stablecoins/usdc-contract-addresses
  */
 const USDC_ADDRESS_MAP: Record<Chain, string> = {
-  // Ethereum
-  [Chain.ETH_MAINNET]: '0xA0b86a33E6441146a8A8e27c01f0D9B1F5E42E92',
-  [Chain.ETH_SEPOLIA]: '0x6f14C02fC1F78322cFd7d707aB90f18baD3B54f5',
-  [Chain.ETH_GOERLI]: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+  // Ethereum - Official Circle USDC
+  [Chain.ETH_MAINNET]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  [Chain.ETH_SEPOLIA]: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+  [Chain.ETH_GOERLI]: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F', // Deprecated
 
-  // Polygon
-  [Chain.POLYGON_MAINNET]: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
-  [Chain.POLYGON_MUMBAI]: '0x0FA8781a83E46826621b3BC094Ea2A0212e71B23',
+  // Polygon - Official Circle USDC (native USDC)
+  [Chain.POLYGON_MAINNET]: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+  [Chain.POLYGON_MUMBAI]: '0x9999f7Fea5938fD3b1E26A12c3f2fb024e194f97', // Deprecated
   [Chain.POLYGON_AMOY]: '0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582',
 
-  // Optimism
+  // Optimism - Official Circle USDC
   [Chain.OPTIMISM_MAINNET]: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
   [Chain.OPTIMISM_SEPOLIA]: '0x5fd84259d66Cd46123540766Be93DFE6D43130D7',
-  [Chain.OPTIMISM_GOERLI]: '0xe05606174bac4A6364B31bd0eCA4bf4dD368f8C6',
+  [Chain.OPTIMISM_GOERLI]: '0xe05606174bac4A6364B31bd0eCA4bf4dD368f8C6', // Deprecated
 
-  // Arbitrum
+  // Arbitrum - Official Circle USDC
   [Chain.ARBITRUM_MAINNET]: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
   [Chain.ARBITRUM_SEPOLIA]: '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d',
-  [Chain.ARBITRUM_GOERLI]: '0xfd064A18f3BF249cf1f87FC203E90D8f650f2d63',
+  [Chain.ARBITRUM_GOERLI]: '0xfd064A18f3BF249cf1f87FC203E90D8f650f2d63', // Deprecated
 
-  // Base
+  // Base - Official Circle USDC
   [Chain.BASE_MAINNET]: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
   [Chain.BASE_SEPOLIA]: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-  [Chain.BASE_GOERLI]: '0xF175520C52418dfE19C8098071a252da48Cd1C19',
+  [Chain.BASE_GOERLI]: '0xF175520C52418dfE19C8098071a252da48Cd1C19', // Deprecated
 
-  // Avalanche
+  // Avalanche - Official Circle USDC
   [Chain.AVALANCHE_MAINNET]: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
   [Chain.AVALANCHE_FUJI]: '0x5425890298aed601595a70AB815c96711a31Bc65',
 
@@ -865,7 +866,10 @@ export class RpcHelpers {
       chainType: this.getChainType(config.chain),
       name: this.getUserFriendlyName(config.chain),
       rpcUrl: this.getRpcUrl(config.alchemyApiKey, config.chain),
-      explorerApiUrl: this.getExplorerApiUrl(config.etherscanApiKey, config.chain),
+      explorerApiUrl: this.getExplorerApiUrl(
+        config.etherscanApiKey,
+        config.chain
+      ),
       explorerUrl: this.getBlockExplorerUrl(config.chain),
       usdcAddress: this.getUSDCAddress(config.chain),
     };
@@ -966,8 +970,14 @@ export class RpcHelpers {
    * // Returns: undefined (Solana doesn't have Etherscan-style API)
    * ```
    */
-  static getExplorerApiUrl(etherscanApiKey: string, chain: Chain): Optional<string>;
-  static getExplorerApiUrl(apis: BlockchainApis, chain: Chain): Optional<string>;
+  static getExplorerApiUrl(
+    etherscanApiKey: string,
+    chain: Chain
+  ): Optional<string>;
+  static getExplorerApiUrl(
+    apis: BlockchainApis,
+    chain: Chain
+  ): Optional<string>;
   static getExplorerApiUrl(
     apiKeyOrApis: string | BlockchainApis,
     chain: Chain
