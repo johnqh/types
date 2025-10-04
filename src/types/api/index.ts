@@ -57,6 +57,11 @@ export type {
   AuthenticationStatusData,
   AuthenticationStatusResponse,
 
+  // Block status types
+  ChainBlockInfo,
+  BlockStatusData,
+  BlockStatusResponse,
+
   // Error response types
   ErrorResponse,
 

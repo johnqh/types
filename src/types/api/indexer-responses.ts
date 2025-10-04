@@ -154,6 +154,25 @@ export interface AuthenticationStatusData {
 
 export type AuthenticationStatusResponse = ApiResponse<AuthenticationStatusData>;
 
+// Block status types
+export interface ChainBlockInfo {
+  chain: string;
+  currentBlock: string | null;
+  indexedBlock: string | null;
+  rpcUrl: string | null;
+  status: 'active' | 'error';
+  error?: Optional<string>;
+}
+
+export interface BlockStatusData {
+  chains: ChainBlockInfo[];
+  totalChains: number;
+  activeChains: number;
+  timestamp: string;
+}
+
+export type BlockStatusResponse = ApiResponse<BlockStatusData>;
+
 // Error response type for API endpoints
 export interface ErrorResponse extends ApiResponse<never> {
   success: false;
@@ -175,4 +194,5 @@ export type IndexerApiResponse =
   | ReferralCodeResponse
   | ReferralStatsResponse
   | AuthenticationStatusResponse
+  | BlockStatusResponse
   | ErrorResponse;

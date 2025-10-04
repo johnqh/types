@@ -86,6 +86,9 @@ export type {
   SiteStatsResponse,
   ReferralCodeResponse,
   ReferralStatsResponse,
+  ChainBlockInfo,
+  BlockStatusData,
+  BlockStatusResponse,
   ErrorResponse,
 } from './types';
 
