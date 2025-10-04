@@ -30,7 +30,8 @@
       "Bash(find:*)",
       "Bash(git push:*)",
       "Bash(cat:*)",
-      "WebFetch(domain:developers.circle.com)"
+      "WebFetch(domain:developers.circle.com)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
