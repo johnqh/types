@@ -157,6 +157,7 @@ export type AuthenticationStatusResponse = ApiResponse<AuthenticationStatusData>
 // Block status types
 export interface ChainBlockInfo {
   chain: string;
+  chainId: number;
   currentBlock: string | null;
   indexedBlock: string | null;
   rpcUrl: string | null;
