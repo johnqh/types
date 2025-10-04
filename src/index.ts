@@ -90,6 +90,18 @@ export type {
   BlockStatusData,
   BlockStatusResponse,
   ErrorResponse,
+
+  // KYC verification types (commonly used)
+  KYCApplication,
+  VerificationResult,
+  UserConsent,
+  InitiateKYCRequest,
+  InitiateKYCResponse,
+  GetKYCStatusResponse,
+  VerifyUserRequest,
+  VerifyUserResponse,
+  KYCVerificationLevel,
+  KYCApplicationStatus,
 } from './types';
 
 // Export RPC helpers and types (via utils -> blockchain)

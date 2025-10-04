@@ -18,3 +18,6 @@ export * from './infrastructure';
 
 // Mailbox contract response types
 export * from './mailbox-responses';
+
+// KYC verification types
+export * from './kyc';
