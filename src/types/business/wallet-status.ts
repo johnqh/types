@@ -4,7 +4,7 @@
  */
 
 import { Optional } from '../common';
-import { ConnectionState } from './enums';
+import { ConnectionState, ChainType } from './enums';
 
 /**
  * Wallet status interface representing the current state of wallet connection
@@ -12,6 +12,8 @@ import { ConnectionState } from './enums';
 export interface WalletStatus {
   /** The connected wallet address */
   walletAddress: string;
+  /** The blockchain type (EVM or Solana) */
+  chainType: ChainType;
   /** Optional verification message (present when wallet is verified) */
   message?: Optional<string>;
   /** Optional signature (present when wallet is verified) */
