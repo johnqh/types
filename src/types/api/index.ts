@@ -62,6 +62,12 @@ export type {
   BlockStatusData,
   BlockStatusResponse,
 
+  // Name service resolution types
+  NameServiceData,
+  NameServiceResponse,
+  NameResolutionData,
+  NameResolutionResponse,
+
   // Error response types
   ErrorResponse,
 

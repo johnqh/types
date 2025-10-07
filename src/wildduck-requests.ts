@@ -46,6 +46,7 @@ export interface AuthenticateRequest extends BaseSessionFields {
   signature: string; // Required - Blockchain signature
   nonce: string; // Required - Unique nonce for replay protection
   message: string; // Required - SIWE/SIWS message that was signed
+  signer?: Optional<string>; // The wallet address that created the signature
   protocol?: Optional<string>; // Default: "API"
   scope?: Optional<'master' | 'imap' | 'smtp' | 'pop3'>; // Default: "master"
   appId?: Optional<string>; // Optional app URL

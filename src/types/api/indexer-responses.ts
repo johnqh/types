@@ -174,6 +174,17 @@ export interface BlockStatusData {
 
 export type BlockStatusResponse = ApiResponse<BlockStatusData>;
 
+// Name service resolution types
+export interface NameServiceData {
+  names: string[];
+}
+
+export type NameServiceResponse = ApiResponse<NameServiceData>;
+
+export interface NameResolutionData extends WalletData {}
+
+export type NameResolutionResponse = ApiResponse<NameResolutionData>;
+
 // Error response type for API endpoints
 export interface ErrorResponse extends ApiResponse<never> {
   success: false;
@@ -196,4 +207,6 @@ export type IndexerApiResponse =
   | ReferralStatsResponse
   | AuthenticationStatusResponse
   | BlockStatusResponse
+  | NameServiceResponse
+  | NameResolutionResponse
   | ErrorResponse;
