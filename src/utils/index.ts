@@ -10,4 +10,3 @@ export * from './constants';
 export * from './logging';
 export * from './url';
 export * from './async-helpers';
-export * from './useApiCall';

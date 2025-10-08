@@ -108,14 +108,7 @@ export type {
 export type { BlockchainApis } from './utils';
 export { RpcHelpers } from './utils';
 
-// Export async utilities and React hooks
-export {
-  useApiCall,
-  useApiCallStrict,
-  useApiGroup,
-  type UseApiCallOptions,
-  type UseApiCallReturn,
-} from './utils';
+// Export async utilities
 export {
   safeAsync,
   withLoadingState,
