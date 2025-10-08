@@ -1,8 +1,8 @@
 // Common utility types
 export * from './common';
 
-// API response types
-export * from './api';
+// Indexer API response types
+export * from './indexer';
 
 // Business domain types
 export * from './business';
@@ -21,3 +21,6 @@ export * from './mailbox-responses';
 
 // KYC verification types
 export * from './kyc';
+
+// WildDuck email server API types
+export * from './wildduck';

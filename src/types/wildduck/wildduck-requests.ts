@@ -6,7 +6,7 @@
  * Based on schemas from wildduck/lib/schemas and API route definitions
  */
 
-import { Optional } from './types/common';
+import { Optional } from '../common';
 
 // =============================================================================
 // BASE COMMON TYPES

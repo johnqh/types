@@ -14,7 +14,7 @@ import {
   isPointsResponse,
   isLeaderboardResponse,
   isSiteStatsResponse,
-} from '../../../src/types/api/indexer-guards';
+} from '../../../src/types/indexer/indexer-guards';
 
 describe('Indexer Type Guards', () => {
   const mockTimestamp = '2023-01-01T00:00:00Z';

@@ -160,7 +160,7 @@ const validation = Web3UsernameValidator.validate('vitalik.eth');
 ```
 src/
 ├── types/                    # Type definitions by domain
-│   ├── api/                 # API request/response types
+│   ├── indexer/             # Indexer API request/response types
 │   ├── blockchain/          # Web3 and blockchain types
 │   ├── business/            # Core business logic types
 │   ├── common.ts            # Shared utility types (Optional<T>, Result<T>)
@@ -275,7 +275,7 @@ import { Email, User, Optional } from '@johnqh/types';
 
 // Specific modules (tree-shakeable)
 import { ChainType } from '@johnqh/types/enums';
-import { ValidationResponse } from '@johnqh/types/api';
+import { ValidationResponse } from '@johnqh/types/indexer';
 
 // Utilities
 import { formatWalletAddress } from '@johnqh/types/utils';

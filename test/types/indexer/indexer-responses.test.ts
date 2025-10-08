@@ -27,7 +27,7 @@ import type {
   SolanaStatusResponse,
   SolanaTestTransactionResponse,
   IndexerApiResponse,
-} from '../../../src/types/api/indexer-responses';
+} from '../../../src/types/indexer/indexer-responses';
 
 describe('Indexer Response Types', () => {
   const mockTimestamp = '2023-01-01T00:00:00Z';

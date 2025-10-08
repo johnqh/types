@@ -64,7 +64,7 @@ import {
   createSubmitMessageRequest,
   createCreateMailboxRequest,
   createPaginationRequest,
-} from '../src/wildduck-requests';
+} from '../src/types/wildduck/wildduck-requests';
 
 describe('WildDuck Requests', () => {
   describe('Base Types', () => {
