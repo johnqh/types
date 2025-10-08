@@ -108,6 +108,25 @@ export type {
 export type { BlockchainApis } from './utils';
 export { RpcHelpers } from './utils';
 
+// Export async utilities and React hooks
+export {
+  useApiCall,
+  useApiCallStrict,
+  useApiGroup,
+  type UseApiCallOptions,
+  type UseApiCallReturn,
+} from './utils';
+export {
+  safeAsync,
+  withLoadingState,
+  safeParallel,
+  withTimeout,
+  withCache,
+  clearExpiredCache,
+  debounceAsync,
+  type AsyncResult,
+} from './utils';
+
 // Export the most commonly used enums
 export {
   // Business enums
