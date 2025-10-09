@@ -1,75 +1,75 @@
 // Export all response types as named exports
 export type {
   // Email account types
-  NameServiceAccount,
-  WalletAccount,
-  EmailAccountsResult,
-  EmailAccountsResponse,
+  IndexerNameServiceAccount,
+  IndexerWalletAccount,
+  IndexerEmailAccountsResult,
+  IndexerEmailAccountsResponse,
 
   // Rewards types
-  RewardData,
-  RewardHistoryData,
-  RewardsResponse,
+  IndexerRewardData,
+  IndexerRewardHistoryData,
+  IndexerRewardsResponse,
 
   // Address validation types
-  AddressValidationData,
-  AddressValidationResponse,
+  IndexerAddressValidationData,
+  IndexerAddressValidationResponse,
 
   // Delegation types
-  DelegateData,
-  DelegatedToResponse,
-  DelegatedFromData,
-  DelegatedFromResponse,
+  IndexerDelegateData,
+  IndexerDelegatedToResponse,
+  IndexerDelegatedFromData,
+  IndexerDelegatedFromResponse,
 
   // Nonce types
-  NonceData,
-  NonceResponse,
+  IndexerNonceData,
+  IndexerNonceResponse,
 
   // Entitlement types
-  EntitlementInfo,
-  EntitlementData,
-  EntitlementResponse,
+  IndexerEntitlementInfo,
+  IndexerEntitlementData,
+  IndexerEntitlementResponse,
 
   // Sign-in message types
-  SignInMessageData,
-  SignInMessageResponse,
+  IndexerSignInMessageData,
+  IndexerSignInMessageResponse,
 
   // Points types
-  PointsData,
-  PointsResponse,
+  IndexerPointsData,
+  IndexerPointsResponse,
 
   // Leaderboard types
-  LeaderboardData,
-  LeaderboardResponse,
+  IndexerLeaderboardData,
+  IndexerLeaderboardResponse,
 
   // Site stats types
-  SiteStatsData,
-  SiteStatsResponse,
+  IndexerSiteStatsData,
+  IndexerSiteStatsResponse,
 
   // Referral code types
-  ReferralCodeData,
-  ReferralCodeResponse,
-  ReferralConsumptionData,
-  ReferralStatsData,
-  ReferralStatsResponse,
+  IndexerReferralCodeData,
+  IndexerReferralCodeResponse,
+  IndexerReferralConsumptionData,
+  IndexerReferralStatsData,
+  IndexerReferralStatsResponse,
 
   // Authentication status types
-  AuthenticationStatusData,
-  AuthenticationStatusResponse,
+  IndexerAuthenticationStatusData,
+  IndexerAuthenticationStatusResponse,
 
   // Block status types
-  ChainBlockInfo,
-  BlockStatusData,
-  BlockStatusResponse,
+  IndexerChainBlockInfo,
+  IndexerBlockStatusData,
+  IndexerBlockStatusResponse,
 
   // Name service resolution types
-  NameServiceData,
-  NameServiceResponse,
-  NameResolutionData,
-  NameResolutionResponse,
+  IndexerNameServiceData,
+  IndexerNameServiceResponse,
+  IndexerNameResolutionData,
+  IndexerNameResolutionResponse,
 
   // Error response types
-  ErrorResponse,
+  IndexerErrorResponse,
 
   // Generic response types
   IndexerApiResponse,

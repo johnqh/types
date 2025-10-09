@@ -5,17 +5,17 @@
  */
 
 import type {
-  AddressValidationResponse,
-  EmailAccountsResponse,
-  RewardsResponse,
-  DelegatedToResponse,
-  DelegatedFromResponse,
-  NonceResponse,
-  EntitlementResponse,
-  SignInMessageResponse,
-  PointsResponse,
-  LeaderboardResponse,
-  SiteStatsResponse,
+  IndexerAddressValidationResponse,
+  IndexerEmailAccountsResponse,
+  IndexerRewardsResponse,
+  IndexerDelegatedToResponse,
+  IndexerDelegatedFromResponse,
+  IndexerNonceResponse,
+  IndexerEntitlementResponse,
+  IndexerSignInMessageResponse,
+  IndexerPointsResponse,
+  IndexerLeaderboardResponse,
+  IndexerSiteStatsResponse,
 } from './indexer-responses';
 
 // Basic type guards for indexer responses
@@ -46,7 +46,7 @@ export function isIndexerSuccessResponse(
 // Specific response type guards
 export function isAddressValidationResponse(
   response: unknown
-): response is AddressValidationResponse {
+): response is IndexerAddressValidationResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -60,7 +60,7 @@ export function isAddressValidationResponse(
 
 export function isEmailAccountsResponse(
   response: unknown
-): response is EmailAccountsResponse {
+): response is IndexerEmailAccountsResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -75,7 +75,7 @@ export function isEmailAccountsResponse(
 
 export function isRewardsResponse(
   response: unknown
-): response is RewardsResponse {
+): response is IndexerRewardsResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -91,7 +91,7 @@ export function isRewardsResponse(
 
 export function isDelegatedToResponse(
   response: unknown
-): response is DelegatedToResponse {
+): response is IndexerDelegatedToResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -106,7 +106,7 @@ export function isDelegatedToResponse(
 
 export function isDelegatedFromResponse(
   response: unknown
-): response is DelegatedFromResponse {
+): response is IndexerDelegatedFromResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -119,7 +119,7 @@ export function isDelegatedFromResponse(
   );
 }
 
-export function isNonceResponse(response: unknown): response is NonceResponse {
+export function isNonceResponse(response: unknown): response is IndexerNonceResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -133,7 +133,7 @@ export function isNonceResponse(response: unknown): response is NonceResponse {
 
 export function isEntitlementResponse(
   response: unknown
-): response is EntitlementResponse {
+): response is IndexerEntitlementResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -148,7 +148,7 @@ export function isEntitlementResponse(
 
 export function isSignInMessageResponse(
   response: unknown
-): response is SignInMessageResponse {
+): response is IndexerSignInMessageResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -163,7 +163,7 @@ export function isSignInMessageResponse(
 
 export function isPointsResponse(
   response: unknown
-): response is PointsResponse {
+): response is IndexerPointsResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -179,7 +179,7 @@ export function isPointsResponse(
 // Points API response type guards
 export function isLeaderboardResponse(
   response: unknown
-): response is LeaderboardResponse {
+): response is IndexerLeaderboardResponse {
   return !!(
     response &&
     typeof response === 'object' &&
@@ -193,7 +193,7 @@ export function isLeaderboardResponse(
 
 export function isSiteStatsResponse(
   response: unknown
-): response is SiteStatsResponse {
+): response is IndexerSiteStatsResponse {
   return !!(
     response &&
     typeof response === 'object' &&

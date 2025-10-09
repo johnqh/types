@@ -11,67 +11,67 @@ import { ApiResponse } from '../infrastructure/api';
 
 // Name service acccount
 
-export interface NameServiceAccount {
+export interface IndexerNameServiceAccount {
   name: string;
   entitled: boolean;
 }
 
 // Email address aggregation types
-export interface WalletAccount extends WalletData {
-  names: NameServiceAccount[];
+export interface IndexerWalletAccount extends WalletData {
+  names: IndexerNameServiceAccount[];
 }
-export interface EmailAccountsResult {
-  accounts: WalletAccount[];
+export interface IndexerEmailAccountsResult {
+  accounts: IndexerWalletAccount[];
 }
 
-export type EmailAccountsResponse = ApiResponse<EmailAccountsResult>;
+export type IndexerEmailAccountsResponse = ApiResponse<IndexerEmailAccountsResult>;
 
 // Rewards history record
-export interface RewardData {
+export interface IndexerRewardData {
   walletAddress: string;
   action: string;
   points: number;
   earningTime: string;
 }
 
-export interface RewardHistoryData {
-  rewards: RewardData[];
+export interface IndexerRewardHistoryData {
+  rewards: IndexerRewardData[];
   records: number;
   points: number;
 }
 
-export type RewardsResponse = ApiResponse<RewardHistoryData>;
+export type IndexerRewardsResponse = ApiResponse<IndexerRewardHistoryData>;
 
 // Address validation types
-export interface AddressValidationData extends WalletData {
+export interface IndexerAddressValidationData extends WalletData {
   name?: Optional<string>;
 }
 
-export type AddressValidationResponse = ApiResponse<AddressValidationData>;
+export type IndexerAddressValidationResponse = ApiResponse<IndexerAddressValidationData>;
 
 // Delegation types
-export interface DelegateData extends WalletData {
+export interface IndexerDelegateData extends WalletData {
   chainId?: Optional<number>;
   txHash?: Optional<string>;
 }
 
-export type DelegatedToResponse = ApiResponse<DelegateData>;
+export type IndexerDelegatedToResponse = ApiResponse<IndexerDelegateData>;
 
-export interface DelegatedFromData {
-  from: DelegateData[];
+export interface IndexerDelegatedFromData {
+  from: IndexerDelegateData[];
 }
 
-export type DelegatedFromResponse = ApiResponse<DelegatedFromData>;
+export type IndexerDelegatedFromResponse = ApiResponse<IndexerDelegatedFromData>;
 
 // Nonce types
-export interface NonceData {
+export interface IndexerNonceData {
   nonce: string;
 }
 
-export type NonceResponse = ApiResponse<NonceData>;
+export type IndexerNonceResponse = ApiResponse<IndexerNonceData>;
 
 // Entitlement types
-export interface EntitlementInfo {
+export interface IndexerEntitlementInfo {
   type: 'nameservice';
   hasEntitlement: boolean;
   isActive: boolean;
@@ -80,58 +80,58 @@ export interface EntitlementInfo {
   store?: Optional<string>;
 }
 
-export interface EntitlementData extends WalletData {
-  entitlement: EntitlementInfo;
+export interface IndexerEntitlementData extends WalletData {
+  entitlement: IndexerEntitlementInfo;
   message: string;
   verified: boolean;
 }
 
-export type EntitlementResponse = ApiResponse<EntitlementData>;
+export type IndexerEntitlementResponse = ApiResponse<IndexerEntitlementData>;
 
 // Message generation types
-export interface SignInMessageData extends WalletData {
+export interface IndexerSignInMessageData extends WalletData {
   message: string;
   chainId?: Optional<number>;
 }
 
-export type SignInMessageResponse = ApiResponse<SignInMessageData>;
+export type IndexerSignInMessageResponse = ApiResponse<IndexerSignInMessageData>;
 
 // Points types - consolidated user points data
-export interface PointsData extends WalletData {
+export interface IndexerPointsData extends WalletData {
   pointsEarned: string;
   lastActivityDate?: Optional<string>;
   createdAt?: Optional<string>;
   updatedAt?: Optional<string>;
 }
 
-export type PointsResponse = ApiResponse<PointsData>;
+export type IndexerPointsResponse = ApiResponse<IndexerPointsData>;
 
 // Points API response types
-export interface LeaderboardData {
-  leaderboard: PointsData[];
+export interface IndexerLeaderboardData {
+  leaderboard: IndexerPointsData[];
 }
 
-export type LeaderboardResponse = ApiResponse<LeaderboardData>;
+export type IndexerLeaderboardResponse = ApiResponse<IndexerLeaderboardData>;
 
-export interface SiteStatsData {
+export interface IndexerSiteStatsData {
   totalPoints: string;
   totalUsers: number;
   lastUpdated?: Optional<string>;
 }
 
-export type SiteStatsResponse = ApiResponse<SiteStatsData>;
+export type IndexerSiteStatsResponse = ApiResponse<IndexerSiteStatsData>;
 
 // Referral code types
-export interface ReferralCodeData {
+export interface IndexerReferralCodeData {
   /** Wallet address (EVM 0x format or Solana Base58) */
   walletAddress: string;
   referralCode: string;
   createdAt: string;
 }
 
-export type ReferralCodeResponse = ApiResponse<ReferralCodeData>;
+export type IndexerReferralCodeResponse = ApiResponse<IndexerReferralCodeData>;
 
-export interface ReferralConsumptionData {
+export interface IndexerReferralConsumptionData {
   /** Wallet address (EVM 0x format or Solana Base58) */
   walletAddress: string;
   /** Can be "" if no referral code is used */
@@ -139,23 +139,23 @@ export interface ReferralConsumptionData {
   createdAt: string;
 }
 
-export interface ReferralStatsData {
+export interface IndexerReferralStatsData {
   total: number;
-  consumptions: ReferralConsumptionData[];
+  consumptions: IndexerReferralConsumptionData[];
 }
 
-export type ReferralStatsResponse = ApiResponse<ReferralStatsData>;
+export type IndexerReferralStatsResponse = ApiResponse<IndexerReferralStatsData>;
 
 // Authentication status types
-export interface AuthenticationStatusData {
+export interface IndexerAuthenticationStatusData {
   authenticated: boolean;
   datetime?: Optional<string>;
 }
 
-export type AuthenticationStatusResponse = ApiResponse<AuthenticationStatusData>;
+export type IndexerAuthenticationStatusResponse = ApiResponse<IndexerAuthenticationStatusData>;
 
 // Block status types
-export interface ChainBlockInfo {
+export interface IndexerChainBlockInfo {
   chain: string;
   chainId: number;
   currentBlock: string | null;
@@ -165,48 +165,48 @@ export interface ChainBlockInfo {
   error?: Optional<string>;
 }
 
-export interface BlockStatusData {
-  chains: ChainBlockInfo[];
+export interface IndexerBlockStatusData {
+  chains: IndexerChainBlockInfo[];
   totalChains: number;
   activeChains: number;
   timestamp: string;
 }
 
-export type BlockStatusResponse = ApiResponse<BlockStatusData>;
+export type IndexerBlockStatusResponse = ApiResponse<IndexerBlockStatusData>;
 
 // Name service resolution types
-export interface NameServiceData {
+export interface IndexerNameServiceData {
   names: string[];
 }
 
-export type NameServiceResponse = ApiResponse<NameServiceData>;
+export type IndexerNameServiceResponse = ApiResponse<IndexerNameServiceData>;
 
-export interface NameResolutionData extends WalletData {}
+export interface IndexerNameResolutionData extends WalletData {}
 
-export type NameResolutionResponse = ApiResponse<NameResolutionData>;
+export type IndexerNameResolutionResponse = ApiResponse<IndexerNameResolutionData>;
 
 // Error response type for API endpoints
-export interface ErrorResponse extends ApiResponse<never> {
+export interface IndexerErrorResponse extends ApiResponse<never> {
   success: false;
   error: string;
 }
 
 // Extended union type to include all response types
 export type IndexerApiResponse =
-  | AddressValidationResponse
-  | EmailAccountsResponse
-  | DelegatedToResponse
-  | DelegatedFromResponse
-  | NonceResponse
-  | EntitlementResponse
-  | PointsResponse
-  | SignInMessageResponse
-  | LeaderboardResponse
-  | SiteStatsResponse
-  | ReferralCodeResponse
-  | ReferralStatsResponse
-  | AuthenticationStatusResponse
-  | BlockStatusResponse
-  | NameServiceResponse
-  | NameResolutionResponse
-  | ErrorResponse;
+  | IndexerAddressValidationResponse
+  | IndexerEmailAccountsResponse
+  | IndexerDelegatedToResponse
+  | IndexerDelegatedFromResponse
+  | IndexerNonceResponse
+  | IndexerEntitlementResponse
+  | IndexerPointsResponse
+  | IndexerSignInMessageResponse
+  | IndexerLeaderboardResponse
+  | IndexerSiteStatsResponse
+  | IndexerReferralCodeResponse
+  | IndexerReferralStatsResponse
+  | IndexerAuthenticationStatusResponse
+  | IndexerBlockStatusResponse
+  | IndexerNameServiceResponse
+  | IndexerNameResolutionResponse
+  | IndexerErrorResponse;
