@@ -44,7 +44,6 @@ export interface PreAuthRequest extends BaseSessionFields {
 export interface AuthenticateRequest extends BaseSessionFields {
   username: string; // Username, blockchain address, ENS/SNS, or email
   signature: string; // Required - Blockchain signature
-  nonce: string; // Required - Unique nonce for replay protection
   message: string; // Required - SIWE/SIWS message that was signed
   signer?: Optional<string>; // The wallet address that created the signature
   protocol?: Optional<string>; // Default: "API"
@@ -455,14 +454,12 @@ export function createPreAuthRequest(
 export function createAuthenticateRequest(
   username: string,
   signature: string,
-  nonce: string,
   message: string,
   options?: Partial<AuthenticateRequest>
 ): AuthenticateRequest {
   return {
     username,
     signature,
-    nonce,
     message,
     protocol: 'API',
     scope: 'master',

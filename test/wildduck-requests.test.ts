@@ -133,7 +133,6 @@ describe('WildDuck Requests', () => {
       const authRequest: AuthenticateRequest = {
         username: '0x1234567890123456789012345678901234567890',
         signature: '0xabcdef123456789',
-        nonce: 'unique-nonce-123',
         message: 'Sign-in message for authentication',
         protocol: 'API',
         scope: 'master',
@@ -142,7 +141,6 @@ describe('WildDuck Requests', () => {
 
       expect(authRequest.username).toBe('0x1234567890123456789012345678901234567890');
       expect(authRequest.signature).toBe('0xabcdef123456789');
-      expect(authRequest.nonce).toBe('unique-nonce-123');
       expect(authRequest.message).toBe('Sign-in message for authentication');
     });
 
@@ -561,13 +559,11 @@ describe('WildDuck Requests', () => {
       const auth = createAuthenticateRequest(
         'user@example.com',
         '0xsignature',
-        'nonce123',
         'auth message'
       );
 
       expect(auth.username).toBe('user@example.com');
       expect(auth.signature).toBe('0xsignature');
-      expect(auth.nonce).toBe('nonce123');
       expect(auth.message).toBe('auth message');
       expect(auth.protocol).toBe('API');
       expect(auth.scope).toBe('master');
@@ -578,7 +574,6 @@ describe('WildDuck Requests', () => {
       const auth = createAuthenticateRequest(
         'user@example.com',
         '0xsignature',
-        'nonce123',
         'auth message',
         {
           token: true,
