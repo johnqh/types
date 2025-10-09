@@ -15,9 +15,6 @@ export * from './types';
 // Re-export all utilities
 export * from './utils';
 
-// Re-export WildDuck API request types
-export * from './types/wildduck';
-
 // For backwards compatibility and easier imports, also export
 // the most commonly used types directly
 export type {

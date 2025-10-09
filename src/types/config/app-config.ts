@@ -46,12 +46,12 @@ export interface FirebaseConfig {
  * ```
  */
 export interface AppConfig {
-  /** Backend API URL for WildDuck email server */
+  /** Backend API URL for Wildduck email server */
   wildDuckBackendUrl: string;
   /** Backend URL for blockchain/crypto indexer service */
   indexerBackendUrl: string;
 
-  /** API token for WildDuck email server authentication */
+  /** API token for Wildduck email server authentication */
   wildDuckApiToken: string;
   /** RevenueCat API key for subscription management */
   revenueCatApiKey: string;

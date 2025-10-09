@@ -21,6 +21,3 @@ export * from './mailbox-responses';
 
 // KYC verification types
 export * from './kyc';
-
-// WildDuck email server API types
-export * from './wildduck';
