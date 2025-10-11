@@ -15,8 +15,8 @@ import {
   PaginatedResponse,
   MessageBase,
   UnifiedError,
-} from './common';
-import { ChainType } from './business/enums';
+} from '../common';
+import { ChainType } from '../business/enums';
 
 // =======================
 // Core Response Types

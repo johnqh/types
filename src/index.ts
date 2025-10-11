@@ -18,13 +18,6 @@ export * from './utils';
 // For backwards compatibility and easier imports, also export
 // the most commonly used types directly
 export type {
-  // Email domain types
-  Email,
-  User,
-  EmailAddress,
-  WalletUserData,
-  MailBox,
-
   // Configuration types
   AppConfig,
   FirebaseConfig,

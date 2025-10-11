@@ -8,7 +8,7 @@
  * - Accredited: Enhanced + financial verification for accredited investors
  */
 
-import type { ChainType } from './business/enums';
+import type { ChainType } from '../business/enums';
 
 // ============================================
 // Verification Levels

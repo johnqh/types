@@ -16,8 +16,11 @@ export * from './config';
 // Infrastructure types
 export * from './infrastructure';
 
-// Mailbox contract response types
-export * from './mailbox-responses';
+// Mailer and mailbox contract response types
+export * from './mailer';
 
 // KYC verification types
 export * from './kyc';
+
+// WildDuck Mail Server API types
+export * from './wildduck';

@@ -25,27 +25,27 @@ import {
   isEVMResponse,
   isSolanaResponse,
   isMailboxErrorResponse
-} from '../../src/types/mailbox-responses';
+} from '../../src/types/mailer/mail-types';
 import { ChainType } from '../../src/types/business/enums';
 
 describe('Mailbox Response Types', () => {
   describe('BaseTransactionResponse', () => {
     it('should accept valid base transaction response', () => {
       const response: BaseTransactionResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         timestamp: Date.now(),
         success: true
       };
 
-      expect(response.txHash).toBe('0x123abc');
+      expect(response.transactionHash).toBe('0x123abc');
       expect(response.chainType).toBe(ChainType.EVM);
       expect(response.success).toBe(true);
     });
 
     it('should accept response with error', () => {
       const response: BaseTransactionResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.SOLANA,
         success: false,
         error: 'Transaction failed'
@@ -57,13 +57,13 @@ describe('Mailbox Response Types', () => {
 
     it('should accept both chain types', () => {
       const evmResponse: BaseTransactionResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true
       };
 
       const solanaResponse: BaseTransactionResponse = {
-        txHash: 'abc123',
+        transactionHash: 'abc123',
         chainType: ChainType.SOLANA,
         success: true
       };
@@ -76,7 +76,7 @@ describe('Mailbox Response Types', () => {
   describe('TransactionReceipt', () => {
     it('should extend BaseTransactionResponse with additional fields', () => {
       const receipt: TransactionReceipt = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         blockNumber: 12345,
@@ -91,7 +91,7 @@ describe('Mailbox Response Types', () => {
 
     it('should support Solana-specific fields', () => {
       const receipt: TransactionReceipt = {
-        txHash: 'abc123',
+        transactionHash: 'abc123',
         chainType: ChainType.SOLANA,
         success: true,
         slot: 98765,
@@ -106,7 +106,7 @@ describe('Mailbox Response Types', () => {
   describe('MessageSendResponse', () => {
     it('should handle regular message send response', () => {
       const response: MessageSendResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         messageId: 'msg_123',
@@ -124,7 +124,7 @@ describe('Mailbox Response Types', () => {
 
     it('should handle priority message with claimable revenue', () => {
       const response: MessageSendResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         fee: BigInt(2000),
@@ -142,7 +142,7 @@ describe('Mailbox Response Types', () => {
   describe('PreparedMessageSendResponse', () => {
     it('should handle prepared message response', () => {
       const response: PreparedMessageSendResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         mailId: 'prepared_msg_456',
@@ -190,7 +190,7 @@ describe('Mailbox Response Types', () => {
   describe('ClaimRevenueResponse', () => {
     it('should handle revenue claim response', () => {
       const response: ClaimRevenueResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         claimedAmount: BigInt(800),
@@ -208,7 +208,7 @@ describe('Mailbox Response Types', () => {
 
       claimTypes.forEach(claimType => {
         const response: ClaimRevenueResponse = {
-          txHash: '0x123abc',
+          transactionHash: '0x123abc',
           chainType: ChainType.EVM,
           success: true,
           claimedAmount: BigInt(100),
@@ -224,7 +224,7 @@ describe('Mailbox Response Types', () => {
   describe('DomainRegistrationResponse', () => {
     it('should handle new domain registration', () => {
       const response: DomainRegistrationResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         domain: 'example.eth',
@@ -240,7 +240,7 @@ describe('Mailbox Response Types', () => {
 
     it('should handle domain extension', () => {
       const response: DomainRegistrationResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         domain: 'example.eth',
@@ -256,7 +256,7 @@ describe('Mailbox Response Types', () => {
   describe('MailboxDelegationResponse', () => {
     it('should handle delegation creation', () => {
       const response: MailboxDelegationResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         delegator: '0xdelegator',
@@ -272,7 +272,7 @@ describe('Mailbox Response Types', () => {
 
     it('should handle delegation clearing', () => {
       const response: MailboxDelegationResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         delegator: '0xdelegator',
@@ -313,7 +313,7 @@ describe('Mailbox Response Types', () => {
   describe('EVMTransactionResponse', () => {
     it('should have EVM-specific fields', () => {
       const response: EVMTransactionResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         blockNumber: 12345,
@@ -332,7 +332,7 @@ describe('Mailbox Response Types', () => {
   describe('SolanaTransactionResponse', () => {
     it('should have Solana-specific fields', () => {
       const response: SolanaTransactionResponse = {
-        txHash: 'abc123',
+        transactionHash: 'abc123',
         chainType: ChainType.SOLANA,
         success: true,
         slot: 98765,
@@ -388,7 +388,7 @@ describe('Mailbox Response Types', () => {
   describe('BatchOperationResponse', () => {
     it('should handle batch operation results', () => {
       const response: BatchOperationResponse = {
-        txHash: '0x123abc',
+        transactionHash: '0x123abc',
         chainType: ChainType.EVM,
         success: true,
         results: [
@@ -414,7 +414,7 @@ describe('Mailbox Response Types', () => {
         messages: [
           {
             messageId: 'msg_1',
-            txHash: '0x123',
+            transactionHash: '0x123',
             sender: '0xsender',
             recipient: '0xrecipient',
             subject: 'Subject 1',
@@ -489,13 +489,13 @@ describe('Mailbox Response Types', () => {
     describe('isEVMResponse', () => {
       it('should identify EVM responses', () => {
         const evmResponse: TransactionReceipt = {
-          txHash: '0x123',
+          transactionHash: '0x123',
           chainType: ChainType.EVM,
           success: true
         };
 
         const solanaResponse: TransactionReceipt = {
-          txHash: 'abc123',
+          transactionHash: 'abc123',
           chainType: ChainType.SOLANA,
           success: true
         };
@@ -508,13 +508,13 @@ describe('Mailbox Response Types', () => {
     describe('isSolanaResponse', () => {
       it('should identify Solana responses', () => {
         const evmResponse: TransactionReceipt = {
-          txHash: '0x123',
+          transactionHash: '0x123',
           chainType: ChainType.EVM,
           success: true
         };
 
         const solanaResponse: TransactionReceipt = {
-          txHash: 'abc123',
+          transactionHash: 'abc123',
           chainType: ChainType.SOLANA,
           success: true
         };

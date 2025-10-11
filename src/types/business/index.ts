@@ -28,17 +28,6 @@ export {
   Theme,
 } from './enums';
 
-// Email types
-export type {
-  Email,
-  EmailAddress,
-  Folder,
-  User,
-  WalletUserData,
-} from './email';
-
-// Mailbox types
-export type { DefaultFolder, MailBox } from './mailbox';
 
 // Wallet status utilities
 export type { WalletStatus } from './wallet-status';
