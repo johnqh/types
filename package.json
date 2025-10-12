@@ -1,5 +1,5 @@
 {
-  "name": "@johnqh/types",
+  "name": "@sudobility/types",
   "version": "1.8.21",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for the 0xmail.box Web3 email ecosystem - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
@@ -75,6 +75,6 @@
     "vitest": "^3.2.4"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   }
 }

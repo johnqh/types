@@ -12,7 +12,7 @@ on:
       - closed
 
 env:
-  NPM_MODULE_NAME: "@johnqh/types"
+  NPM_MODULE_NAME: "@sudobility/types"
 
 jobs:
   test:
@@ -148,7 +148,7 @@ jobs:
             
             ### Installation
             ```bash
-            npm install @johnqh/types@${{ needs.check_for_release.outputs.version }}
+            npm install @sudobility/types@${{ needs.check_for_release.outputs.version }}
             ```
             
             ### What's Included
@@ -160,8 +160,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Publish to NPM"
-        run: npm publish --access public
+      - name: "Publish to NPM (Private)"
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -169,7 +169,7 @@ jobs:
         if: success()
         run: |
           echo "🚀 Release ${{ needs.check_for_release.outputs.version }} deployed successfully!"
-          echo "• NPM: https://www.npmjs.com/package/@johnqh/types/v/${{ needs.check_for_release.outputs.version }}"
+          echo "• NPM: https://www.npmjs.com/package/@sudobility/types/v/${{ needs.check_for_release.outputs.version }}"
           echo "• GitHub: https://github.com/${{ github.repository }}/releases/tag/${{ needs.check_for_release.outputs.version_tag }}"
           echo "• Documentation: https://github.com/${{ github.repository }}#readme"
 
