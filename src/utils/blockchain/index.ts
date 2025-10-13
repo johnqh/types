@@ -33,7 +33,3 @@ export {
   normalizeAddress,
   validateEventArgs,
 } from './event-helpers';
-
-// RPC helper utilities
-export type { BlockchainApis, ChainInfo } from './rpc-helpers';
-export { RpcHelpers } from './rpc-helpers';

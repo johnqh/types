@@ -117,10 +117,6 @@ export type {
   KYCApplicationStatus,
 } from './types';
 
-// Export RPC helpers and types (via utils -> blockchain)
-export type { BlockchainApis, ChainInfo } from './utils';
-export { RpcHelpers } from './utils';
-
 // Export async utilities
 export {
   safeAsync,
