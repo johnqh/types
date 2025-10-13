@@ -35,5 +35,5 @@ export {
 } from './event-helpers';
 
 // RPC helper utilities
-export type { BlockchainApis } from './rpc-helpers';
+export type { BlockchainApis, ChainInfo } from './rpc-helpers';
 export { RpcHelpers } from './rpc-helpers';

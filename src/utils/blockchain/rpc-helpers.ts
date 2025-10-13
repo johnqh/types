@@ -20,779 +20,671 @@ export interface BlockchainApis {
 }
 
 /**
- * Alchemy network identifier mappings
- * Maps Chain enum values to Alchemy-specific network identifiers
+ * Consolidated chain information structure
+ * Contains all static metadata about a blockchain network
  */
-const ALCHEMY_NETWORK_MAP: Record<Chain, string> = {
-  // Ethereum - direct mapping
-  [Chain.ETH_MAINNET]: 'eth-mainnet',
-  [Chain.ETH_SEPOLIA]: 'eth-sepolia',
-  [Chain.ETH_GOERLI]: 'eth-goerli',
-
-  // Polygon - direct mapping
-  [Chain.POLYGON_MAINNET]: 'polygon-mainnet',
-  [Chain.POLYGON_MUMBAI]: 'polygon-mumbai',
-  [Chain.POLYGON_AMOY]: 'polygon-amoy',
-
-  // Optimism - uses 'opt' prefix
-  [Chain.OPTIMISM_MAINNET]: 'opt-mainnet',
-  [Chain.OPTIMISM_SEPOLIA]: 'opt-sepolia',
-  [Chain.OPTIMISM_GOERLI]: 'opt-goerli',
-
-  // Arbitrum - uses 'arb' prefix
-  [Chain.ARBITRUM_MAINNET]: 'arb-mainnet',
-  [Chain.ARBITRUM_SEPOLIA]: 'arb-sepolia',
-  [Chain.ARBITRUM_GOERLI]: 'arb-goerli',
-
-  // Base - direct mapping
-  [Chain.BASE_MAINNET]: 'base-mainnet',
-  [Chain.BASE_SEPOLIA]: 'base-sepolia',
-  [Chain.BASE_GOERLI]: 'base-goerli',
-
-  // Avalanche
-  [Chain.AVALANCHE_MAINNET]: 'avax-mainnet',
-  [Chain.AVALANCHE_FUJI]: 'avax-fuji',
-
-  // BNB Chain
-  [Chain.BNB_MAINNET]: 'bnb-mainnet',
-  [Chain.BNB_TESTNET]: 'bnb-testnet',
-
-  // Gnosis Chain
-  [Chain.GNOSIS_MAINNET]: 'gnosis-mainnet',
-  [Chain.GNOSIS_CHIADO]: 'gnosis-chiado',
-
-  // Celo
-  [Chain.CELO_MAINNET]: 'celo-mainnet',
-  [Chain.CELO_ALFAJORES]: 'celo-alfajores',
-
-  // zkSync
-  [Chain.ZKSYNC_MAINNET]: 'zksync-mainnet',
-  [Chain.ZKSYNC_SEPOLIA]: 'zksync-sepolia',
-
-  // Linea
-  [Chain.LINEA_MAINNET]: 'linea-mainnet',
-  [Chain.LINEA_SEPOLIA]: 'linea-sepolia',
-
-  // Scroll
-  [Chain.SCROLL_MAINNET]: 'scroll-mainnet',
-  [Chain.SCROLL_SEPOLIA]: 'scroll-sepolia',
-
-  // Monad
-  [Chain.MONAD_MAINNET]: '',
-  [Chain.MONAD_TESTNET]: '',
-
-  // Story Protocol
-  [Chain.STORY_MAINNET]: '',
-  [Chain.STORY_TESTNET]: '',
-
-  // Plume Network
-  [Chain.PLUME_MAINNET]: '',
-  [Chain.PLUME_TESTNET]: '',
-
-  // Nexus
-  [Chain.NEXUS_MAINNET]: '',
-  [Chain.NEXUS_TESTNET]: '',
-
-  // HyperEVM
-  [Chain.HYPEREVM_MAINNET]: '',
-  [Chain.HYPEREVM_TESTNET]: '',
-
-  // Sonic
-  [Chain.SONIC_MAINNET]: '',
-  [Chain.SONIC_TESTNET]: '',
-  [Chain.SONIC_BLAZE]: '',
-
-  // Unichain
-  [Chain.UNICHAIN_MAINNET]: '',
-  [Chain.UNICHAIN_SEPOLIA]: '',
-
-  // World Chain
-  [Chain.WORLD_MAINNET]: '',
-
-  // XDC Network
-  [Chain.XDC_MAINNET]: '',
-
-  // Ink
-  [Chain.INK_TESTNET]: '',
-
-  // Fetch.ai
-  [Chain.FETCH_MAINNET]: '',
-  [Chain.FETCH_TESTNET]: '',
-
-  // Gensyn
-  [Chain.GENSYN_MAINNET]: '',
-  [Chain.GENSYN_TESTNET]: '',
-
-  // Ritual
-  [Chain.RITUAL_MAINNET]: '',
-  [Chain.RITUAL_TESTNET]: '',
-
-  // Solana - simple names
-  [Chain.SOLANA_MAINNET]: 'mainnet',
-  [Chain.SOLANA_DEVNET]: 'devnet',
-  [Chain.SOLANA_TESTNET]: 'testnet',
-
-  // Local development - no Alchemy support
-  [Chain.EVM_LOCAL]: '',
-  [Chain.SOLANA_LOCAL]: '',
-};
+export interface ChainInfo {
+  /** Chain type (EVM or Solana) */
+  chainType: ChainType;
+  /** Numeric chain ID (positive for EVM, negative for Solana) */
+  chainId: number;
+  /** User-friendly display name */
+  name: string;
+  /** Alchemy network identifier for RPC endpoints */
+  alchemyNetwork: string;
+  /** Block explorer API domain (empty for Solana and unsupported chains) */
+  explorerDomain: string;
+  /** Block explorer browser domain */
+  explorerBrowserDomain: string;
+  /** USDC contract address (EVM) or mint address (Solana) */
+  usdcAddress: string;
+  /** Whether this is a development/testnet chain (true) or mainnet/production chain (false) */
+  isDev: boolean;
+  /** Optional deployed mailer contract address (EVM chains only) */
+  mailerAddress?: string;
+  /** Optional block number where the mailer contract was deployed (used for event indexing) */
+  startingBlock?: number;
+}
 
 /**
- * Block explorer domain mappings
+ * Consolidated chain information map
+ * Contains all static metadata for each supported blockchain network
  */
-const EXPLORER_DOMAIN_MAP: Record<Chain, string> = {
+const CHAIN_INFO_MAP: Record<Chain, ChainInfo> = {
   // Ethereum
-  [Chain.ETH_MAINNET]: 'api.etherscan.io',
-  [Chain.ETH_SEPOLIA]: 'api-sepolia.etherscan.io',
-  [Chain.ETH_GOERLI]: 'api-goerli.etherscan.io',
+  [Chain.ETH_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 1,
+    name: 'Ethereum',
+    alchemyNetwork: 'eth-mainnet',
+    explorerDomain: 'api.etherscan.io',
+    explorerBrowserDomain: 'etherscan.io',
+    usdcAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+    isDev: false,
+  },
+  [Chain.ETH_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 11155111,
+    name: 'Ethereum Sepolia',
+    alchemyNetwork: 'eth-sepolia',
+    explorerDomain: 'api-sepolia.etherscan.io',
+    explorerBrowserDomain: 'sepolia.etherscan.io',
+    usdcAddress: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+    isDev: true,
+    mailerAddress: '0x13fC7Fe676E4FaaE8F4D910d8Ed7fbD3FebDbe88',
+  },
+  [Chain.ETH_GOERLI]: {
+    chainType: ChainType.EVM,
+    chainId: 5,
+    name: 'Ethereum Goerli',
+    alchemyNetwork: 'eth-goerli',
+    explorerDomain: 'api-goerli.etherscan.io',
+    explorerBrowserDomain: 'goerli.etherscan.io',
+    usdcAddress: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    isDev: true,
+  },
 
   // Polygon
-  [Chain.POLYGON_MAINNET]: 'api.polygonscan.com',
-  [Chain.POLYGON_MUMBAI]: 'api-testnet.polygonscan.com',
-  [Chain.POLYGON_AMOY]: 'api-amoy.polygonscan.com',
+  [Chain.POLYGON_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 137,
+    name: 'Polygon',
+    alchemyNetwork: 'polygon-mainnet',
+    explorerDomain: 'api.polygonscan.com',
+    explorerBrowserDomain: 'polygonscan.com',
+    usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+    isDev: false,
+  },
+  [Chain.POLYGON_MUMBAI]: {
+    chainType: ChainType.EVM,
+    chainId: 80001,
+    name: 'Polygon Mumbai',
+    alchemyNetwork: 'polygon-mumbai',
+    explorerDomain: 'api-testnet.polygonscan.com',
+    explorerBrowserDomain: 'mumbai.polygonscan.com',
+    usdcAddress: '0x9999f7Fea5938fD3b1E26A12c3f2fb024e194f97',
+    isDev: true,
+  },
+  [Chain.POLYGON_AMOY]: {
+    chainType: ChainType.EVM,
+    chainId: 80002,
+    name: 'Polygon Amoy',
+    alchemyNetwork: 'polygon-amoy',
+    explorerDomain: 'api-amoy.polygonscan.com',
+    explorerBrowserDomain: 'amoy.polygonscan.com',
+    usdcAddress: '0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582',
+    isDev: true,
+  },
 
   // Optimism
-  [Chain.OPTIMISM_MAINNET]: 'api-optimistic.etherscan.io',
-  [Chain.OPTIMISM_SEPOLIA]: 'api-sepolia-optimistic.etherscan.io',
-  [Chain.OPTIMISM_GOERLI]: 'api-goerli-optimistic.etherscan.io',
+  [Chain.OPTIMISM_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 10,
+    name: 'Optimism',
+    alchemyNetwork: 'opt-mainnet',
+    explorerDomain: 'api-optimistic.etherscan.io',
+    explorerBrowserDomain: 'optimistic.etherscan.io',
+    usdcAddress: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
+    isDev: false,
+  },
+  [Chain.OPTIMISM_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 11155420,
+    name: 'Optimism Sepolia',
+    alchemyNetwork: 'opt-sepolia',
+    explorerDomain: 'api-sepolia-optimistic.etherscan.io',
+    explorerBrowserDomain: 'sepolia-optimistic.etherscan.io',
+    usdcAddress: '0x5fd84259d66Cd46123540766Be93DFE6D43130D7',
+    isDev: true,
+  },
+  [Chain.OPTIMISM_GOERLI]: {
+    chainType: ChainType.EVM,
+    chainId: 420,
+    name: 'Optimism Goerli',
+    alchemyNetwork: 'opt-goerli',
+    explorerDomain: 'api-goerli-optimistic.etherscan.io',
+    explorerBrowserDomain: 'goerli-optimistic.etherscan.io',
+    usdcAddress: '0xe05606174bac4A6364B31bd0eCA4bf4dD368f8C6',
+    isDev: true,
+  },
 
   // Arbitrum
-  [Chain.ARBITRUM_MAINNET]: 'api.arbiscan.io',
-  [Chain.ARBITRUM_SEPOLIA]: 'api-sepolia.arbiscan.io',
-  [Chain.ARBITRUM_GOERLI]: 'api-goerli.arbiscan.io',
+  [Chain.ARBITRUM_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 42161,
+    name: 'Arbitrum',
+    alchemyNetwork: 'arb-mainnet',
+    explorerDomain: 'api.arbiscan.io',
+    explorerBrowserDomain: 'arbiscan.io',
+    usdcAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+    isDev: false,
+  },
+  [Chain.ARBITRUM_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 421614,
+    name: 'Arbitrum Sepolia',
+    alchemyNetwork: 'arb-sepolia',
+    explorerDomain: 'api-sepolia.arbiscan.io',
+    explorerBrowserDomain: 'sepolia.arbiscan.io',
+    usdcAddress: '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d',
+    isDev: true,
+  },
+  [Chain.ARBITRUM_GOERLI]: {
+    chainType: ChainType.EVM,
+    chainId: 421613,
+    name: 'Arbitrum Goerli',
+    alchemyNetwork: 'arb-goerli',
+    explorerDomain: 'api-goerli.arbiscan.io',
+    explorerBrowserDomain: 'goerli.arbiscan.io',
+    usdcAddress: '0xfd064A18f3BF249cf1f87FC203E90D8f650f2d63',
+    isDev: true,
+  },
 
   // Base
-  [Chain.BASE_MAINNET]: 'api.basescan.org',
-  [Chain.BASE_SEPOLIA]: 'api-sepolia.basescan.org',
-  [Chain.BASE_GOERLI]: 'api-goerli.basescan.org',
+  [Chain.BASE_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 8453,
+    name: 'Base',
+    alchemyNetwork: 'base-mainnet',
+    explorerDomain: 'api.basescan.org',
+    explorerBrowserDomain: 'basescan.org',
+    usdcAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    isDev: false,
+  },
+  [Chain.BASE_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 84532,
+    name: 'Base Sepolia',
+    alchemyNetwork: 'base-sepolia',
+    explorerDomain: 'api-sepolia.basescan.org',
+    explorerBrowserDomain: 'sepolia.basescan.org',
+    usdcAddress: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+    isDev: true,
+  },
+  [Chain.BASE_GOERLI]: {
+    chainType: ChainType.EVM,
+    chainId: 84531,
+    name: 'Base Goerli',
+    alchemyNetwork: 'base-goerli',
+    explorerDomain: 'api-goerli.basescan.org',
+    explorerBrowserDomain: 'goerli.basescan.org',
+    usdcAddress: '0xF175520C52418dfE19C8098071a252da48Cd1C19',
+    isDev: true,
+  },
 
   // Avalanche
-  [Chain.AVALANCHE_MAINNET]: 'api.snowtrace.io',
-  [Chain.AVALANCHE_FUJI]: 'api-testnet.snowtrace.io',
+  [Chain.AVALANCHE_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 43114,
+    name: 'Avalanche',
+    alchemyNetwork: 'avax-mainnet',
+    explorerDomain: 'api.snowtrace.io',
+    explorerBrowserDomain: 'snowtrace.io',
+    usdcAddress: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+    isDev: false,
+  },
+  [Chain.AVALANCHE_FUJI]: {
+    chainType: ChainType.EVM,
+    chainId: 43113,
+    name: 'Avalanche Fuji',
+    alchemyNetwork: 'avax-fuji',
+    explorerDomain: 'api-testnet.snowtrace.io',
+    explorerBrowserDomain: 'testnet.snowtrace.io',
+    usdcAddress: '0x5425890298aed601595a70AB815c96711a31Bc65',
+    isDev: true,
+  },
 
   // BNB Chain
-  [Chain.BNB_MAINNET]: 'api.bscscan.com',
-  [Chain.BNB_TESTNET]: 'api-testnet.bscscan.com',
+  [Chain.BNB_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 56,
+    name: 'BNB Chain',
+    alchemyNetwork: 'bnb-mainnet',
+    explorerDomain: 'api.bscscan.com',
+    explorerBrowserDomain: 'bscscan.com',
+    usdcAddress: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+    isDev: false,
+  },
+  [Chain.BNB_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 97,
+    name: 'BNB Chain Testnet',
+    alchemyNetwork: 'bnb-testnet',
+    explorerDomain: 'api-testnet.bscscan.com',
+    explorerBrowserDomain: 'testnet.bscscan.com',
+    usdcAddress: '0x64544969ed7EBf5f083679233325356EbE738930',
+    isDev: true,
+  },
 
   // Gnosis Chain
-  [Chain.GNOSIS_MAINNET]: 'api.gnosisscan.io',
-  [Chain.GNOSIS_CHIADO]: 'api-chiado.gnosisscan.io',
+  [Chain.GNOSIS_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 100,
+    name: 'Gnosis',
+    alchemyNetwork: 'gnosis-mainnet',
+    explorerDomain: 'api.gnosisscan.io',
+    explorerBrowserDomain: 'gnosisscan.io',
+    usdcAddress: '0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83',
+    isDev: false,
+  },
+  [Chain.GNOSIS_CHIADO]: {
+    chainType: ChainType.EVM,
+    chainId: 10200,
+    name: 'Gnosis Chiado',
+    alchemyNetwork: 'gnosis-chiado',
+    explorerDomain: 'api-chiado.gnosisscan.io',
+    explorerBrowserDomain: 'gnosis-chiado.blockscout.com',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Celo
-  [Chain.CELO_MAINNET]: 'api.celoscan.io',
-  [Chain.CELO_ALFAJORES]: 'api-alfajores.celoscan.io',
+  [Chain.CELO_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 42220,
+    name: 'Celo',
+    alchemyNetwork: 'celo-mainnet',
+    explorerDomain: 'api.celoscan.io',
+    explorerBrowserDomain: 'celoscan.io',
+    usdcAddress: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
+    isDev: false,
+  },
+  [Chain.CELO_ALFAJORES]: {
+    chainType: ChainType.EVM,
+    chainId: 44787,
+    name: 'Celo Alfajores',
+    alchemyNetwork: 'celo-alfajores',
+    explorerDomain: 'api-alfajores.celoscan.io',
+    explorerBrowserDomain: 'alfajores.celoscan.io',
+    usdcAddress: '0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B',
+    isDev: true,
+  },
 
   // zkSync
-  [Chain.ZKSYNC_MAINNET]: 'api-era.zksync.network',
-  [Chain.ZKSYNC_SEPOLIA]: 'api-sepolia-era.zksync.network',
+  [Chain.ZKSYNC_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 324,
+    name: 'zkSync',
+    alchemyNetwork: 'zksync-mainnet',
+    explorerDomain: 'api-era.zksync.network',
+    explorerBrowserDomain: 'explorer.zksync.io',
+    usdcAddress: '0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4',
+    isDev: false,
+  },
+  [Chain.ZKSYNC_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 300,
+    name: 'zkSync Sepolia',
+    alchemyNetwork: 'zksync-sepolia',
+    explorerDomain: 'api-sepolia-era.zksync.network',
+    explorerBrowserDomain: 'sepolia.explorer.zksync.io',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Linea
-  [Chain.LINEA_MAINNET]: 'api.lineascan.build',
-  [Chain.LINEA_SEPOLIA]: 'api-sepolia.lineascan.build',
+  [Chain.LINEA_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 59144,
+    name: 'Linea',
+    alchemyNetwork: 'linea-mainnet',
+    explorerDomain: 'api.lineascan.build',
+    explorerBrowserDomain: 'lineascan.build',
+    usdcAddress: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
+    isDev: false,
+  },
+  [Chain.LINEA_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 59141,
+    name: 'Linea Sepolia',
+    alchemyNetwork: 'linea-sepolia',
+    explorerDomain: 'api-sepolia.lineascan.build',
+    explorerBrowserDomain: 'sepolia.lineascan.build',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Scroll
-  [Chain.SCROLL_MAINNET]: 'api.scrollscan.com',
-  [Chain.SCROLL_SEPOLIA]: 'api-sepolia.scrollscan.com',
+  [Chain.SCROLL_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 534352,
+    name: 'Scroll',
+    alchemyNetwork: 'scroll-mainnet',
+    explorerDomain: 'api.scrollscan.com',
+    explorerBrowserDomain: 'scrollscan.com',
+    usdcAddress: '0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4',
+    isDev: false,
+  },
+  [Chain.SCROLL_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 534351,
+    name: 'Scroll Sepolia',
+    alchemyNetwork: 'scroll-sepolia',
+    explorerDomain: 'api-sepolia.scrollscan.com',
+    explorerBrowserDomain: 'sepolia.scrollscan.com',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Monad
-  [Chain.MONAD_MAINNET]: '',
-  [Chain.MONAD_TESTNET]: '',
+  [Chain.MONAD_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 10000,
+    name: 'Monad',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.monad.xyz',
+    usdcAddress: '0x',
+    isDev: false,
+  },
+  [Chain.MONAD_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 10001,
+    name: 'Monad Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.explorer.monad.xyz',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Story Protocol
-  [Chain.STORY_MAINNET]: '',
-  [Chain.STORY_TESTNET]: '',
+  [Chain.STORY_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 1516,
+    name: 'Story',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.story.foundation',
+    usdcAddress: '0x',
+    isDev: false,
+  },
+  [Chain.STORY_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 1513,
+    name: 'Story Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.explorer.story.foundation',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Plume Network
-  [Chain.PLUME_MAINNET]: '',
-  [Chain.PLUME_TESTNET]: '',
+  [Chain.PLUME_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 98865,
+    name: 'Plume',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.plumenetwork.xyz',
+    usdcAddress: '0x222365EF19F7947e5484218551B56bb3965Aa7aF',
+    isDev: false,
+  },
+  [Chain.PLUME_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 98864,
+    name: 'Plume Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.explorer.plumenetwork.xyz',
+    usdcAddress: '0xcB5f30e335672893c7eb944B374c196392C19D18',
+    isDev: true,
+  },
 
   // Nexus
-  [Chain.NEXUS_MAINNET]: '',
-  [Chain.NEXUS_TESTNET]: '',
+  [Chain.NEXUS_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 9999,
+    name: 'Nexus',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.nexus.xyz',
+    usdcAddress: '0x',
+    isDev: false,
+  },
+  [Chain.NEXUS_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 9998,
+    name: 'Nexus Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.explorer.nexus.xyz',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // HyperEVM
-  [Chain.HYPEREVM_MAINNET]: '',
-  [Chain.HYPEREVM_TESTNET]: '',
+  [Chain.HYPEREVM_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 998,
+    name: 'HyperEVM',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'app.hyperliquid.xyz/explorer',
+    usdcAddress: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
+    isDev: false,
+  },
+  [Chain.HYPEREVM_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 997,
+    name: 'HyperEVM Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'app.hyperliquid-testnet.xyz/explorer',
+    usdcAddress: '0x2B3370eE501B4a559b57D449569354196457D8Ab',
+    isDev: true,
+  },
 
   // Sonic
-  [Chain.SONIC_MAINNET]: '',
-  [Chain.SONIC_TESTNET]: '',
-  [Chain.SONIC_BLAZE]: '',
+  [Chain.SONIC_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 146,
+    name: 'Sonic',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'sonicscan.org',
+    usdcAddress: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
+    isDev: false,
+  },
+  [Chain.SONIC_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 64165,
+    name: 'Sonic Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.sonicscan.org',
+    usdcAddress: '0x0BA304580ee7c9a980CF72e55f5Ed2E9fd30Bc51',
+    isDev: true,
+  },
+  [Chain.SONIC_BLAZE]: {
+    chainType: ChainType.EVM,
+    chainId: 57054,
+    name: 'Sonic Blaze',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'blaze.sonicscan.org',
+    usdcAddress: '0xA4879Fed32Ecbef99399e5cbC247E533421C4eC6',
+    isDev: true,
+  },
 
   // Unichain
-  [Chain.UNICHAIN_MAINNET]: '',
-  [Chain.UNICHAIN_SEPOLIA]: '',
+  [Chain.UNICHAIN_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 1,
+    name: 'Unichain',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'uniscan.xyz',
+    usdcAddress: '0x078D782b760474a361dDA0AF3839290b0EF57AD6',
+    isDev: false,
+  },
+  [Chain.UNICHAIN_SEPOLIA]: {
+    chainType: ChainType.EVM,
+    chainId: 1301,
+    name: 'Unichain Sepolia',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'sepolia.uniscan.xyz',
+    usdcAddress: '0x31d0220469e10c4E71834a79b1f276E153D00a2D',
+    isDev: true,
+  },
 
   // World Chain
-  [Chain.WORLD_MAINNET]: '',
+  [Chain.WORLD_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 480,
+    name: 'World Chain',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'worldscan.org',
+    usdcAddress: '0x79A02482A880bCe3F13E09da970dC34dB4cD24D1',
+    isDev: false,
+  },
 
   // XDC Network
-  [Chain.XDC_MAINNET]: '',
+  [Chain.XDC_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 50,
+    name: 'XDC Network',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'xdcscan.io',
+    usdcAddress: '0x',
+    isDev: false,
+  },
 
   // Ink
-  [Chain.INK_TESTNET]: '',
+  [Chain.INK_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 763373,
+    name: 'Ink Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.inkonchain.com',
+    usdcAddress: '0xFabab97dCE620294D2B0b0e46C68964e326300Ac',
+    isDev: true,
+  },
 
   // Fetch.ai
-  [Chain.FETCH_MAINNET]: '',
-  [Chain.FETCH_TESTNET]: '',
+  [Chain.FETCH_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 2154,
+    name: 'Fetch.ai',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explore.fetch.ai',
+    usdcAddress: '0x',
+    isDev: false,
+  },
+  [Chain.FETCH_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 2153,
+    name: 'Fetch.ai Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explore-testnet.fetch.ai',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Gensyn
-  [Chain.GENSYN_MAINNET]: '',
-  [Chain.GENSYN_TESTNET]: '',
+  [Chain.GENSYN_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 8888,
+    name: 'Gensyn',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.gensyn.ai',
+    usdcAddress: '0x',
+    isDev: false,
+  },
+  [Chain.GENSYN_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 8887,
+    name: 'Gensyn Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.explorer.gensyn.ai',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Ritual
-  [Chain.RITUAL_MAINNET]: '',
-  [Chain.RITUAL_TESTNET]: '',
-
-  // Solana - no block explorer API in this format
-  [Chain.SOLANA_MAINNET]: '',
-  [Chain.SOLANA_DEVNET]: '',
-  [Chain.SOLANA_TESTNET]: '',
-
-  // Local development - no block explorer API
-  [Chain.EVM_LOCAL]: '',
-  [Chain.SOLANA_LOCAL]: '',
-};
-
-/**
- * Block explorer browser URL mappings
- */
-const EXPLORER_BROWSER_MAP: Record<Chain, string> = {
-  // Ethereum
-  [Chain.ETH_MAINNET]: 'etherscan.io',
-  [Chain.ETH_SEPOLIA]: 'sepolia.etherscan.io',
-  [Chain.ETH_GOERLI]: 'goerli.etherscan.io',
-
-  // Polygon
-  [Chain.POLYGON_MAINNET]: 'polygonscan.com',
-  [Chain.POLYGON_MUMBAI]: 'mumbai.polygonscan.com',
-  [Chain.POLYGON_AMOY]: 'amoy.polygonscan.com',
-
-  // Optimism
-  [Chain.OPTIMISM_MAINNET]: 'optimistic.etherscan.io',
-  [Chain.OPTIMISM_SEPOLIA]: 'sepolia-optimistic.etherscan.io',
-  [Chain.OPTIMISM_GOERLI]: 'goerli-optimistic.etherscan.io',
-
-  // Arbitrum
-  [Chain.ARBITRUM_MAINNET]: 'arbiscan.io',
-  [Chain.ARBITRUM_SEPOLIA]: 'sepolia.arbiscan.io',
-  [Chain.ARBITRUM_GOERLI]: 'goerli.arbiscan.io',
-
-  // Base
-  [Chain.BASE_MAINNET]: 'basescan.org',
-  [Chain.BASE_SEPOLIA]: 'sepolia.basescan.org',
-  [Chain.BASE_GOERLI]: 'goerli.basescan.org',
-
-  // Avalanche
-  [Chain.AVALANCHE_MAINNET]: 'snowtrace.io',
-  [Chain.AVALANCHE_FUJI]: 'testnet.snowtrace.io',
-
-  // BNB Chain
-  [Chain.BNB_MAINNET]: 'bscscan.com',
-  [Chain.BNB_TESTNET]: 'testnet.bscscan.com',
-
-  // Gnosis Chain
-  [Chain.GNOSIS_MAINNET]: 'gnosisscan.io',
-  [Chain.GNOSIS_CHIADO]: 'gnosis-chiado.blockscout.com',
-
-  // Celo
-  [Chain.CELO_MAINNET]: 'celoscan.io',
-  [Chain.CELO_ALFAJORES]: 'alfajores.celoscan.io',
-
-  // zkSync
-  [Chain.ZKSYNC_MAINNET]: 'explorer.zksync.io',
-  [Chain.ZKSYNC_SEPOLIA]: 'sepolia.explorer.zksync.io',
-
-  // Linea
-  [Chain.LINEA_MAINNET]: 'lineascan.build',
-  [Chain.LINEA_SEPOLIA]: 'sepolia.lineascan.build',
-
-  // Scroll
-  [Chain.SCROLL_MAINNET]: 'scrollscan.com',
-  [Chain.SCROLL_SEPOLIA]: 'sepolia.scrollscan.com',
-
-  // Monad
-  [Chain.MONAD_MAINNET]: 'explorer.monad.xyz',
-  [Chain.MONAD_TESTNET]: 'testnet.explorer.monad.xyz',
-
-  // Story Protocol
-  [Chain.STORY_MAINNET]: 'explorer.story.foundation',
-  [Chain.STORY_TESTNET]: 'testnet.explorer.story.foundation',
-
-  // Plume Network
-  [Chain.PLUME_MAINNET]: 'explorer.plumenetwork.xyz',
-  [Chain.PLUME_TESTNET]: 'testnet.explorer.plumenetwork.xyz',
-
-  // Nexus
-  [Chain.NEXUS_MAINNET]: 'explorer.nexus.xyz',
-  [Chain.NEXUS_TESTNET]: 'testnet.explorer.nexus.xyz',
-
-  // HyperEVM
-  [Chain.HYPEREVM_MAINNET]: 'app.hyperliquid.xyz/explorer',
-  [Chain.HYPEREVM_TESTNET]: 'app.hyperliquid-testnet.xyz/explorer',
-
-  // Sonic
-  [Chain.SONIC_MAINNET]: 'sonicscan.org',
-  [Chain.SONIC_TESTNET]: 'testnet.sonicscan.org',
-  [Chain.SONIC_BLAZE]: 'blaze.sonicscan.org',
-
-  // Unichain
-  [Chain.UNICHAIN_MAINNET]: 'uniscan.xyz',
-  [Chain.UNICHAIN_SEPOLIA]: 'sepolia.uniscan.xyz',
-
-  // World Chain
-  [Chain.WORLD_MAINNET]: 'worldscan.org',
-
-  // XDC Network
-  [Chain.XDC_MAINNET]: 'xdcscan.io',
-
-  // Ink
-  [Chain.INK_TESTNET]: 'explorer.inkonchain.com',
-
-  // Fetch.ai
-  [Chain.FETCH_MAINNET]: 'explore.fetch.ai',
-  [Chain.FETCH_TESTNET]: 'explore-testnet.fetch.ai',
-
-  // Gensyn
-  [Chain.GENSYN_MAINNET]: 'explorer.gensyn.ai',
-  [Chain.GENSYN_TESTNET]: 'testnet.explorer.gensyn.ai',
-
-  // Ritual
-  [Chain.RITUAL_MAINNET]: 'explorer.ritual.net',
-  [Chain.RITUAL_TESTNET]: 'testnet.explorer.ritual.net',
+  [Chain.RITUAL_MAINNET]: {
+    chainType: ChainType.EVM,
+    chainId: 7777,
+    name: 'Ritual',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.ritual.net',
+    usdcAddress: '0x',
+    isDev: false,
+  },
+  [Chain.RITUAL_TESTNET]: {
+    chainType: ChainType.EVM,
+    chainId: 7776,
+    name: 'Ritual Testnet',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: 'testnet.explorer.ritual.net',
+    usdcAddress: '0x',
+    isDev: true,
+  },
 
   // Solana
-  [Chain.SOLANA_MAINNET]: 'explorer.solana.com',
-  [Chain.SOLANA_DEVNET]: 'explorer.solana.com/?cluster=devnet',
-  [Chain.SOLANA_TESTNET]: 'explorer.solana.com/?cluster=testnet',
-
-  // Local development - no block explorer
-  [Chain.EVM_LOCAL]: '',
-  [Chain.SOLANA_LOCAL]: '',
-};
-
-/**
- * EVM chains (used for type checking)
- */
-const EVM_CHAINS = new Set<Chain>([
-  Chain.ETH_MAINNET,
-  Chain.ETH_SEPOLIA,
-  Chain.ETH_GOERLI,
-  Chain.POLYGON_MAINNET,
-  Chain.POLYGON_MUMBAI,
-  Chain.POLYGON_AMOY,
-  Chain.OPTIMISM_MAINNET,
-  Chain.OPTIMISM_SEPOLIA,
-  Chain.OPTIMISM_GOERLI,
-  Chain.ARBITRUM_MAINNET,
-  Chain.ARBITRUM_SEPOLIA,
-  Chain.ARBITRUM_GOERLI,
-  Chain.BASE_MAINNET,
-  Chain.BASE_SEPOLIA,
-  Chain.BASE_GOERLI,
-  Chain.AVALANCHE_MAINNET,
-  Chain.AVALANCHE_FUJI,
-  Chain.BNB_MAINNET,
-  Chain.BNB_TESTNET,
-  Chain.GNOSIS_MAINNET,
-  Chain.GNOSIS_CHIADO,
-  Chain.CELO_MAINNET,
-  Chain.CELO_ALFAJORES,
-  Chain.ZKSYNC_MAINNET,
-  Chain.ZKSYNC_SEPOLIA,
-  Chain.LINEA_MAINNET,
-  Chain.LINEA_SEPOLIA,
-  Chain.SCROLL_MAINNET,
-  Chain.SCROLL_SEPOLIA,
-  Chain.MONAD_MAINNET,
-  Chain.MONAD_TESTNET,
-  Chain.STORY_MAINNET,
-  Chain.STORY_TESTNET,
-  Chain.PLUME_MAINNET,
-  Chain.PLUME_TESTNET,
-  Chain.NEXUS_MAINNET,
-  Chain.NEXUS_TESTNET,
-  Chain.HYPEREVM_MAINNET,
-  Chain.HYPEREVM_TESTNET,
-  Chain.SONIC_MAINNET,
-  Chain.SONIC_TESTNET,
-  Chain.SONIC_BLAZE,
-  Chain.UNICHAIN_MAINNET,
-  Chain.UNICHAIN_SEPOLIA,
-  Chain.WORLD_MAINNET,
-  Chain.XDC_MAINNET,
-  Chain.INK_TESTNET,
-  Chain.FETCH_MAINNET,
-  Chain.FETCH_TESTNET,
-  Chain.GENSYN_MAINNET,
-  Chain.GENSYN_TESTNET,
-  Chain.RITUAL_MAINNET,
-  Chain.RITUAL_TESTNET,
-  Chain.EVM_LOCAL,
-]);
-
-/**
- * Solana chains (used for type checking)
- */
-const SOLANA_CHAINS = new Set<Chain>([
-  Chain.SOLANA_MAINNET,
-  Chain.SOLANA_DEVNET,
-  Chain.SOLANA_TESTNET,
-  Chain.SOLANA_LOCAL,
-]);
-
-/**
- * Chain ID mappings
- * EVM chains use positive IDs, Solana chains use negative IDs
- */
-const CHAIN_ID_MAP: Record<Chain, number> = {
-  // Ethereum
-  [Chain.ETH_MAINNET]: 1,
-  [Chain.ETH_SEPOLIA]: 11155111,
-  [Chain.ETH_GOERLI]: 5,
-
-  // Polygon
-  [Chain.POLYGON_MAINNET]: 137,
-  [Chain.POLYGON_MUMBAI]: 80001,
-  [Chain.POLYGON_AMOY]: 80002,
-
-  // Optimism
-  [Chain.OPTIMISM_MAINNET]: 10,
-  [Chain.OPTIMISM_SEPOLIA]: 11155420,
-  [Chain.OPTIMISM_GOERLI]: 420,
-
-  // Arbitrum
-  [Chain.ARBITRUM_MAINNET]: 42161,
-  [Chain.ARBITRUM_SEPOLIA]: 421614,
-  [Chain.ARBITRUM_GOERLI]: 421613,
-
-  // Base
-  [Chain.BASE_MAINNET]: 8453,
-  [Chain.BASE_SEPOLIA]: 84532,
-  [Chain.BASE_GOERLI]: 84531,
-
-  // Avalanche
-  [Chain.AVALANCHE_MAINNET]: 43114,
-  [Chain.AVALANCHE_FUJI]: 43113,
-
-  // BNB Chain
-  [Chain.BNB_MAINNET]: 56,
-  [Chain.BNB_TESTNET]: 97,
-
-  // Gnosis Chain
-  [Chain.GNOSIS_MAINNET]: 100,
-  [Chain.GNOSIS_CHIADO]: 10200,
-
-  // Celo
-  [Chain.CELO_MAINNET]: 42220,
-  [Chain.CELO_ALFAJORES]: 44787,
-
-  // zkSync
-  [Chain.ZKSYNC_MAINNET]: 324,
-  [Chain.ZKSYNC_SEPOLIA]: 300,
-
-  // Linea
-  [Chain.LINEA_MAINNET]: 59144,
-  [Chain.LINEA_SEPOLIA]: 59141,
-
-  // Scroll
-  [Chain.SCROLL_MAINNET]: 534352,
-  [Chain.SCROLL_SEPOLIA]: 534351,
-
-  // Monad
-  [Chain.MONAD_MAINNET]: 10000, // TBD - placeholder
-  [Chain.MONAD_TESTNET]: 10001, // TBD - placeholder
-
-  // Story Protocol
-  [Chain.STORY_MAINNET]: 1516, // Actual Story chain ID
-  [Chain.STORY_TESTNET]: 1513, // Story testnet chain ID
-
-  // Plume Network
-  [Chain.PLUME_MAINNET]: 98865, // Plume mainnet
-  [Chain.PLUME_TESTNET]: 98864, // Plume testnet
-
-  // Nexus
-  [Chain.NEXUS_MAINNET]: 9999, // TBD - placeholder
-  [Chain.NEXUS_TESTNET]: 9998, // TBD - placeholder
-
-  // HyperEVM
-  [Chain.HYPEREVM_MAINNET]: 998, // HyperEVM L1
-  [Chain.HYPEREVM_TESTNET]: 997, // HyperEVM testnet
-
-  // Sonic
-  [Chain.SONIC_MAINNET]: 146, // Sonic mainnet
-  [Chain.SONIC_TESTNET]: 64165, // Sonic testnet (S)
-  [Chain.SONIC_BLAZE]: 57054, // Sonic Blaze testnet (deprecated soon)
-
-  // Unichain
-  [Chain.UNICHAIN_MAINNET]: 1, // TBD - mainnet not launched yet, placeholder
-  [Chain.UNICHAIN_SEPOLIA]: 1301, // Unichain Sepolia testnet
-
-  // World Chain
-  [Chain.WORLD_MAINNET]: 480, // World Chain mainnet
-
-  // XDC Network
-  [Chain.XDC_MAINNET]: 50, // XDC Network mainnet
-
-  // Ink
-  [Chain.INK_TESTNET]: 763373, // Ink testnet (Sepolia)
-
-  // Fetch.ai (Cosmos-based but supports EVM)
-  [Chain.FETCH_MAINNET]: 2154, // Fetch.ai EVM
-  [Chain.FETCH_TESTNET]: 2153, // Fetch.ai testnet
-
-  // Gensyn
-  [Chain.GENSYN_MAINNET]: 8888, // TBD - placeholder
-  [Chain.GENSYN_TESTNET]: 8887, // TBD - placeholder
-
-  // Ritual
-  [Chain.RITUAL_MAINNET]: 7777, // TBD - placeholder
-  [Chain.RITUAL_TESTNET]: 7776, // TBD - placeholder
-
-  // Solana (negative IDs)
-  [Chain.SOLANA_MAINNET]: -101,
-  [Chain.SOLANA_DEVNET]: -102,
-  [Chain.SOLANA_TESTNET]: -103,
+  [Chain.SOLANA_MAINNET]: {
+    chainType: ChainType.SOLANA,
+    chainId: -101,
+    name: 'Solana',
+    alchemyNetwork: 'solana-mainnet',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.solana.com',
+    usdcAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    isDev: false,
+  },
+  [Chain.SOLANA_DEVNET]: {
+    chainType: ChainType.SOLANA,
+    chainId: -102,
+    name: 'Solana Devnet',
+    alchemyNetwork: 'solana-devnet',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.solana.com/?cluster=devnet',
+    usdcAddress: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
+    isDev: true,
+  },
+  [Chain.SOLANA_TESTNET]: {
+    chainType: ChainType.SOLANA,
+    chainId: -103,
+    name: 'Solana Testnet',
+    alchemyNetwork: 'solana-testnet',
+    explorerDomain: '',
+    explorerBrowserDomain: 'explorer.solana.com/?cluster=testnet',
+    usdcAddress: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
+    isDev: true,
+  },
 
   // Local development
-  [Chain.EVM_LOCAL]: 31337,
-  [Chain.SOLANA_LOCAL]: -104,
-};
-
-/**
- * USDC address/mint mappings
- * EVM chains have contract addresses, Solana chains have mint addresses
- * Source: https://developers.circle.com/stablecoins/usdc-contract-addresses
- */
-const USDC_ADDRESS_MAP: Record<Chain, string> = {
-  // Ethereum - Official Circle USDC
-  [Chain.ETH_MAINNET]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  [Chain.ETH_SEPOLIA]: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
-  [Chain.ETH_GOERLI]: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F', // Deprecated
-
-  // Polygon - Official Circle USDC (native USDC)
-  [Chain.POLYGON_MAINNET]: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
-  [Chain.POLYGON_MUMBAI]: '0x9999f7Fea5938fD3b1E26A12c3f2fb024e194f97', // Deprecated
-  [Chain.POLYGON_AMOY]: '0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582',
-
-  // Optimism - Official Circle USDC
-  [Chain.OPTIMISM_MAINNET]: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
-  [Chain.OPTIMISM_SEPOLIA]: '0x5fd84259d66Cd46123540766Be93DFE6D43130D7',
-  [Chain.OPTIMISM_GOERLI]: '0xe05606174bac4A6364B31bd0eCA4bf4dD368f8C6', // Deprecated
-
-  // Arbitrum - Official Circle USDC
-  [Chain.ARBITRUM_MAINNET]: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
-  [Chain.ARBITRUM_SEPOLIA]: '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d',
-  [Chain.ARBITRUM_GOERLI]: '0xfd064A18f3BF249cf1f87FC203E90D8f650f2d63', // Deprecated
-
-  // Base - Official Circle USDC
-  [Chain.BASE_MAINNET]: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-  [Chain.BASE_SEPOLIA]: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-  [Chain.BASE_GOERLI]: '0xF175520C52418dfE19C8098071a252da48Cd1C19', // Deprecated
-
-  // Avalanche - Official Circle USDC
-  [Chain.AVALANCHE_MAINNET]: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
-  [Chain.AVALANCHE_FUJI]: '0x5425890298aed601595a70AB815c96711a31Bc65',
-
-  // BNB Chain
-  [Chain.BNB_MAINNET]: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-  [Chain.BNB_TESTNET]: '0x64544969ed7EBf5f083679233325356EbE738930',
-
-  // Gnosis Chain
-  [Chain.GNOSIS_MAINNET]: '0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83',
-  [Chain.GNOSIS_CHIADO]: '0x',
-
-  // Celo
-  [Chain.CELO_MAINNET]: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
-  [Chain.CELO_ALFAJORES]: '0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B',
-
-  // zkSync - Official Circle USDC
-  [Chain.ZKSYNC_MAINNET]: '0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4',
-  [Chain.ZKSYNC_SEPOLIA]: '0x',
-
-  // Linea
-  [Chain.LINEA_MAINNET]: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
-  [Chain.LINEA_SEPOLIA]: '0x',
-
-  // Scroll
-  [Chain.SCROLL_MAINNET]: '0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4',
-  [Chain.SCROLL_SEPOLIA]: '0x',
-
-  // Monad
-  [Chain.MONAD_MAINNET]: '0x',
-  [Chain.MONAD_TESTNET]: '0x',
-
-  // Story Protocol
-  [Chain.STORY_MAINNET]: '0x',
-  [Chain.STORY_TESTNET]: '0x',
-
-  // Plume Network
-  [Chain.PLUME_MAINNET]: '0x222365EF19F7947e5484218551B56bb3965Aa7aF',
-  [Chain.PLUME_TESTNET]: '0xcB5f30e335672893c7eb944B374c196392C19D18',
-
-  // Nexus
-  [Chain.NEXUS_MAINNET]: '0x',
-  [Chain.NEXUS_TESTNET]: '0x',
-
-  // HyperEVM
-  [Chain.HYPEREVM_MAINNET]: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
-  [Chain.HYPEREVM_TESTNET]: '0x2B3370eE501B4a559b57D449569354196457D8Ab',
-
-  // Sonic
-  [Chain.SONIC_MAINNET]: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
-  [Chain.SONIC_TESTNET]: '0x0BA304580ee7c9a980CF72e55f5Ed2E9fd30Bc51',
-  [Chain.SONIC_BLAZE]: '0xA4879Fed32Ecbef99399e5cbC247E533421C4eC6',
-
-  // Unichain
-  [Chain.UNICHAIN_MAINNET]: '0x078D782b760474a361dDA0AF3839290b0EF57AD6',
-  [Chain.UNICHAIN_SEPOLIA]: '0x31d0220469e10c4E71834a79b1f276E153D00a2D',
-
-  // World Chain
-  [Chain.WORLD_MAINNET]: '0x79A02482A880bCe3F13E09da970dC34dB4cD24D1',
-
-  // XDC Network
-  [Chain.XDC_MAINNET]: '0x',
-
-  // Ink
-  [Chain.INK_TESTNET]: '0xFabab97dCE620294D2B0b0e46C68964e326300Ac',
-
-  // Fetch.ai
-  [Chain.FETCH_MAINNET]: '0x',
-  [Chain.FETCH_TESTNET]: '0x',
-
-  // Gensyn
-  [Chain.GENSYN_MAINNET]: '0x',
-  [Chain.GENSYN_TESTNET]: '0x',
-
-  // Ritual
-  [Chain.RITUAL_MAINNET]: '0x',
-  [Chain.RITUAL_TESTNET]: '0x',
-
-  // Solana (mint addresses)
-  [Chain.SOLANA_MAINNET]: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-  [Chain.SOLANA_DEVNET]: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
-  [Chain.SOLANA_TESTNET]: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
-
-  // Local development - mock addresses
-  [Chain.EVM_LOCAL]: '0x0000000000000000000000000000000000000000',
-  [Chain.SOLANA_LOCAL]: '11111111111111111111111111111111',
-};
-
-/**
- * User-friendly chain name mappings
- */
-const CHAIN_NAME_MAP: Record<Chain, string> = {
-  // Ethereum
-  [Chain.ETH_MAINNET]: 'Ethereum',
-  [Chain.ETH_SEPOLIA]: 'Ethereum Sepolia',
-  [Chain.ETH_GOERLI]: 'Ethereum Goerli',
-
-  // Polygon
-  [Chain.POLYGON_MAINNET]: 'Polygon',
-  [Chain.POLYGON_MUMBAI]: 'Polygon Mumbai',
-  [Chain.POLYGON_AMOY]: 'Polygon Amoy',
-
-  // Optimism
-  [Chain.OPTIMISM_MAINNET]: 'Optimism',
-  [Chain.OPTIMISM_SEPOLIA]: 'Optimism Sepolia',
-  [Chain.OPTIMISM_GOERLI]: 'Optimism Goerli',
-
-  // Arbitrum
-  [Chain.ARBITRUM_MAINNET]: 'Arbitrum',
-  [Chain.ARBITRUM_SEPOLIA]: 'Arbitrum Sepolia',
-  [Chain.ARBITRUM_GOERLI]: 'Arbitrum Goerli',
-
-  // Base
-  [Chain.BASE_MAINNET]: 'Base',
-  [Chain.BASE_SEPOLIA]: 'Base Sepolia',
-  [Chain.BASE_GOERLI]: 'Base Goerli',
-
-  // Avalanche
-  [Chain.AVALANCHE_MAINNET]: 'Avalanche',
-  [Chain.AVALANCHE_FUJI]: 'Avalanche Fuji',
-
-  // BNB Chain
-  [Chain.BNB_MAINNET]: 'BNB Chain',
-  [Chain.BNB_TESTNET]: 'BNB Chain Testnet',
-
-  // Gnosis Chain
-  [Chain.GNOSIS_MAINNET]: 'Gnosis',
-  [Chain.GNOSIS_CHIADO]: 'Gnosis Chiado',
-
-  // Celo
-  [Chain.CELO_MAINNET]: 'Celo',
-  [Chain.CELO_ALFAJORES]: 'Celo Alfajores',
-
-  // zkSync
-  [Chain.ZKSYNC_MAINNET]: 'zkSync',
-  [Chain.ZKSYNC_SEPOLIA]: 'zkSync Sepolia',
-
-  // Linea
-  [Chain.LINEA_MAINNET]: 'Linea',
-  [Chain.LINEA_SEPOLIA]: 'Linea Sepolia',
-
-  // Scroll
-  [Chain.SCROLL_MAINNET]: 'Scroll',
-  [Chain.SCROLL_SEPOLIA]: 'Scroll Sepolia',
-
-  // Monad
-  [Chain.MONAD_MAINNET]: 'Monad',
-  [Chain.MONAD_TESTNET]: 'Monad Testnet',
-
-  // Story Protocol
-  [Chain.STORY_MAINNET]: 'Story',
-  [Chain.STORY_TESTNET]: 'Story Testnet',
-
-  // Plume Network
-  [Chain.PLUME_MAINNET]: 'Plume',
-  [Chain.PLUME_TESTNET]: 'Plume Testnet',
-
-  // Nexus
-  [Chain.NEXUS_MAINNET]: 'Nexus',
-  [Chain.NEXUS_TESTNET]: 'Nexus Testnet',
-
-  // HyperEVM
-  [Chain.HYPEREVM_MAINNET]: 'HyperEVM',
-  [Chain.HYPEREVM_TESTNET]: 'HyperEVM Testnet',
-
-  // Sonic
-  [Chain.SONIC_MAINNET]: 'Sonic',
-  [Chain.SONIC_TESTNET]: 'Sonic Testnet',
-  [Chain.SONIC_BLAZE]: 'Sonic Blaze',
-
-  // Unichain
-  [Chain.UNICHAIN_MAINNET]: 'Unichain',
-  [Chain.UNICHAIN_SEPOLIA]: 'Unichain Sepolia',
-
-  // World Chain
-  [Chain.WORLD_MAINNET]: 'World Chain',
-
-  // XDC Network
-  [Chain.XDC_MAINNET]: 'XDC Network',
-
-  // Ink
-  [Chain.INK_TESTNET]: 'Ink Testnet',
-
-  // Fetch.ai
-  [Chain.FETCH_MAINNET]: 'Fetch.ai',
-  [Chain.FETCH_TESTNET]: 'Fetch.ai Testnet',
-
-  // Gensyn
-  [Chain.GENSYN_MAINNET]: 'Gensyn',
-  [Chain.GENSYN_TESTNET]: 'Gensyn Testnet',
-
-  // Ritual
-  [Chain.RITUAL_MAINNET]: 'Ritual',
-  [Chain.RITUAL_TESTNET]: 'Ritual Testnet',
-
-  // Solana
-  [Chain.SOLANA_MAINNET]: 'Solana',
-  [Chain.SOLANA_DEVNET]: 'Solana Devnet',
-  [Chain.SOLANA_TESTNET]: 'Solana Testnet',
-
-  // Local development
-  [Chain.EVM_LOCAL]: 'Local EVM',
-  [Chain.SOLANA_LOCAL]: 'Local Solana',
+  [Chain.EVM_LOCAL]: {
+    chainType: ChainType.EVM,
+    chainId: 31337,
+    name: 'Local EVM',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: '',
+    usdcAddress: '0x0000000000000000000000000000000000000000',
+    isDev: true,
+  },
+  [Chain.SOLANA_LOCAL]: {
+    chainType: ChainType.SOLANA,
+    chainId: -104,
+    name: 'Local Solana',
+    alchemyNetwork: '',
+    explorerDomain: '',
+    explorerBrowserDomain: '',
+    usdcAddress: '11111111111111111111111111111111',
+    isDev: true,
+  },
 };
 
 /**
@@ -805,7 +697,8 @@ export class RpcHelpers {
    * @returns True if the chain is an EVM chain
    */
   static isEvmChain(chain: Chain): boolean {
-    return EVM_CHAINS.has(chain);
+    const info = CHAIN_INFO_MAP[chain];
+    return info ? info.chainType === ChainType.EVM : false;
   }
 
   /**
@@ -814,7 +707,8 @@ export class RpcHelpers {
    * @returns True if the chain is a Solana chain
    */
   static isSolanaChain(chain: Chain): boolean {
-    return SOLANA_CHAINS.has(chain);
+    const info = CHAIN_INFO_MAP[chain];
+    return info ? info.chainType === ChainType.SOLANA : false;
   }
 
   /**
@@ -832,13 +726,38 @@ export class RpcHelpers {
    * ```
    */
   static getChainType(chain: Chain): ChainType {
-    if (this.isEvmChain(chain)) {
-      return ChainType.EVM;
+    const info = CHAIN_INFO_MAP[chain];
+    if (!info) {
+      throw new Error(`Unknown chain: ${chain}`);
     }
-    if (this.isSolanaChain(chain)) {
-      return ChainType.SOLANA;
+    return info.chainType;
+  }
+
+  /**
+   * Get complete static chain information
+   * @param chain - Chain identifier
+   * @returns ChainInfo object containing all static chain metadata
+   * @throws Error if the chain is not recognized
+   * @example
+   * ```typescript
+   * const info = RpcHelpers.getChainInfo(Chain.ETH_MAINNET);
+   * // Returns: {
+   * //   chainType: ChainType.EVM,
+   * //   chainId: 1,
+   * //   name: 'Ethereum',
+   * //   alchemyNetwork: 'eth-mainnet',
+   * //   explorerDomain: 'api.etherscan.io',
+   * //   explorerBrowserDomain: 'etherscan.io',
+   * //   usdcAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+   * // }
+   * ```
+   */
+  static getChainInfo(chain: Chain): ChainInfo {
+    const info = CHAIN_INFO_MAP[chain];
+    if (!info) {
+      throw new Error(`Unknown chain: ${chain}`);
     }
-    throw new Error(`Unknown chain: ${chain}`);
+    return info;
   }
 
   /**
@@ -862,11 +781,7 @@ export class RpcHelpers {
    * ```
    */
   static getChainId(chain: Chain): number {
-    const chainId = CHAIN_ID_MAP[chain];
-    if (chainId === undefined) {
-      throw new Error(`Unknown chain: ${chain}`);
-    }
-    return chainId;
+    return this.getChainInfo(chain).chainId;
   }
 
   /**
@@ -887,11 +802,7 @@ export class RpcHelpers {
    * ```
    */
   static getUSDCAddress(chain: Chain): string {
-    const address = USDC_ADDRESS_MAP[chain];
-    if (address === undefined) {
-      throw new Error(`Unknown chain: ${chain}`);
-    }
-    return address;
+    return this.getChainInfo(chain).usdcAddress;
   }
 
   /**
@@ -915,45 +826,42 @@ export class RpcHelpers {
    * ```
    */
   static getUserFriendlyName(chain: Chain): string {
-    const name = CHAIN_NAME_MAP[chain];
-    if (name === undefined) {
-      throw new Error(`Unknown chain: ${chain}`);
-    }
-    return name;
+    return this.getChainInfo(chain).name;
   }
 
   /**
    * Get the list of visible chains for the application
-   * @param isDev - Whether to include development/testnet chains
-   * @returns Array of Chain values to display
+   * @param chainType - Filter by chain type (EVM or Solana)
+   * @param isDev - Whether to include development/testnet chains (true) or production chains (false)
+   * @returns Array of ChainInfo objects for chains that match the filters and have a mailer contract deployed
    * @example
    * ```typescript
-   * const prodChains = RpcHelpers.getVisibleChains(false);
-   * // Returns: [Chain.ETH_MAINNET, Chain.BASE_MAINNET, Chain.POLYGON_MAINNET, Chain.OPTIMISM_MAINNET]
+   * // Get production EVM chains with mailer contracts
+   * const prodEvmChains = RpcHelpers.getVisibleChains(ChainType.EVM, false);
+   * // Returns: ChainInfo[] with only mainnet EVM chains that have mailerAddress set
    *
-   * const devChains = RpcHelpers.getVisibleChains(true);
-   * // Returns: [Chain.ETH_MAINNET, Chain.BASE_MAINNET, Chain.POLYGON_MAINNET, Chain.OPTIMISM_MAINNET, Chain.ETH_SEPOLIA]
+   * // Get development EVM chains with mailer contracts
+   * const devEvmChains = RpcHelpers.getVisibleChains(ChainType.EVM, true);
+   * // Returns: ChainInfo[] with only testnet EVM chains that have mailerAddress set
+   *
+   * // Get production Solana chains with mailer contracts
+   * const prodSolanaChains = RpcHelpers.getVisibleChains(ChainType.SOLANA, false);
+   * // Returns: ChainInfo[] with only mainnet Solana chains that have mailerAddress set
    * ```
    */
-  static getVisibleChains(isDev: boolean): Chain[] {
-    const mainnetChains = [
-      Chain.ETH_MAINNET,
-      Chain.BASE_MAINNET,
-      Chain.POLYGON_MAINNET,
-      Chain.OPTIMISM_MAINNET,
-    ];
-
-    if (isDev) {
-      return [...mainnetChains, Chain.ETH_SEPOLIA];
-    }
-
-    return mainnetChains;
+  static getVisibleChains(chainType: ChainType, isDev: boolean): ChainInfo[] {
+    return Object.values(CHAIN_INFO_MAP).filter(
+      (info) =>
+        info.chainType === chainType &&
+        info.isDev === isDev &&
+        info.mailerAddress !== undefined
+    );
   }
 
   /**
-   * Derive all chain information from a ChainConfig
+   * Derive all chain information from a ChainConfig including API URLs
    * @param config - Chain configuration with API keys
-   * @returns Object with all derived chain information
+   * @returns Object with all derived chain information including RPC and explorer URLs
    * @example
    * ```typescript
    * const config: ChainConfig = {
@@ -962,7 +870,7 @@ export class RpcHelpers {
    *   etherscanApiKey: 'your-etherscan-key'
    * };
    *
-   * const info = RpcHelpers.getChainInfo(config);
+   * const info = RpcHelpers.deriveChainInfo(config);
    * // Returns: {
    * //   chain: Chain.ETH_MAINNET,
    * //   chainId: 1,
@@ -975,7 +883,7 @@ export class RpcHelpers {
    * // }
    * ```
    */
-  static getChainInfo(config: ChainConfig) {
+  static deriveChainInfo(config: ChainConfig) {
     return {
       chain: config.chain,
       chainId: this.getChainId(config.chain),
@@ -1045,13 +953,10 @@ export class RpcHelpers {
       return undefined;
     }
 
-    const network = ALCHEMY_NETWORK_MAP[chain];
+    const chainInfo = this.getChainInfo(chain);
+    const network = chainInfo.alchemyNetwork;
     if (!network) {
       return undefined;
-    }
-
-    if (this.isSolanaChain(chain)) {
-      return `https://solana-${network}.g.alchemy.com/v2/${alchemyApiKey}`;
     }
 
     return `https://${network}.g.alchemy.com/v2/${alchemyApiKey}`;
@@ -1107,11 +1012,12 @@ export class RpcHelpers {
       return undefined;
     }
 
-    if (this.isSolanaChain(chain)) {
+    const chainInfo = this.getChainInfo(chain);
+    if (chainInfo.chainType === ChainType.SOLANA) {
       return undefined;
     }
 
-    const domain = EXPLORER_DOMAIN_MAP[chain];
+    const domain = chainInfo.explorerDomain;
     if (!domain) {
       return undefined;
     }
@@ -1138,7 +1044,8 @@ export class RpcHelpers {
    * ```
    */
   static getBlockExplorerUrl(chain: Chain): Optional<string> {
-    const domain = EXPLORER_BROWSER_MAP[chain];
+    const chainInfo = this.getChainInfo(chain);
+    const domain = chainInfo.explorerBrowserDomain;
     if (!domain) {
       return undefined;
     }
