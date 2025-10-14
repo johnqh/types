@@ -14,6 +14,18 @@ import {
   isPointsResponse,
   isLeaderboardResponse,
   isSiteStatsResponse,
+  isReferralCodeResponse,
+  isReferralStatsResponse,
+  isAuthenticationStatusResponse,
+  isBlockStatusResponse,
+  isNameServiceResponse,
+  isNameResolutionResponse,
+  isTemplateResponse,
+  isTemplateListResponse,
+  isTemplateDeleteResponse,
+  isWebhookResponse,
+  isWebhookListResponse,
+  isWebhookDeleteResponse,
 } from '../../../src/types/indexer/indexer-guards';
 
 describe('Indexer Type Guards', () => {
@@ -470,6 +482,531 @@ describe('Indexer Type Guards', () => {
     });
   });
 
+  describe('Referral Response Guards', () => {
+    describe('isReferralCodeResponse', () => {
+      it('should identify referral code responses correctly', () => {
+        const referralCodeResponse = {
+          success: true,
+          data: {
+            walletAddress: mockWalletAddress,
+            referralCode: 'ABC123',
+            createdAt: mockTimestamp,
+          },
+        };
+
+        expect(isReferralCodeResponse(referralCodeResponse)).toBe(true);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            walletAddress: mockWalletAddress,
+            // missing referralCode and createdAt
+          },
+        };
+
+        expect(isReferralCodeResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isReferralStatsResponse', () => {
+      it('should identify referral stats responses correctly', () => {
+        const referralStatsResponse = {
+          success: true,
+          data: {
+            total: 10,
+            consumptions: [
+              {
+                walletAddress: mockWalletAddress,
+                referralCode: 'ABC123',
+                createdAt: mockTimestamp,
+              },
+            ],
+          },
+        };
+
+        expect(isReferralStatsResponse(referralStatsResponse)).toBe(true);
+      });
+
+      it('should reject responses with non-array consumptions', () => {
+        const invalidResponse = {
+          success: true,
+          data: {
+            total: 10,
+            consumptions: 'not an array',
+          },
+        };
+
+        expect(isReferralStatsResponse(invalidResponse)).toBe(false);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            total: 10,
+            // missing consumptions
+          },
+        };
+
+        expect(isReferralStatsResponse(incompleteResponse)).toBe(false);
+      });
+    });
+  });
+
+  describe('Authentication Status Response Guard', () => {
+    describe('isAuthenticationStatusResponse', () => {
+      it('should identify authentication status responses correctly', () => {
+        const authResponse = {
+          success: true,
+          data: {
+            authenticated: true,
+            datetime: mockTimestamp,
+          },
+        };
+
+        expect(isAuthenticationStatusResponse(authResponse)).toBe(true);
+      });
+
+      it('should handle responses without optional datetime', () => {
+        const authResponse = {
+          success: true,
+          data: {
+            authenticated: false,
+          },
+        };
+
+        expect(isAuthenticationStatusResponse(authResponse)).toBe(true);
+      });
+
+      it('should reject responses with non-boolean authenticated', () => {
+        const invalidResponse = {
+          success: true,
+          data: {
+            authenticated: 'true',
+          },
+        };
+
+        expect(isAuthenticationStatusResponse(invalidResponse)).toBe(false);
+      });
+
+      it('should reject responses missing authenticated property', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            datetime: mockTimestamp,
+          },
+        };
+
+        expect(isAuthenticationStatusResponse(incompleteResponse)).toBe(false);
+      });
+    });
+  });
+
+  describe('Block Status Response Guard', () => {
+    describe('isBlockStatusResponse', () => {
+      it('should identify block status responses correctly', () => {
+        const blockStatusResponse = {
+          success: true,
+          data: {
+            chains: [
+              {
+                chain: 'ethereum',
+                chainId: 1,
+                currentBlock: '12345678',
+                indexedBlock: '12345670',
+                rpcUrl: 'https://eth.llamarpc.com',
+                status: 'active',
+              },
+            ],
+            totalChains: 5,
+            activeChains: 5,
+            timestamp: mockTimestamp,
+          },
+        };
+
+        expect(isBlockStatusResponse(blockStatusResponse)).toBe(true);
+      });
+
+      it('should reject responses with non-array chains', () => {
+        const invalidResponse = {
+          success: true,
+          data: {
+            chains: 'not an array',
+            totalChains: 5,
+            activeChains: 5,
+            timestamp: mockTimestamp,
+          },
+        };
+
+        expect(isBlockStatusResponse(invalidResponse)).toBe(false);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            chains: [],
+            totalChains: 5,
+            // missing activeChains and timestamp
+          },
+        };
+
+        expect(isBlockStatusResponse(incompleteResponse)).toBe(false);
+      });
+    });
+  });
+
+  describe('Name Service Response Guards', () => {
+    describe('isNameServiceResponse', () => {
+      it('should identify name service responses correctly', () => {
+        const nameServiceResponse = {
+          success: true,
+          data: {
+            names: ['test.eth', 'test2.eth'],
+          },
+        };
+
+        expect(isNameServiceResponse(nameServiceResponse)).toBe(true);
+      });
+
+      it('should reject responses with non-array names', () => {
+        const invalidResponse = {
+          success: true,
+          data: {
+            names: 'not an array',
+          },
+        };
+
+        expect(isNameServiceResponse(invalidResponse)).toBe(false);
+      });
+
+      it('should reject responses missing names property', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {},
+        };
+
+        expect(isNameServiceResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isNameResolutionResponse', () => {
+      it('should identify name resolution responses correctly', () => {
+        const nameResolutionResponse = {
+          success: true,
+          data: {
+            walletAddress: mockWalletAddress,
+            chainType: ChainType.EVM,
+          },
+        };
+
+        expect(isNameResolutionResponse(nameResolutionResponse)).toBe(true);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            walletAddress: mockWalletAddress,
+            // missing chainType
+          },
+        };
+
+        expect(isNameResolutionResponse(incompleteResponse)).toBe(false);
+      });
+    });
+  });
+
+  describe('Template Response Guards', () => {
+    describe('isTemplateResponse', () => {
+      it('should identify template responses correctly', () => {
+        const templateResponse = {
+          success: true,
+          data: {
+            template: {
+              id: 'template-123',
+              userId: 'user-456',
+              templateName: 'My Template',
+              subject: 'Test Subject',
+              bodyContent: 'Test body content',
+              isActive: true,
+              usageCount: 5,
+              lastUsedAt: mockTimestamp,
+              createdAt: mockTimestamp,
+              updatedAt: mockTimestamp,
+            },
+            verified: true,
+          },
+        };
+
+        expect(isTemplateResponse(templateResponse)).toBe(true);
+      });
+
+      it('should reject responses missing template properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            template: {
+              id: 'template-123',
+              // missing other required fields
+            },
+            verified: true,
+          },
+        };
+
+        expect(isTemplateResponse(incompleteResponse)).toBe(false);
+      });
+
+      it('should reject responses missing verified property', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            template: {
+              id: 'template-123',
+              userId: 'user-456',
+              templateName: 'My Template',
+              subject: 'Test Subject',
+              bodyContent: 'Test body content',
+              isActive: true,
+              usageCount: 5,
+              lastUsedAt: mockTimestamp,
+              createdAt: mockTimestamp,
+              updatedAt: mockTimestamp,
+            },
+            // missing verified
+          },
+        };
+
+        expect(isTemplateResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isTemplateListResponse', () => {
+      it('should identify template list responses correctly', () => {
+        const templateListResponse = {
+          success: true,
+          data: {
+            templates: [
+              {
+                id: 'template-123',
+                userId: 'user-456',
+                templateName: 'My Template',
+                subject: 'Test Subject',
+                bodyContent: 'Test body content',
+                isActive: true,
+                usageCount: 5,
+                lastUsedAt: mockTimestamp,
+                createdAt: mockTimestamp,
+                updatedAt: mockTimestamp,
+              },
+            ],
+            total: 1,
+            hasMore: false,
+            verified: true,
+          },
+        };
+
+        expect(isTemplateListResponse(templateListResponse)).toBe(true);
+      });
+
+      it('should reject responses with non-array templates', () => {
+        const invalidResponse = {
+          success: true,
+          data: {
+            templates: 'not an array',
+            total: 1,
+            hasMore: false,
+            verified: true,
+          },
+        };
+
+        expect(isTemplateListResponse(invalidResponse)).toBe(false);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            templates: [],
+            total: 0,
+            // missing hasMore and verified
+          },
+        };
+
+        expect(isTemplateListResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isTemplateDeleteResponse', () => {
+      it('should identify template delete responses correctly', () => {
+        const deleteResponse = {
+          success: true,
+          data: {
+            message: 'Template deleted successfully',
+            verified: true,
+          },
+        };
+
+        expect(isTemplateDeleteResponse(deleteResponse)).toBe(true);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            message: 'Template deleted successfully',
+            // missing verified
+          },
+        };
+
+        expect(isTemplateDeleteResponse(incompleteResponse)).toBe(false);
+      });
+    });
+  });
+
+  describe('Webhook Response Guards', () => {
+    describe('isWebhookResponse', () => {
+      it('should identify webhook responses correctly', () => {
+        const webhookResponse = {
+          success: true,
+          data: {
+            webhook: {
+              id: 'webhook-123',
+              userId: 'user-456',
+              webhookUrl: 'https://example.com/webhook',
+              isActive: true,
+              lastTriggeredAt: mockTimestamp,
+              triggerCount: 10,
+              createdAt: mockTimestamp,
+              updatedAt: mockTimestamp,
+            },
+            verified: true,
+          },
+        };
+
+        expect(isWebhookResponse(webhookResponse)).toBe(true);
+      });
+
+      it('should reject responses missing webhook properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            webhook: {
+              id: 'webhook-123',
+              // missing other required fields
+            },
+            verified: true,
+          },
+        };
+
+        expect(isWebhookResponse(incompleteResponse)).toBe(false);
+      });
+
+      it('should reject responses missing verified property', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            webhook: {
+              id: 'webhook-123',
+              userId: 'user-456',
+              webhookUrl: 'https://example.com/webhook',
+              isActive: true,
+              lastTriggeredAt: mockTimestamp,
+              triggerCount: 10,
+              createdAt: mockTimestamp,
+              updatedAt: mockTimestamp,
+            },
+            // missing verified
+          },
+        };
+
+        expect(isWebhookResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isWebhookListResponse', () => {
+      it('should identify webhook list responses correctly', () => {
+        const webhookListResponse = {
+          success: true,
+          data: {
+            webhooks: [
+              {
+                id: 'webhook-123',
+                userId: 'user-456',
+                webhookUrl: 'https://example.com/webhook',
+                isActive: true,
+                lastTriggeredAt: mockTimestamp,
+                triggerCount: 10,
+                createdAt: mockTimestamp,
+                updatedAt: mockTimestamp,
+              },
+            ],
+            total: 1,
+            hasMore: false,
+            verified: true,
+          },
+        };
+
+        expect(isWebhookListResponse(webhookListResponse)).toBe(true);
+      });
+
+      it('should reject responses with non-array webhooks', () => {
+        const invalidResponse = {
+          success: true,
+          data: {
+            webhooks: 'not an array',
+            total: 1,
+            hasMore: false,
+            verified: true,
+          },
+        };
+
+        expect(isWebhookListResponse(invalidResponse)).toBe(false);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            webhooks: [],
+            total: 0,
+            // missing hasMore and verified
+          },
+        };
+
+        expect(isWebhookListResponse(incompleteResponse)).toBe(false);
+      });
+    });
+
+    describe('isWebhookDeleteResponse', () => {
+      it('should identify webhook delete responses correctly', () => {
+        const deleteResponse = {
+          success: true,
+          data: {
+            message: 'Webhook deleted successfully',
+            verified: true,
+          },
+        };
+
+        expect(isWebhookDeleteResponse(deleteResponse)).toBe(true);
+      });
+
+      it('should reject responses missing required properties', () => {
+        const incompleteResponse = {
+          success: true,
+          data: {
+            message: 'Webhook deleted successfully',
+            // missing verified
+          },
+        };
+
+        expect(isWebhookDeleteResponse(incompleteResponse)).toBe(false);
+      });
+    });
+  });
+
   describe('Edge Cases and Type Safety', () => {
     it('should handle null and undefined inputs', () => {
       const guards = [
@@ -486,6 +1023,18 @@ describe('Indexer Type Guards', () => {
         isPointsResponse,
         isLeaderboardResponse,
         isSiteStatsResponse,
+        isReferralCodeResponse,
+        isReferralStatsResponse,
+        isAuthenticationStatusResponse,
+        isBlockStatusResponse,
+        isNameServiceResponse,
+        isNameResolutionResponse,
+        isTemplateResponse,
+        isTemplateListResponse,
+        isTemplateDeleteResponse,
+        isWebhookResponse,
+        isWebhookListResponse,
+        isWebhookDeleteResponse,
       ];
 
       guards.forEach((guard) => {

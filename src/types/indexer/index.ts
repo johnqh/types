@@ -68,6 +68,24 @@ export type {
   IndexerNameResolutionData,
   IndexerNameResolutionResponse,
 
+  // Email template types
+  IndexerTemplateData,
+  IndexerTemplateResult,
+  IndexerTemplateResponse,
+  IndexerTemplateListResult,
+  IndexerTemplateListResponse,
+  IndexerTemplateDeleteResult,
+  IndexerTemplateDeleteResponse,
+
+  // Webhook types
+  IndexerWebhookData,
+  IndexerWebhookResult,
+  IndexerWebhookResponse,
+  IndexerWebhookListResult,
+  IndexerWebhookListResponse,
+  IndexerWebhookDeleteResult,
+  IndexerWebhookDeleteResponse,
+
   // Error response types
   IndexerErrorResponse,
 
@@ -88,6 +106,18 @@ export {
   isPointsResponse,
   isLeaderboardResponse,
   isSiteStatsResponse,
+  isReferralCodeResponse,
+  isReferralStatsResponse,
+  isAuthenticationStatusResponse,
+  isBlockStatusResponse,
+  isNameServiceResponse,
+  isNameResolutionResponse,
+  isTemplateResponse,
+  isTemplateListResponse,
+  isTemplateDeleteResponse,
+  isWebhookResponse,
+  isWebhookListResponse,
+  isWebhookDeleteResponse,
   isIndexerErrorResponse,
   isIndexerSuccessResponse,
 } from './indexer-guards';

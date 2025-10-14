@@ -185,6 +185,78 @@ export interface IndexerNameResolutionData extends WalletData {}
 
 export type IndexerNameResolutionResponse = ApiResponse<IndexerNameResolutionData>;
 
+// Email template types
+export interface IndexerTemplateData {
+  id: string;
+  userId: string;
+  templateName: string;
+  subject: string;
+  bodyContent: string;
+  isActive: boolean;
+  usageCount: number;
+  lastUsedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IndexerTemplateResult {
+  template: IndexerTemplateData;
+  verified: boolean;
+}
+
+export type IndexerTemplateResponse = ApiResponse<IndexerTemplateResult>;
+
+export interface IndexerTemplateListResult {
+  templates: IndexerTemplateData[];
+  total: number;
+  hasMore: boolean;
+  verified: boolean;
+}
+
+export type IndexerTemplateListResponse = ApiResponse<IndexerTemplateListResult>;
+
+export interface IndexerTemplateDeleteResult {
+  message: string;
+  verified: boolean;
+}
+
+export type IndexerTemplateDeleteResponse = ApiResponse<IndexerTemplateDeleteResult>;
+
+// Webhook types
+export interface IndexerWebhookData {
+  id: string;
+  userId: string;
+  webhookUrl: string;
+  isActive: boolean;
+  lastTriggeredAt: string | null;
+  triggerCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IndexerWebhookResult {
+  webhook: IndexerWebhookData;
+  verified: boolean;
+}
+
+export type IndexerWebhookResponse = ApiResponse<IndexerWebhookResult>;
+
+export interface IndexerWebhookListResult {
+  webhooks: IndexerWebhookData[];
+  total: number;
+  hasMore: boolean;
+  verified: boolean;
+}
+
+export type IndexerWebhookListResponse = ApiResponse<IndexerWebhookListResult>;
+
+export interface IndexerWebhookDeleteResult {
+  message: string;
+  verified: boolean;
+}
+
+export type IndexerWebhookDeleteResponse = ApiResponse<IndexerWebhookDeleteResult>;
+
 // Error response type for API endpoints
 export interface IndexerErrorResponse extends ApiResponse<never> {
   success: false;
@@ -209,4 +281,10 @@ export type IndexerApiResponse =
   | IndexerBlockStatusResponse
   | IndexerNameServiceResponse
   | IndexerNameResolutionResponse
+  | IndexerTemplateResponse
+  | IndexerTemplateListResponse
+  | IndexerTemplateDeleteResponse
+  | IndexerWebhookResponse
+  | IndexerWebhookListResponse
+  | IndexerWebhookDeleteResponse
   | IndexerErrorResponse;

@@ -16,6 +16,18 @@ import type {
   IndexerPointsResponse,
   IndexerLeaderboardResponse,
   IndexerSiteStatsResponse,
+  IndexerReferralCodeResponse,
+  IndexerReferralStatsResponse,
+  IndexerAuthenticationStatusResponse,
+  IndexerBlockStatusResponse,
+  IndexerNameServiceResponse,
+  IndexerNameResolutionResponse,
+  IndexerTemplateResponse,
+  IndexerTemplateListResponse,
+  IndexerTemplateDeleteResponse,
+  IndexerWebhookResponse,
+  IndexerWebhookListResponse,
+  IndexerWebhookDeleteResponse,
 } from './indexer-responses';
 
 // Basic type guards for indexer responses
@@ -202,6 +214,213 @@ export function isSiteStatsResponse(
     response.data &&
     typeof response.data === 'object' &&
     'totalPoints' in response.data
+  );
+}
+
+// Template response type guards
+export function isTemplateResponse(
+  response: unknown
+): response is IndexerTemplateResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'template' in response.data &&
+    'verified' in response.data &&
+    response.data.template &&
+    typeof response.data.template === 'object' &&
+    'id' in response.data.template &&
+    'templateName' in response.data.template &&
+    'subject' in response.data.template &&
+    'bodyContent' in response.data.template
+  );
+}
+
+export function isTemplateListResponse(
+  response: unknown
+): response is IndexerTemplateListResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'templates' in response.data &&
+    'total' in response.data &&
+    'hasMore' in response.data &&
+    'verified' in response.data &&
+    Array.isArray(response.data.templates)
+  );
+}
+
+export function isTemplateDeleteResponse(
+  response: unknown
+): response is IndexerTemplateDeleteResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'message' in response.data &&
+    'verified' in response.data
+  );
+}
+
+// Webhook response type guards
+export function isWebhookResponse(
+  response: unknown
+): response is IndexerWebhookResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'webhook' in response.data &&
+    'verified' in response.data &&
+    response.data.webhook &&
+    typeof response.data.webhook === 'object' &&
+    'id' in response.data.webhook &&
+    'webhookUrl' in response.data.webhook
+  );
+}
+
+export function isWebhookListResponse(
+  response: unknown
+): response is IndexerWebhookListResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'webhooks' in response.data &&
+    'total' in response.data &&
+    'hasMore' in response.data &&
+    'verified' in response.data &&
+    Array.isArray(response.data.webhooks)
+  );
+}
+
+export function isWebhookDeleteResponse(
+  response: unknown
+): response is IndexerWebhookDeleteResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'message' in response.data &&
+    'verified' in response.data
+  );
+}
+
+// Referral response type guards
+export function isReferralCodeResponse(
+  response: unknown
+): response is IndexerReferralCodeResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'walletAddress' in response.data &&
+    'referralCode' in response.data &&
+    'createdAt' in response.data
+  );
+}
+
+export function isReferralStatsResponse(
+  response: unknown
+): response is IndexerReferralStatsResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'total' in response.data &&
+    'consumptions' in response.data &&
+    Array.isArray(response.data.consumptions)
+  );
+}
+
+// Authentication status type guard
+export function isAuthenticationStatusResponse(
+  response: unknown
+): response is IndexerAuthenticationStatusResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'authenticated' in response.data &&
+    typeof response.data.authenticated === 'boolean'
+  );
+}
+
+// Block status type guard
+export function isBlockStatusResponse(
+  response: unknown
+): response is IndexerBlockStatusResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'chains' in response.data &&
+    'totalChains' in response.data &&
+    'activeChains' in response.data &&
+    'timestamp' in response.data &&
+    Array.isArray(response.data.chains)
+  );
+}
+
+// Name service response type guards
+export function isNameServiceResponse(
+  response: unknown
+): response is IndexerNameServiceResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'names' in response.data &&
+    Array.isArray(response.data.names)
+  );
+}
+
+export function isNameResolutionResponse(
+  response: unknown
+): response is IndexerNameResolutionResponse {
+  return !!(
+    response &&
+    typeof response === 'object' &&
+    'success' in response &&
+    'data' in response &&
+    response.data &&
+    typeof response.data === 'object' &&
+    'walletAddress' in response.data &&
+    'chainType' in response.data
   );
 }
 
