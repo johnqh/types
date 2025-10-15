@@ -108,6 +108,8 @@ export type {
   IndexerTemplateListResponse,
   IndexerTemplateDeleteResult,
   IndexerTemplateDeleteResponse,
+  IndexerTemplateCreateRequest,
+  IndexerTemplateUpdateRequest,
   IndexerWebhookData,
   IndexerWebhookResult,
   IndexerWebhookResponse,

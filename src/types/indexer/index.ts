@@ -76,6 +76,8 @@ export type {
   IndexerTemplateListResponse,
   IndexerTemplateDeleteResult,
   IndexerTemplateDeleteResponse,
+  IndexerTemplateCreateRequest,
+  IndexerTemplateUpdateRequest,
 
   // Webhook types
   IndexerWebhookData,

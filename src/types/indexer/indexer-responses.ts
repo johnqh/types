@@ -222,6 +222,19 @@ export interface IndexerTemplateDeleteResult {
 
 export type IndexerTemplateDeleteResponse = ApiResponse<IndexerTemplateDeleteResult>;
 
+// Template request types
+export interface IndexerTemplateCreateRequest {
+  templateName: string;
+  subject: string;
+  bodyContent: string;
+}
+
+export interface IndexerTemplateUpdateRequest {
+  templateName?: string;
+  subject?: string;
+  bodyContent?: string;
+}
+
 // Webhook types
 export interface IndexerWebhookData {
   id: string;
