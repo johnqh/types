@@ -117,6 +117,7 @@ export type {
   IndexerWebhookListResponse,
   IndexerWebhookDeleteResult,
   IndexerWebhookDeleteResponse,
+  IndexerWebhookCreateRequest,
   IndexerErrorResponse,
   IndexerApiResponse,
 

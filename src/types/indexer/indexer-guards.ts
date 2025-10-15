@@ -233,9 +233,9 @@ export function isTemplateResponse(
     response.data.template &&
     typeof response.data.template === 'object' &&
     'id' in response.data.template &&
-    'templateName' in response.data.template &&
+    'name' in response.data.template &&
     'subject' in response.data.template &&
-    'bodyContent' in response.data.template
+    'body' in response.data.template
   );
 }
 

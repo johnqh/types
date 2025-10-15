@@ -24,7 +24,8 @@ export interface IndexerEmailAccountsResult {
   accounts: IndexerWalletAccount[];
 }
 
-export type IndexerEmailAccountsResponse = ApiResponse<IndexerEmailAccountsResult>;
+export type IndexerEmailAccountsResponse =
+  ApiResponse<IndexerEmailAccountsResult>;
 
 // Rewards history record
 export interface IndexerRewardData {
@@ -47,7 +48,8 @@ export interface IndexerAddressValidationData extends WalletData {
   name?: Optional<string>;
 }
 
-export type IndexerAddressValidationResponse = ApiResponse<IndexerAddressValidationData>;
+export type IndexerAddressValidationResponse =
+  ApiResponse<IndexerAddressValidationData>;
 
 // Delegation types
 export interface IndexerDelegateData extends WalletData {
@@ -61,7 +63,8 @@ export interface IndexerDelegatedFromData {
   from: IndexerDelegateData[];
 }
 
-export type IndexerDelegatedFromResponse = ApiResponse<IndexerDelegatedFromData>;
+export type IndexerDelegatedFromResponse =
+  ApiResponse<IndexerDelegatedFromData>;
 
 // Nonce types
 export interface IndexerNonceData {
@@ -94,7 +97,8 @@ export interface IndexerSignInMessageData extends WalletData {
   chainId?: Optional<number>;
 }
 
-export type IndexerSignInMessageResponse = ApiResponse<IndexerSignInMessageData>;
+export type IndexerSignInMessageResponse =
+  ApiResponse<IndexerSignInMessageData>;
 
 // Points types - consolidated user points data
 export interface IndexerPointsData extends WalletData {
@@ -144,7 +148,8 @@ export interface IndexerReferralStatsData {
   consumptions: IndexerReferralConsumptionData[];
 }
 
-export type IndexerReferralStatsResponse = ApiResponse<IndexerReferralStatsData>;
+export type IndexerReferralStatsResponse =
+  ApiResponse<IndexerReferralStatsData>;
 
 // Authentication status types
 export interface IndexerAuthenticationStatusData {
@@ -152,7 +157,8 @@ export interface IndexerAuthenticationStatusData {
   datetime?: Optional<string>;
 }
 
-export type IndexerAuthenticationStatusResponse = ApiResponse<IndexerAuthenticationStatusData>;
+export type IndexerAuthenticationStatusResponse =
+  ApiResponse<IndexerAuthenticationStatusData>;
 
 // Block status types
 export interface IndexerChainBlockInfo {
@@ -183,15 +189,16 @@ export type IndexerNameServiceResponse = ApiResponse<IndexerNameServiceData>;
 
 export interface IndexerNameResolutionData extends WalletData {}
 
-export type IndexerNameResolutionResponse = ApiResponse<IndexerNameResolutionData>;
+export type IndexerNameResolutionResponse =
+  ApiResponse<IndexerNameResolutionData>;
 
 // Email template types
 export interface IndexerTemplateData {
   id: string;
   userId: string;
-  templateName: string;
+  name: string;
   subject: string;
-  bodyContent: string;
+  body: string;
   isActive: boolean;
   usageCount: number;
   lastUsedAt: string | null;
@@ -213,26 +220,28 @@ export interface IndexerTemplateListResult {
   verified: boolean;
 }
 
-export type IndexerTemplateListResponse = ApiResponse<IndexerTemplateListResult>;
+export type IndexerTemplateListResponse =
+  ApiResponse<IndexerTemplateListResult>;
 
 export interface IndexerTemplateDeleteResult {
   message: string;
   verified: boolean;
 }
 
-export type IndexerTemplateDeleteResponse = ApiResponse<IndexerTemplateDeleteResult>;
+export type IndexerTemplateDeleteResponse =
+  ApiResponse<IndexerTemplateDeleteResult>;
 
 // Template request types
 export interface IndexerTemplateCreateRequest {
-  templateName: string;
+  name: string;
   subject: string;
-  bodyContent: string;
+  body: string;
 }
 
 export interface IndexerTemplateUpdateRequest {
-  templateName?: string;
+  name?: string;
   subject?: string;
-  bodyContent?: string;
+  body?: string;
 }
 
 // Webhook types
@@ -268,7 +277,13 @@ export interface IndexerWebhookDeleteResult {
   verified: boolean;
 }
 
-export type IndexerWebhookDeleteResponse = ApiResponse<IndexerWebhookDeleteResult>;
+export type IndexerWebhookDeleteResponse =
+  ApiResponse<IndexerWebhookDeleteResult>;
+
+// Webhook request types
+export interface IndexerWebhookCreateRequest {
+  webhookUrl: string;
+}
 
 // Error response type for API endpoints
 export interface IndexerErrorResponse extends ApiResponse<never> {
