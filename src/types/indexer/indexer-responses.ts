@@ -166,15 +166,23 @@ export interface IndexerChainBlockInfo {
   chainId: number;
   currentBlock: string | null;
   indexedBlock: string | null;
+  percentage: string | null;
+  blocksBehind: string | null;
   rpcUrl: string | null;
-  status: 'active' | 'error';
+  status: 'synced' | 'syncing' | 'error';
   error?: Optional<string>;
 }
 
 export interface IndexerBlockStatusData {
   chains: IndexerChainBlockInfo[];
   totalChains: number;
-  activeChains: number;
+  syncedChains: number;
+  overallHealth: 'healthy' | 'syncing' | 'degraded';
+  summary: {
+    syncedCount: number;
+    syncingCount: number;
+    errorCount: number;
+  };
   timestamp: string;
 }
 
