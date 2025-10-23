@@ -13,14 +13,12 @@ export type {
   ApiResponse,
   ChainMetadata,
   ChainStatisticsEntity,
-  ContractType,
   DelegationEntity,
   EventLogEntity,
   GraphQLResult,
   MailEntity,
   MultiChainId,
   PreparedMailEntity,
-  ProcessedEventName,
   SignatureProtectedRequest,
   StatisticsEntity,
   SupportedChainId,
@@ -28,7 +26,7 @@ export type {
   UserStatisticsEntity,
 } from './api';
 
-export { ChainType } from './api';
+export { ChainType, ContractType, ProcessedEventName } from './api';
 
 // Network types
 export type {

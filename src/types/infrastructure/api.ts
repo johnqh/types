@@ -201,21 +201,25 @@ export type SupportedChainId =
 /**
  * Contract types supported by the indexer
  */
-export type ContractType = 'Mailer' | 'MailService';
+export enum ContractType {
+  Mailer = 'Mailer',
+  MailService = 'MailService',
+}
 
 /**
  * Event names processed by the indexer
  */
-export type ProcessedEventName =
-  | 'MailSent'
-  | 'PreparedMailSent'
-  | 'DelegationSet'
-  | 'DelegationCleared'
-  | 'DomainRegistered'
-  | 'DomainExtended'
-  | 'DomainReleased'
-  | 'FeeUpdated'
-  | 'SharesRecorded'
-  | 'RecipientClaimed'
-  | 'OwnerClaimed'
-  | 'ExpiredSharesClaimed';
+export enum ProcessedEventName {
+  MailSent = 'MailSent',
+  PreparedMailSent = 'PreparedMailSent',
+  DelegationSet = 'DelegationSet',
+  DelegationCleared = 'DelegationCleared',
+  DomainRegistered = 'DomainRegistered',
+  DomainExtended = 'DomainExtended',
+  DomainReleased = 'DomainReleased',
+  FeeUpdated = 'FeeUpdated',
+  SharesRecorded = 'SharesRecorded',
+  RecipientClaimed = 'RecipientClaimed',
+  OwnerClaimed = 'OwnerClaimed',
+  ExpiredSharesClaimed = 'ExpiredSharesClaimed',
+}

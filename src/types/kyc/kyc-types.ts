@@ -17,28 +17,71 @@ import type { ChainType } from '../business/enums';
 /**
  * Available KYC verification levels
  */
-export type KYCVerificationLevel = 'basic' | 'enhanced' | 'accredited';
+export enum KYCVerificationLevel {
+  /** Age and identity verification (18+) */
+  Basic = 'basic',
+  /** Basic + country verification + AML screening */
+  Enhanced = 'enhanced',
+  /** Enhanced + financial verification for accredited investors */
+  Accredited = 'accredited',
+}
 
 /**
  * Status of a KYC application throughout its lifecycle
  */
-export type KYCApplicationStatus =
-  | 'PENDING'      // User created application but hasn't started
-  | 'INITIATED'    // Sumsub applicant created
-  | 'IN_PROGRESS'  // User is uploading documents
-  | 'SUBMITTED'    // User submitted for review
-  | 'COMPLETED'    // Verification completed (any result)
-  | 'REJECTED';    // Final rejection after max retries
+export enum KYCApplicationStatus {
+  /** User created application but hasn't started */
+  Pending = 'PENDING',
+  /** Sumsub applicant created */
+  Initiated = 'INITIATED',
+  /** User is uploading documents */
+  InProgress = 'IN_PROGRESS',
+  /** User submitted for review */
+  Submitted = 'SUBMITTED',
+  /** Verification completed (any result) */
+  Completed = 'COMPLETED',
+  /** Final rejection after max retries */
+  Rejected = 'REJECTED',
+}
 
 /**
  * Sumsub review status values
  */
-export type SumsubReviewStatus = 'init' | 'pending' | 'prechecked' | 'completed';
+export enum SumsubReviewStatus {
+  Init = 'init',
+  Pending = 'pending',
+  Prechecked = 'prechecked',
+  Completed = 'completed',
+}
 
 /**
  * Sumsub review answer (verification result)
  */
-export type SumsubReviewAnswer = 'GREEN' | 'RED' | 'YELLOW';
+export enum SumsubReviewAnswer {
+  Green = 'GREEN',
+  Red = 'RED',
+  Yellow = 'YELLOW',
+}
+
+/**
+ * Applicant type for Sumsub verification
+ */
+export enum ApplicantType {
+  Individual = 'individual',
+  Company = 'company',
+}
+
+/**
+ * Review rejection type from Sumsub
+ */
+export enum ReviewRejectType {
+  /** Final rejection, no more retries allowed */
+  Final = 'FINAL',
+  /** User can retry the verification */
+  Retry = 'RETRY',
+  /** External review needed */
+  External = 'EXTERNAL',
+}
 
 // ============================================
 // Database Models
@@ -124,7 +167,7 @@ export interface SumsubConfig {
 export interface SumsubApplicantData {
   externalUserId: string; // wallet address
   email: string;
-  type: 'individual';
+  type: ApplicantType;
   fixedInfo?: {
     country?: string;
   };
@@ -136,7 +179,7 @@ export interface SumsubApplicantData {
 export interface SumsubWebhookPayload {
   applicantId: string;
   inspectionId: string;
-  applicantType: 'individual' | 'company';
+  applicantType: ApplicantType;
   correlationId: string;
   externalUserId: string; // wallet address
   levelName: string;
@@ -147,7 +190,7 @@ export interface SumsubWebhookPayload {
     clientComment: string;
     reviewAnswer: SumsubReviewAnswer;
     rejectLabels: string[];
-    reviewRejectType: 'FINAL' | 'RETRY' | 'EXTERNAL';
+    reviewRejectType: ReviewRejectType;
   };
   createdAtMs: string;
   clientId: string;

@@ -57,7 +57,7 @@ export interface WildduckBimiInfo {
   certified: boolean;
   url: string;
   image: string;
-  type?: "VMC" | "CMC";
+  type?: 'VMC' | 'CMC';
 }
 
 export interface WildduckLimits {
@@ -136,11 +136,11 @@ export interface WildduckAuthResponse {
 // Request builder functions
 export function createPreAuthRequest(
   username: string,
-  options?: Partial<WildduckPreAuthRequest>,
+  options?: Partial<WildduckPreAuthRequest>
 ): WildduckPreAuthRequest {
   return {
     username,
-    scope: "master",
+    scope: 'master',
     ...options,
   };
 }
@@ -149,14 +149,14 @@ export function createAuthenticateRequest(
   username: string,
   signature?: string,
   message?: string,
-  options?: Partial<WildduckAuthenticateRequest>,
+  options?: Partial<WildduckAuthenticateRequest>
 ): WildduckAuthenticateRequest {
   return {
     username,
     ...(signature && { signature }),
     ...(message && { message }),
-    protocol: "API",
-    scope: "master",
+    protocol: 'API',
+    scope: 'master',
     token: false,
     ...options,
   };
@@ -369,13 +369,25 @@ export interface WildduckPasswordResetResponse {
 // ============================================================================
 
 /**
+ * Special mailbox types (IMAP special-use flags)
+ * These correspond to standard IMAP mailbox flags
+ */
+export enum MailboxSpecialUse {
+  Inbox = '\\Inbox',
+  Sent = '\\Sent',
+  Trash = '\\Trash',
+  Drafts = '\\Drafts',
+  Junk = '\\Junk',
+}
+
+/**
  * Simplified Wildduck Mailbox type (from @johnqh/types pattern)
  */
 export interface WildduckMailbox {
   id: string;
   name: string;
   path: string;
-  specialUse?: "Inbox" | "Sent" | "Trash" | "Drafts" | "Junk" | "Archive";
+  specialUse?: MailboxSpecialUse;
   modifyIndex: number;
   subscribed: boolean;
   hidden: boolean;
@@ -412,7 +424,7 @@ export interface GetMessagesRequest {
   page?: number;
   next?: string;
   previous?: string;
-  order?: "asc" | "desc";
+  order?: 'asc' | 'desc';
   unseen?: boolean;
   flagged?: boolean;
   thread?: string;
@@ -677,7 +689,7 @@ export interface WildduckSearchMessagesRequest {
   searchable?: boolean;
   threadCounters?: boolean;
   limit?: number;
-  order?: "asc" | "desc";
+  order?: 'asc' | 'desc';
   next?: string;
   previous?: string;
   sess?: string;
@@ -746,7 +758,7 @@ export interface WildduckUploadMessageRequest {
   reference?: {
     mailbox: string;
     id: number;
-    action: "reply" | "replyAll" | "forward";
+    action: 'reply' | 'replyAll' | 'forward';
     attachments?: boolean | string[];
   };
   replacePrevious?: {
@@ -1429,23 +1441,23 @@ export interface WildduckSessionParams {
 // ============================================================================
 
 export const isWildduckAuthResponse = (
-  obj: unknown,
+  obj: unknown
 ): obj is WildduckAuthResponse => {
   return (
-    typeof obj === "object" &&
+    typeof obj === 'object' &&
     obj !== null &&
-    "success" in obj &&
-    typeof (obj as WildduckAuthResponse).success === "boolean"
+    'success' in obj &&
+    typeof (obj as WildduckAuthResponse).success === 'boolean'
   );
 };
 
 export const isWildduckMessage = (obj: unknown): obj is WildduckMessage => {
   return (
-    typeof obj === "object" &&
+    typeof obj === 'object' &&
     obj !== null &&
-    "id" in obj &&
-    "subject" in obj &&
-    typeof (obj as WildduckMessage).id === "string" &&
-    typeof (obj as WildduckMessage).subject === "string"
+    'id' in obj &&
+    'subject' in obj &&
+    typeof (obj as WildduckMessage).id === 'string' &&
+    typeof (obj as WildduckMessage).subject === 'string'
   );
 };

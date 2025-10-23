@@ -130,8 +130,6 @@ export type {
   GetKYCStatusResponse,
   VerifyUserRequest,
   VerifyUserResponse,
-  KYCVerificationLevel,
-  KYCApplicationStatus,
 } from './types';
 
 // Export async utilities
@@ -167,4 +165,22 @@ export {
   ChainType,
   WalletType,
   StorageType,
+  ContractType,
+  ProcessedEventName,
+
+  // Mailer enums
+  ConfirmationStatus,
+  ClaimType,
+  FeeType,
+
+  // KYC enums
+  KYCVerificationLevel,
+  KYCApplicationStatus,
+  SumsubReviewStatus,
+  SumsubReviewAnswer,
+  ApplicantType,
+  ReviewRejectType,
+
+  // WildDuck enums
+  MailboxSpecialUse,
 } from './types';

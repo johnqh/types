@@ -19,6 +19,46 @@ import {
 import { ChainType } from '../business/enums';
 
 // =======================
+// Enums
+// =======================
+
+/**
+ * Transaction confirmation status levels
+ */
+export enum ConfirmationStatus {
+  /** Transaction has been processed but not yet confirmed */
+  Processed = 'processed',
+  /** Transaction has been confirmed in a block */
+  Confirmed = 'confirmed',
+  /** Transaction has been finalized and is irreversible */
+  Finalized = 'finalized',
+}
+
+/**
+ * Types of revenue claims
+ */
+export enum ClaimType {
+  /** Claim by message recipient */
+  Recipient = 'recipient',
+  /** Claim by contract owner */
+  Owner = 'owner',
+  /** Claim of expired revenue */
+  Expired = 'expired',
+}
+
+/**
+ * Fee types in the mailbox contract
+ */
+export enum FeeType {
+  /** Fee for sending messages */
+  Send = 'send',
+  /** Fee for delegation operations */
+  Delegation = 'delegation',
+  /** Fee for domain registration */
+  Registration = 'registration',
+}
+
+// =======================
 // Core Response Types
 // =======================
 
@@ -49,7 +89,7 @@ export interface TransactionReceipt extends BaseTransactionResponse {
   /** Gas used for EVM transactions */
   gasUsed?: Optional<bigint>;
   /** Transaction confirmation status */
-  confirmationStatus?: Optional<'processed' | 'confirmed' | 'finalized'>;
+  confirmationStatus?: Optional<ConfirmationStatus>;
 }
 
 // =======================
@@ -121,7 +161,7 @@ export interface ClaimRevenueResponse extends TransactionReceipt {
   /** Remaining claimable amount */
   remainingAmount: bigint | number;
   /** Type of claim */
-  claimType: 'recipient' | 'owner' | 'expired';
+  claimType: ClaimType;
 }
 
 /**
@@ -201,7 +241,7 @@ export interface FeeInfo {
  */
 export interface FeeUpdateResponse extends TransactionReceipt {
   /** Type of fee that was updated */
-  feeType: 'send' | 'delegation' | 'registration';
+  feeType: FeeType;
   /** Previous fee amount */
   oldFee: bigint | number;
   /** New fee amount */
