@@ -33,7 +33,8 @@
       "WebFetch(domain:developers.circle.com)",
       "Bash(git log:*)",
       "Bash(npm uninstall:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npm audit fix:*)"
     ],
     "deny": [],
     "ask": []
