@@ -6,9 +6,9 @@
 
 ## Current State
 
-- **Version**: 1.2.3
+- **Version**: 1.8.29
 - **Dependencies**: Zero runtime dependencies (dev dependencies only)
-- **Test Coverage**: 240 tests, all passing
+- **Test Coverage**: 219 tests, all passing
 - **Build Status**: Clean builds with TypeScript 5.x
 - **Code Quality**: ESLint v9 with strict TypeScript rules
 

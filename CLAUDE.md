@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is `@johnqh/types` v1.6.2, a comprehensive TypeScript types library for the 0xmail.box ecosystem. It provides shared type definitions, interfaces, enums, and utility functions used across multiple projects in the 0xmail.box Web3 email platform.
+This is `@sudobility/types` v1.8.29, a comprehensive TypeScript types library for the 0xmail.box ecosystem. It provides shared type definitions, interfaces, enums, and utility functions used across multiple projects in the 0xmail.box Web3 email platform.
 
 ## Key Architecture
 
@@ -66,7 +66,7 @@ npm run build
 # Watch mode for development
 npm run dev
 
-# Run all 267 tests
+# Run all 219 tests
 npm test
 
 # Type checking
@@ -99,7 +99,7 @@ npm run ai:docs          # Generate AI documentation
 ## Testing Strategy
 
 - **Framework**: Vitest for fast unit testing
-- **Coverage**: 267 comprehensive tests covering all utilities and type guards
+- **Coverage**: 219 comprehensive tests covering all utilities and type guards
 - **Structure**: Tests mirror source structure in `test/` directory
 - **Focus**: Type guards, validation functions, utility functions, and API contracts
 
@@ -219,34 +219,40 @@ npm run test:coverage
 - **Type safety**: Strict TypeScript with comprehensive checking
 - **Documentation**: JSDoc comments on all public APIs
 
-## Recent Changes (v1.6.2)
+## Recent Changes (v1.8.29)
 
 ### Type System Improvements
-- **Optional<T> Consistency**: Standardized optional type usage throughout
-- **Enhanced Type Safety**: Replaced all `any` types with `unknown`
-- **Shared Constants**: STATUS_VALUES for enum consistency
-- **Field Standardization**: Consistent `txHash` usage across blockchain types
+- **Enum Conversion**: Converted 11 string literal types to enums for better type safety
+  - KYC types: `KYCVerificationLevel`, `KYCApplicationStatus`, `SumsubReviewStatus`, `SumsubReviewAnswer`, `ApplicantType`, `ReviewRejectType`
+  - Mailer types: `ConfirmationStatus`, `ClaimType`, `FeeType`
+  - Infrastructure types: `ContractType`, `ProcessedEventName`
+  - WildDuck types: `MailboxSpecialUse`
+- **Enhanced Type Safety**: Runtime validation capabilities with enums
+- **Better IDE Support**: Improved autocomplete and IntelliSense
+- **Iterability**: Can now iterate over enum values
 
-### New Features
-- **Comprehensive Indexer Types**: HeliusTransaction, ErrorResponse, DelegationInfo
-- **Enhanced Validation**: Web3UsernameValidator with multi-chain support
-- **Improved Analytics**: Type-safe analytics event properties
-- **Better Error Handling**: UnifiedError with structured details
+### Dependency Updates
+- Updated all devDependencies to latest stable versions (no breaking changes)
+- `@eslint/js`: 9.36.0 → 9.38.0
+- `@types/node`: 24.5.2 → 24.9.1
+- `@typescript-eslint/*`: 8.44.0 → 8.46.2
+- `eslint`: 9.36.0 → 9.38.0
+- Fixed vite security vulnerability
 
 ### Documentation
 - **AI-Optimized README**: Comprehensive examples and usage patterns
-- **TYPE_CHANGES.md**: Complete change log with migration guidance
-- **Enhanced JSDoc**: Better documentation coverage across all APIs
+- **Enhanced JSDoc**: Complete documentation coverage with examples
 - **Development Guides**: Improved contributor documentation
+- **Version Consistency**: Updated all documentation to reflect current version
 
 ## Migration Guidance
 
 ### For Type Consumers
 ```typescript
 // Recommended patterns
-import { Optional, Result, ValidationResult } from '@johnqh/types';
-import { ChainType, AuthStatus } from '@johnqh/types';
-import { isEvmAddress, formatWalletAddress } from '@johnqh/types';
+import { Optional, Result, ValidationResult } from '@sudobility/types';
+import { ChainType, AuthStatus } from '@sudobility/types';
+import { isEvmAddress, formatWalletAddress } from '@sudobility/types';
 
 // Use Optional<T> for nullable values
 const user: Optional<User> = getUser(); // instead of User | null | undefined
@@ -282,4 +288,4 @@ if (isEvmAddress(address)) {
 
 ---
 
-*This configuration optimizes @johnqh/types for AI-assisted development while maintaining enterprise-grade quality standards.*
+*This configuration optimizes @sudobility/types for AI-assisted development while maintaining enterprise-grade quality standards.*
