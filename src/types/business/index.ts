@@ -17,7 +17,6 @@ export {
   ErrorType,
   FeatureFlag,
   FontSize,
-  MailboxType,
   MediumView,
   MobileView,
   NotificationType,

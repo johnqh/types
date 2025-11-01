@@ -378,6 +378,8 @@ export enum MailboxSpecialUse {
   Trash = '\\Trash',
   Drafts = '\\Drafts',
   Junk = '\\Junk',
+  Settings = '\\App.Settings',
+  Developer = '\\App.Developer',
 }
 
 /**

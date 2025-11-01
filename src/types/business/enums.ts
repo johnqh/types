@@ -3,6 +3,8 @@
  * These replace string literals throughout the application
  */
 
+import { MailboxSpecialUse } from '../wildduck/wildduck-types';
+
 // Authentication states - aligned with @johnqh/di
 export enum AuthStatus {
   CONNECTED = 'connected',
@@ -150,22 +152,22 @@ export enum FontSize {
 }
 
 // Helper type that allows both standard mailbox types and custom folder names
-export type EmailFolder = MailboxType | string;
+export type EmailFolder = MailboxSpecialUse | string;
 
 // Utility functions for working with email folders
 export const EmailFolderUtils = {
   /**
    * Check if a folder name is one of the standard mailbox types
    */
-  isStandardFolder(folder: string): folder is MailboxType {
-    return Object.values(MailboxType).includes(folder as MailboxType);
+  isStandardFolder(folder: string): folder is MailboxSpecialUse {
+    return Object.values(MailboxSpecialUse).includes(folder as MailboxSpecialUse);
   },
 
   /**
    * Get all standard folder names
    */
-  getStandardFolders(): MailboxType[] {
-    return Object.values(MailboxType);
+  getStandardFolders(): MailboxSpecialUse[] {
+    return Object.values(MailboxSpecialUse);
   },
 
   /**
@@ -261,21 +263,6 @@ export enum EmailSortCriteria {
   SUBJECT = 'subject',
   FROM = 'from',
   SIZE = 'size',
-}
-
-// Mailbox types (consolidated from StandardEmailFolder and MailboxType)
-export enum MailboxType {
-  INBOX = 'inbox',
-  SENT = 'sent',
-  DRAFTS = 'drafts',
-  SPAM = 'spam',
-  TRASH = 'trash',
-  STARRED = 'starred',
-  SNOOZED = 'snoozed',
-  ARCHIVE = 'archive',
-  SETTINGS = 'settings',
-  DEVELOPER = 'developer',
-  CUSTOM = 'custom',
 }
 
 // Connection types

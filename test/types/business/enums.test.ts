@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest';
 import {
   ChainType,
   EmailFolder,
-  MailboxType,
   SortOrder,
   Theme,
   NotificationType,
   EmailFolderUtils,
 } from '../../../src/types/business/enums';
+import { MailboxSpecialUse } from '../../../src/types/wildduck/wildduck-types';
 
 describe('Business Enums', () => {
   describe('ChainType', () => {
@@ -25,48 +25,44 @@ describe('Business Enums', () => {
   });
 
   describe('EmailFolder', () => {
-    it('should be a type that includes MailboxType', () => {
+    it('should be a type that includes MailboxSpecialUse', () => {
       // EmailFolder is a type union, not an enum, so we test with values
-      const standardFolder: EmailFolder = MailboxType.INBOX;
+      const standardFolder: EmailFolder = MailboxSpecialUse.Inbox;
       const customFolder: EmailFolder = 'custom-folder';
 
-      expect(standardFolder).toBe('inbox');
+      expect(standardFolder).toBe('\\Inbox');
       expect(customFolder).toBe('custom-folder');
     });
 
     it('should work with EmailFolderUtils', () => {
-      expect(EmailFolderUtils.isStandardFolder('inbox')).toBe(true);
+      expect(EmailFolderUtils.isStandardFolder('\\Inbox')).toBe(true);
       expect(EmailFolderUtils.isStandardFolder('custom-folder')).toBe(false);
       expect(EmailFolderUtils.isCustomFolder('custom-folder')).toBe(true);
-      expect(EmailFolderUtils.displayName('inbox')).toBe('Inbox');
+      expect(EmailFolderUtils.displayName('\\Inbox')).toBe('\\Inbox');
     });
   });
 
-  describe('MailboxType (consolidated from StandardEmailFolder)', () => {
+  describe('MailboxSpecialUse', () => {
     it('should have correct values', () => {
-      expect(MailboxType.INBOX).toBe('inbox');
-      expect(MailboxType.SENT).toBe('sent');
-      expect(MailboxType.DRAFTS).toBe('drafts');
-      expect(MailboxType.SPAM).toBe('spam');
-      expect(MailboxType.TRASH).toBe('trash');
-      expect(MailboxType.STARRED).toBe('starred');
-      expect(MailboxType.SNOOZED).toBe('snoozed');
-      expect(MailboxType.ARCHIVE).toBe('archive');
+      expect(MailboxSpecialUse.Inbox).toBe('\\Inbox');
+      expect(MailboxSpecialUse.Sent).toBe('\\Sent');
+      expect(MailboxSpecialUse.Drafts).toBe('\\Drafts');
+      expect(MailboxSpecialUse.Junk).toBe('\\Junk');
+      expect(MailboxSpecialUse.Trash).toBe('\\Trash');
+      expect(MailboxSpecialUse.Settings).toBe('\\App.Settings');
+      expect(MailboxSpecialUse.Developer).toBe('\\App.Developer');
     });
 
     it('should have all expected standard folders', () => {
-      const folders = Object.values(MailboxType);
-      expect(folders).toContain('inbox');
-      expect(folders).toContain('sent');
-      expect(folders).toContain('drafts');
-      expect(folders).toContain('spam');
-      expect(folders).toContain('trash');
-      expect(folders).toContain('starred');
-      expect(folders).toContain('snoozed');
-      expect(folders).toContain('archive');
-      expect(folders).toContain('settings');
-      expect(folders).toContain('developer');
-      expect(folders).toHaveLength(11); // Added SETTINGS, DEVELOPER and CUSTOM to consolidated enum
+      const folders = Object.values(MailboxSpecialUse);
+      expect(folders).toContain('\\Inbox');
+      expect(folders).toContain('\\Sent');
+      expect(folders).toContain('\\Drafts');
+      expect(folders).toContain('\\Junk');
+      expect(folders).toContain('\\Trash');
+      expect(folders).toContain('\\App.Settings');
+      expect(folders).toContain('\\App.Developer');
+      expect(folders).toHaveLength(7); // Inbox, Sent, Trash, Drafts, Junk, Settings, Developer
     });
   });
 
