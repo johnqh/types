@@ -108,6 +108,8 @@ describe('Email Types', () => {
       expect(MailboxType.STARRED).toBe('starred');
       expect(MailboxType.SNOOZED).toBe('snoozed');
       expect(MailboxType.ARCHIVE).toBe('archive');
+      expect(MailboxType.SETTINGS).toBe('settings');
+      expect(MailboxType.DEVELOPER).toBe('developer');
     });
 
     it('should allow EmailFolder type to accept standard and custom folders', () => {

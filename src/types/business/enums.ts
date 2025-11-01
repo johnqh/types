@@ -273,6 +273,8 @@ export enum MailboxType {
   STARRED = 'starred',
   SNOOZED = 'snoozed',
   ARCHIVE = 'archive',
+  SETTINGS = 'settings',
+  DEVELOPER = 'developer',
   CUSTOM = 'custom',
 }
 

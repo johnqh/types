@@ -64,7 +64,9 @@ describe('Business Enums', () => {
       expect(folders).toContain('starred');
       expect(folders).toContain('snoozed');
       expect(folders).toContain('archive');
-      expect(folders).toHaveLength(9); // Added CUSTOM to consolidated enum
+      expect(folders).toContain('settings');
+      expect(folders).toContain('developer');
+      expect(folders).toHaveLength(11); // Added SETTINGS, DEVELOPER and CUSTOM to consolidated enum
     });
   });
 
