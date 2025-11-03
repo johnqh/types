@@ -112,6 +112,7 @@ export interface WildduckAuthenticateRequest {
   signature?: string;
   message?: string;
   signer?: string;
+  referralCode?: string;
   protocol?: string;
   scope?: string;
   appId?: string;
@@ -158,7 +159,7 @@ export function createAuthenticateRequest(
     protocol: 'API',
     scope: 'master',
     token: false,
-    ...options,
+    ...options, // referralCode will be included here if present in options
   };
 }
 
