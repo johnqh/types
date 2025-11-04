@@ -103,6 +103,8 @@ export type IndexerSignInMessageResponse =
 // Points types - consolidated user points data
 export interface IndexerPointsData extends WalletData {
   pointsEarned: string;
+  totalActivities: number;
+  leaderboardRank: number | null;
   lastActivityDate?: Optional<string>;
   createdAt?: Optional<string>;
   updatedAt?: Optional<string>;
