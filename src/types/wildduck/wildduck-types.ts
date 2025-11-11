@@ -82,6 +82,7 @@ export interface WildduckKeyInfo {
 // ============================================================================
 
 export interface WildduckUserAuth {
+  username: string;
   userId: string;
   accessToken: string;
 }
