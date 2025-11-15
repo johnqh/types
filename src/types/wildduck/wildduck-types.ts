@@ -690,7 +690,7 @@ export interface WildduckSearchMessagesRequest {
   attachments?: boolean;
   flagged?: boolean;
   unseen?: boolean;
-  includeHeaders?: string;
+  includeHeaders?: string[];
   searchable?: boolean;
   threadCounters?: boolean;
   limit?: number;
@@ -699,6 +699,16 @@ export interface WildduckSearchMessagesRequest {
   previous?: string;
   sess?: string;
   ip?: string;
+}
+
+export interface WildduckSearchMessagesResponse {
+  success: boolean;
+  query: string;
+  total: number;
+  page: number;
+  previousCursor: string | false;
+  nextCursor: string | false;
+  results: WildduckMessageListItem[];
 }
 
 export interface WildduckSearchApplyRequest
