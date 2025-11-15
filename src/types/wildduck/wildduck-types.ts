@@ -632,9 +632,9 @@ export interface WildduckDetailedMessageResponse {
   thread: string;
   from: WildduckMessageAddress;
   replyTo?: WildduckMessageAddress;
-  to?: WildduckMessageAddress;
-  cc?: WildduckMessageAddress;
-  bcc?: WildduckMessageAddress;
+  to?: WildduckMessageAddress[];
+  cc?: WildduckMessageAddress[];
+  bcc?: WildduckMessageAddress[];
   subject: string;
   messageId: string;
   date: string;
