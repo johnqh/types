@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.9",
+  "version": "1.9.10",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for the 0xmail.box Web3 email ecosystem - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
