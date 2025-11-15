@@ -60,15 +60,30 @@ export interface WildduckBimiInfo {
   type?: 'VMC' | 'CMC';
 }
 
+export interface WildduckLimitUsage {
+  allowed: number;
+  used: number;
+}
+
+export interface WildduckLimitUsageWithTtl extends WildduckLimitUsage {
+  ttl: number | false;
+}
+
+export interface WildduckSingleLimit {
+  allowed: number;
+}
+
 export interface WildduckLimits {
-  quota?: { allowed: number; used: number };
-  recipients?: { allowed: number; used: number; ttl: number };
-  forwards?: { allowed: number; used: number; ttl: number };
-  received?: { allowed: number; used: number; ttl: number };
-  imapUpload?: { allowed: number; used: number; ttl: number };
-  imapDownload?: { allowed: number; used: number; ttl: number };
-  pop3Download?: { allowed: number; used: number; ttl: number };
-  imapMaxConnections?: { allowed: number; used: number };
+  quota: WildduckLimitUsage;
+  recipients?: WildduckLimitUsageWithTtl;
+  forwards?: WildduckLimitUsageWithTtl;
+  received?: WildduckLimitUsageWithTtl;
+  filters?: WildduckLimitUsage;
+  imapUpload?: WildduckLimitUsageWithTtl;
+  imapDownload?: WildduckLimitUsageWithTtl;
+  pop3Download?: WildduckLimitUsageWithTtl;
+  pop3MaxMessages?: WildduckSingleLimit;
+  imapMaxConnections?: WildduckLimitUsage;
 }
 
 export interface WildduckKeyInfo {
@@ -99,11 +114,11 @@ export interface WildduckPreAuthResponse {
   id?: string;
   username?: string;
   address?: string;
-  scope?: string[];
+  scope?: string;
   require2fa?: string[];
-  requirePasswordChange?: boolean;
+  error?: string;
+  code?: string;
   message?: string;
-  nonce?: string;
 }
 
 export interface WildduckAuthenticateRequest {
@@ -127,12 +142,13 @@ export interface WildduckAuthResponse {
   id?: string;
   username?: string;
   address?: string;
-  scope?: string[];
+  scope?: string;
   token?: string;
   require2fa?: string[];
   requirePasswordChange?: boolean;
-  message?: string;
   error?: string;
+  code?: string;
+  message?: string;
 }
 
 // Request builder functions
@@ -198,7 +214,7 @@ export interface WildduckUserResponse {
   name: string;
   address: string;
   language?: string;
-  retention: number;
+  retention?: number;
   uploadSentMessages?: boolean;
   enabled2fa: string[];
   autoreply: boolean;
@@ -213,6 +229,7 @@ export interface WildduckUserResponse {
   mtaRelay?: string;
   limits: WildduckLimits;
   fromWhitelist: string[];
+  featureFlags?: Record<string, unknown>;
   disabledScopes: string[];
   hasPasswordSet: boolean;
   activated: boolean;
@@ -519,61 +536,12 @@ export interface WildduckMessageAttachment {
   id: string;
   filename: string;
   contentType: string;
-  size: number;
   hash?: string;
-  disposition?: string; // 'inline', 'attachment', etc.
+  disposition?: string;
   transferEncoding?: string;
-  related?: boolean; // Indicates if attachment is related to message body (inline)
-}
-
-export interface WildduckMessageBase {
-  id: string;
-  mailbox: string;
-  thread: string;
-  from?: WildduckMessageAddress;
-  to: WildduckMessageAddress[];
-  cc?: WildduckMessageAddress[];
-  bcc?: WildduckMessageAddress[];
-  subject: string;
-  date: string;
-  intro: string;
-  seen: boolean;
-  deleted: boolean;
-  flagged: boolean;
-  draft: boolean;
-  answered: boolean;
-  size: number;
-  ha: boolean; // has attachments
-}
-
-export interface WildduckMessage extends WildduckMessageBase {
-  attachments: boolean;
-}
-
-export interface WildduckMessageDetail extends WildduckMessageBase {
-  user: string;
-  html?: string;
-  text?: string;
-  headers?: Record<string, string | string[]>;
-  attachments: WildduckMessageAttachment[];
-  references?: string[];
-  inReplyTo?: string;
-}
-
-export interface WildduckMessagesResponse {
-  success: boolean;
-  total: number;
-  page: number;
-  previousCursor?: string;
-  nextCursor?: string;
-  results: WildduckMessage[];
-  error?: string;
-}
-
-export interface WildduckMessageResponse {
-  success: boolean;
-  data?: WildduckMessageDetail;
-  error?: string;
+  related?: boolean;
+  size?: number;
+  sizeKb?: number;
 }
 
 export interface WildduckMessageListItem {
@@ -581,7 +549,7 @@ export interface WildduckMessageListItem {
   mailbox: string;
   thread: string;
   threadMessageCount?: number;
-  from: WildduckMessageAddress;
+  from?: WildduckMessageAddress;
   to: WildduckMessageAddress[];
   cc: WildduckMessageAddress[];
   bcc: WildduckMessageAddress[];
@@ -607,6 +575,19 @@ export interface WildduckMessageListItem {
   headers?: Record<string, string>;
 }
 
+export type WildduckMessage = WildduckMessageListItem;
+
+export interface WildduckMessagesResponse {
+  success: boolean;
+  total: number;
+  page: number;
+  previousCursor: string | false;
+  nextCursor: string | false;
+  specialUse: string;
+  results: WildduckMessageListItem[];
+  error?: string;
+}
+
 export interface WildduckMessageListResponse {
   success: boolean;
   total: number;
@@ -617,24 +598,36 @@ export interface WildduckMessageListResponse {
   results: WildduckMessageListItem[];
 }
 
-export interface WildduckDetailedMessageResponse {
-  success: boolean;
+export interface WildduckEnvelopeRecipient {
+  value: string;
+  formatted: string;
+}
+
+export interface WildduckMessageEnvelope {
+  from: string;
+  rcpt: WildduckEnvelopeRecipient[];
+}
+
+export interface WildduckVerificationResults {
+  tls?: {
+    name: Record<string, unknown>;
+    version: Record<string, unknown>;
+  } | false;
+  spf?: Record<string, unknown> | false;
+  dkim?: Record<string, unknown> | false;
+}
+
+export interface WildduckMessageDetail {
   id: number;
   mailbox: string;
   user: string;
-  envelope: {
-    from: string;
-    rcpt: Array<{
-      value: string;
-      formatted: string;
-    }>;
-  };
+  envelope?: WildduckMessageEnvelope;
   thread: string;
-  from: WildduckMessageAddress;
+  from?: WildduckMessageAddress;
   replyTo?: WildduckMessageAddress;
-  to?: WildduckMessageAddress[];
-  cc?: WildduckMessageAddress[];
-  bcc?: WildduckMessageAddress[];
+  to: WildduckMessageAddress[];
+  cc: WildduckMessageAddress[];
+  bcc: WildduckMessageAddress[];
   subject: string;
   messageId: string;
   date: string;
@@ -649,14 +642,13 @@ export interface WildduckDetailedMessageResponse {
   deleted: boolean;
   flagged: boolean;
   draft: boolean;
+  answered: boolean;
+  forwarded: boolean;
   html?: string[];
   text?: string;
-  attachments?: WildduckAttachment[];
-  verificationResults?: {
-    tls?: { name: unknown; version: unknown };
-    spf?: unknown;
-    dkim?: unknown;
-  };
+  intro?: string;
+  attachments: WildduckMessageAttachment[];
+  verificationResults?: WildduckVerificationResults;
   bimi?: WildduckBimiInfo;
   contentType: WildduckContentType;
   metaData?: Record<string, unknown>;
@@ -665,10 +657,16 @@ export interface WildduckDetailedMessageResponse {
   outbound?: unknown[];
   forwardTargets?: Record<string, unknown>;
   reference?: Record<string, unknown>;
-  answered: boolean;
-  forwarded: boolean;
   encrypted?: boolean;
+  headers?: Record<string, string | string[]>;
 }
+
+export interface WildduckMessageResponse extends WildduckMessageDetail {
+  success: boolean;
+  error?: string;
+}
+
+export type WildduckDetailedMessageResponse = WildduckMessageResponse;
 
 export interface WildduckSearchMessagesRequest {
   q?: string;
@@ -786,6 +784,7 @@ export interface WildduckUploadMessageResponse {
   message: {
     id: number;
     mailbox: string;
+    size?: number;
   };
 }
 
@@ -820,9 +819,9 @@ export interface WildduckSubmitMessageRequest {
 export interface WildduckSubmitMessageResponse {
   success: boolean;
   message: {
-    id: string;
-    from: string;
-    to: string[];
+    id: number;
+    mailbox: string;
+    queueId: string;
   };
 }
 
@@ -1464,7 +1463,7 @@ export const isWildduckMessage = (obj: unknown): obj is WildduckMessage => {
     obj !== null &&
     'id' in obj &&
     'subject' in obj &&
-    typeof (obj as WildduckMessage).id === 'string' &&
+    typeof (obj as WildduckMessage).id === 'number' &&
     typeof (obj as WildduckMessage).subject === 'string'
   );
 };
