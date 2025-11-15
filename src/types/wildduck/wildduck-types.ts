@@ -521,6 +521,9 @@ export interface WildduckMessageAttachment {
   contentType: string;
   size: number;
   hash?: string;
+  disposition?: string; // 'inline', 'attachment', etc.
+  transferEncoding?: string;
+  related?: boolean; // Indicates if attachment is related to message body (inline)
 }
 
 export interface WildduckMessageBase {
