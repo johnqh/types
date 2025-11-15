@@ -427,10 +427,6 @@ export interface WildduckMailboxResponse {
 export interface GetMailboxesRequest {
   sess?: string;
   ip?: string;
-  limit?: number;
-  page?: number;
-  next?: string;
-  previous?: string;
   specialUse?: boolean;
   showHidden?: boolean;
   counters?: boolean;
