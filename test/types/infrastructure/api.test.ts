@@ -95,7 +95,7 @@ describe('API Types', () => {
         id: '1-0x123-0',
         from: '0x1234567890123456789012345678901234567890',
         to: '0x0987654321098765432109876543210987654321',
-        mailHash: '0xmailhash123',
+        mailHash: '0xabcdef123456789abcdef123456789abcdef123456789abcdef123456789abcd',
         contractAddress: '0xcontract123',
         feesPaid: BigInt('1000000000000000000'),
         priority: true,

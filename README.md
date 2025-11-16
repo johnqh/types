@@ -4,11 +4,11 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Comprehensive TypeScript type definitions and utilities for the 0xmail.box Web3 email ecosystem.**
+**Comprehensive TypeScript type definitions and utilities for Web3 email applications.**
 
 ## 🚀 Overview
 
-This package provides a complete type-safe foundation for 0xmail.box applications, featuring:
+This package provides a complete type-safe foundation for Web3 email applications, featuring:
 
 - **267 comprehensive tests** ensuring type reliability
 - **Zero runtime dependencies** for optimal performance
@@ -59,8 +59,8 @@ import {
 
 // Email handling
 const email: Email = {
-  from: 'sender@0xmail.box',
-  to: 'recipient@0xmail.box',
+  from: 'sender@example.com',
+  to: 'recipient@example.com',
   subject: 'Web3 Email',
   body: 'Hello from the blockchain!',
   id: 'msg_123',
@@ -301,10 +301,10 @@ This project follows strict quality standards:
 
 ## 📄 License
 
-MIT © 0xmail.box
+MIT © Sudobility
 
 ---
 
 **Built with ❤️ for the Web3 email revolution**
 
-*This package powers the type-safe foundation of 0xmail.box, the first Web3-native email platform.*
+*This package powers the type-safe foundation for Web3-native email platforms.*

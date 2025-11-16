@@ -1,7 +1,7 @@
 /**
  * KYC (Know Your Customer) Verification Types
  *
- * Types for the 0xmail KYC verification service which integrates
+ * Types for KYC verification services which integrate
  * with Sumsub for identity verification at three levels:
  * - Basic: Age and identity verification (18+)
  * - Enhanced: Basic + country verification + AML screening

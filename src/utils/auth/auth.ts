@@ -7,11 +7,17 @@ import { Optional } from '../../types/common';
 
 /**
  * Generate an authentication message with a nonce
+ * @param emailDomain - The email domain/service name to display in the auth message
+ * @param nonce - Optional nonce value. If not provided, a random one will be generated
+ * @returns Authentication message string
  */
-export function generateAuthMessage(nonce?: Optional<string>): string {
+export function generateAuthMessage(
+  emailDomain: string,
+  nonce?: Optional<string>
+): string {
   const actualNonce =
     nonce || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  return `Authenticate with 0xMail\nNonce: ${actualNonce}`;
+  return `Authenticate with ${emailDomain}\nNonce: ${actualNonce}`;
 }
 
 /**

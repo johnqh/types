@@ -2,7 +2,7 @@
 
 ## What This Project Is
 
-`@johnqh/types` is the foundational TypeScript types library for the 0xmail.box ecosystem. It serves as the single source of truth for type definitions shared across multiple applications and services.
+`@johnqh/types` is the foundational TypeScript types library for Web3 email applications. It serves as the single source of truth for type definitions shared across multiple applications and services.
 
 ## Current State
 

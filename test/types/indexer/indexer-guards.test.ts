@@ -157,7 +157,7 @@ describe('Indexer Type Guards', () => {
                 walletAddress: mockWalletAddress,
                 chainType: ChainType.EVM,
               },
-              names: ['test@0xmail.box'],
+              names: ['test@example.com'],
             },
           ],
         },

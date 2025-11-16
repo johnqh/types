@@ -170,7 +170,7 @@ src/
 
 ## Domain Knowledge Required
 
-### 0xmail.box Platform:
+### Web3 Email Platform:
 - Web3-native email platform
 - Blockchain-based messaging between wallet addresses
 - Integration with traditional email infrastructure

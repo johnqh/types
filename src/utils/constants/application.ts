@@ -4,7 +4,6 @@
 // - ./ui-constants.ts - Layout, typography, and component patterns
 
 // API Configuration
-const API_BASE_URL = 'https://0xmail.box';
 const API_TIMEOUT = 30000; // 30 seconds
 const API_RETRY_ATTEMPTS = 3;
 const API_RETRY_DELAY = 1000; // 1 second
@@ -97,12 +96,8 @@ const ROUTES = {
   WEB3_PROJECTS: '/web3-projects',
 } as const;
 
-// External Links
-const EXTERNAL_LINKS = {
-  GITHUB: 'https://github.com/0xmailbox',
-  TWITTER: 'https://twitter.com/0xmailbox',
-  DISCORD: 'https://discord.gg/0xmailbox',
-  DOCUMENTATION: 'https://docs.0xmail.box',
+// Contact Information
+const CONTACT_INFO = {
   SUPPORT_EMAIL: 'support@sudobility.com',
   CONTACT_EMAIL: 'info@sudobility.com',
 } as const;
@@ -153,7 +148,6 @@ const Z_INDEX = {
 // Note: Formatting utilities moved to ./formatters.ts
 
 export {
-  API_BASE_URL,
   API_TIMEOUT,
   API_RETRY_ATTEMPTS,
   API_RETRY_DELAY,
@@ -166,7 +160,7 @@ export {
   ERROR_MESSAGES,
   SUCCESS_MESSAGES,
   ROUTES,
-  EXTERNAL_LINKS,
+  CONTACT_INFO,
   WALLET_NAMES,
   NETWORK_IDS,
   ANIMATION,

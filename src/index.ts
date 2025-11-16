@@ -1,8 +1,8 @@
 /**
- * @johnqh/types - Common TypeScript types for 0xmail.box projects
+ * @johnqh/types - Common TypeScript types for Web3 email projects
  *
  * This package contains all shared TypeScript definitions used across
- * the 0xmail.box ecosystem including business logic types, blockchain
+ * Web3 email applications including business logic types, blockchain
  * types, configuration interfaces, infrastructure types, and utility functions.
  *
  * @version 1.0.0

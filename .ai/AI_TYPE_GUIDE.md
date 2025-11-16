@@ -45,8 +45,8 @@ import {
 // Email message
 const email: Email = {
   id: 'msg_123',
-  from: 'sender@0xmail.box',
-  to: 'recipient@0xmail.box',
+  from: 'sender@example.com',
+  to: 'recipient@example.com',
   subject: 'Hello Web3',
   body: 'Message content',
   timestamp: Date.now(),

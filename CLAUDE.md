@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is `@sudobility/types` v1.8.29, a comprehensive TypeScript types library for the 0xmail.box ecosystem. It provides shared type definitions, interfaces, enums, and utility functions used across multiple projects in the 0xmail.box Web3 email platform.
+This is `@sudobility/types` v1.8.29, a comprehensive TypeScript types library for Web3 email applications. It provides shared type definitions, interfaces, enums, and utility functions used across multiple Web3 email platform projects.
 
 ## Key Architecture
 
@@ -113,7 +113,7 @@ npm run ai:docs          # Generate AI documentation
 
 ## Domain Knowledge
 
-### 0xmail.box Context
+### Web3 Email Platform Context
 - **Web3-native email platform**: Blockchain-based messaging system
 - **Multi-chain support**: Ethereum, Polygon, Arbitrum, Optimism, Base, Solana
 - **Wallet-centric**: User management tied to crypto wallet addresses

@@ -1,7 +1,7 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.11",
-  "description": "Comprehensive TypeScript types, interfaces, and utilities for the 0xmail.box Web3 email ecosystem - optimized for AI-assisted development",
+  "version": "1.9.12",
+  "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -52,7 +52,6 @@
     "typescript",
     "types",
     "interfaces",
-    "0xmail",
     "web3",
     "blockchain",
     "email",
@@ -60,7 +59,7 @@
     "tree-shakeable",
     "zero-dependencies"
   ],
-  "author": "0xmail.box",
+  "author": "Sudobility",
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.38.0",
