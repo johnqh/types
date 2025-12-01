@@ -284,7 +284,8 @@ export function isSolanaAddress(address: string): boolean {
     }
 
     // Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
-    const base58Regex = /^[1-9a-hjkmnp-z]+$/;
+    // Note: excludes 0, O, I, l to avoid ambiguity
+    const base58Regex = /^[1-9A-HJ-NP-Za-km-z]+$/;
     if (!base58Regex.test(address)) {
       return false;
     }
@@ -310,7 +311,7 @@ export function isSolanaAddress(address: string): boolean {
  * @returns True if value is EVM address string
  */
 export function isEvmAddress(address: string): boolean {
-  return /^0x[a-f0-9]{40}$/.test(address);
+  return /^0x[a-fA-F0-9]{40}$/.test(address);
 }
 
 /**
