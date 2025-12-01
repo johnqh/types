@@ -276,10 +276,32 @@ export interface MessageFilter {
  * @param value - Value to check
  * @returns True if value is a valid Solana address
  */
-export function isSolanaAddress(value: unknown): value is string {
-  return (
-    typeof value === 'string' && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(value)
-  );
+export function isSolanaAddress(address: string): boolean {
+  try {
+    // Solana addresses are base58 encoded and typically 32-44 characters
+    if (address.length < 32 || address.length > 44) {
+      return false;
+    }
+
+    // Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
+    const base58Regex = /^[1-9a-hjkmnp-z]+$/;
+    if (!base58Regex.test(address)) {
+      return false;
+    }
+
+    // Additional validation: try to decode with bs58 if available
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const bs58 = require('bs58');
+      const decoded = bs58.decode(address);
+      return decoded.length === 32; // Solana addresses decode to 32 bytes
+    } catch {
+      // If bs58 is not available, rely on regex validation
+      return true;
+    }
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -287,8 +309,8 @@ export function isSolanaAddress(value: unknown): value is string {
  * @param value - Value to check
  * @returns True if value is EVM address string
  */
-export function isEvmAddress(value: unknown): value is string {
-  return typeof value === 'string' && /^0x[a-fA-F0-9]{40}$/.test(value);
+export function isEvmAddress(address: string): boolean {
+  return /^0x[a-f0-9]{40}$/.test(address);
 }
 
 /**

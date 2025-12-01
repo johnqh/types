@@ -18,7 +18,6 @@ export enum AddressType {
   SolanaAddress = 'SolanaAddress',
   ENSName = 'ENSName',
   SNSName = 'SNSName',
-  Unknown = 'Unknown',
 }
 
 /**
@@ -30,7 +29,7 @@ export type ParsedEmailAddress = {
   /** The domain part (after @) */
   domain: string;
   /** The detected type of the address */
-  type: AddressType;
+  type: Optional<AddressType>;
 };
 
 // Address validation functions are now imported directly from common.ts
@@ -130,36 +129,38 @@ export function isSNSName(address: string): boolean {
  * Determine the address type from a string
  * Case insensitive as addresses/names are often case insensitive
  */
-export function getAddressType(address: string): AddressType {
+export function getAddressType(
+  address: string,
+  parentAddressType?: AddressType
+): Optional<AddressType> {
   if (!address || typeof address !== 'string') {
-    return AddressType.Unknown;
+    return undefined;
   }
 
   // Convert to lowercase for case-insensitive comparison
-  const trimmedAddress = address.trim();
-  const lowerAddress = trimmedAddress.toLowerCase();
+  const lowerAddress = address.trim().toLowerCase();
 
-  // Check for ENS names (.eth or .box domains)
-  if (isENSName(lowerAddress)) {
-    return AddressType.ENSName;
-  }
-
-  // Check for SNS names (.sol domain)
-  if (isSNSName(lowerAddress)) {
-    return AddressType.SNSName;
+  // If parent address type is provided and address contains ".", it's a domain name
+  if (parentAddressType && lowerAddress.includes('.')) {
+    if (parentAddressType === AddressType.EVMAddress) {
+      return AddressType.ENSName;
+    }
+    if (parentAddressType === AddressType.SolanaAddress) {
+      return AddressType.SNSName;
+    }
   }
 
   // Check for EVM address (0x followed by 40 hex characters)
-  if (isEvmAddress(trimmedAddress)) {
+  if (isEvmAddress(lowerAddress)) {
     return AddressType.EVMAddress;
   }
 
   // Check for Solana address (base58 encoded, 32-44 characters)
-  if (isSolanaAddress(trimmedAddress)) {
+  if (isSolanaAddress(lowerAddress)) {
     return AddressType.SolanaAddress;
   }
 
-  return AddressType.Unknown;
+  return undefined;
 }
 
 /**
@@ -190,7 +191,7 @@ export function isValidWalletAddress(
 
     default:
       // Unknown chain type, accept any known address format
-      return addressType !== AddressType.Unknown;
+      return !!addressType;
   }
 }
 
