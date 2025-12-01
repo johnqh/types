@@ -131,7 +131,7 @@ export function isSNSName(address: string): boolean {
  */
 export function getAddressType(
   address: string,
-  parentAddressType?: AddressType
+  parentAddressType: Optional<AddressType> = undefined
 ): Optional<AddressType> {
   // Check for EVM address (0x followed by 40 hex characters)
   if (isEvmAddress(address)) {
