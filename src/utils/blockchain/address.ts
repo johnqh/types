@@ -133,22 +133,8 @@ export function getAddressType(
   address: string,
   parentAddressType?: AddressType
 ): Optional<AddressType> {
-  if (!address || typeof address !== 'string') {
-    return undefined;
-  }
-
   // Convert to lowercase for case-insensitive comparison
   const lowerAddress = address.trim().toLowerCase();
-
-  // If parent address type is provided and address contains ".", it's a domain name
-  if (parentAddressType && lowerAddress.includes('.')) {
-    if (parentAddressType === AddressType.EVMAddress) {
-      return AddressType.ENSName;
-    }
-    if (parentAddressType === AddressType.SolanaAddress) {
-      return AddressType.SNSName;
-    }
-  }
 
   // Check for EVM address (0x followed by 40 hex characters)
   if (isEvmAddress(lowerAddress)) {
@@ -158,6 +144,16 @@ export function getAddressType(
   // Check for Solana address (base58 encoded, 32-44 characters)
   if (isSolanaAddress(lowerAddress)) {
     return AddressType.SolanaAddress;
+  }
+
+  // If parent address type is provided and address contains ".", it's a domain name
+  if (parentAddressType && lowerAddress.includes('.')) {
+    if (parentAddressType === AddressType.EVMAddress) {
+      return AddressType.ENSName;
+    }
+    if (parentAddressType === AddressType.SolanaAddress) {
+      return AddressType.SNSName;
+    }
   }
 
   return undefined;
