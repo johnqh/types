@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.28",
+  "version": "1.9.29",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -74,6 +74,6 @@
     "vitest": "^4.0.4"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }
