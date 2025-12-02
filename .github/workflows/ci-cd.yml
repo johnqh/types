@@ -24,5 +24,4 @@ jobs:
     uses: johnqh/workflows/.github/workflows/unified-cicd.yml@main
     with:
       npm-access: "public"
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    secrets: inherit
