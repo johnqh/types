@@ -35,7 +35,11 @@
       "Bash(npm uninstall:*)",
       "Bash(rm:*)",
       "Bash(npm audit fix:*)",
-      "Bash(npm update:*)"
+      "Bash(npm update:*)",
+      "Bash(npm config:*)",
+      "Bash(npm view:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
