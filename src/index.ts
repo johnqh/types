@@ -155,6 +155,7 @@ export {
   MobileView,
   RequestStatus,
   NotificationType,
+  InfoType,
 
   // Blockchain enums
   MessageType,

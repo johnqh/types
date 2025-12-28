@@ -243,6 +243,14 @@ export enum NotificationType {
   ERROR = 'error', // STATUS_VALUES.ERROR
 }
 
+// Info types for UI feedback
+export enum InfoType {
+  INFO = 'info',
+  SUCCESS = 'success',
+  WARNING = 'warning',
+  ERROR = 'error',
+}
+
 // Email address types
 export enum EmailAddressType {
   DIRECT = 'direct',
