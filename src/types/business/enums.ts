@@ -3,7 +3,19 @@
  * These replace string literals throughout the application
  */
 
-import { MailboxSpecialUse } from '../wildduck/wildduck-types';
+/**
+ * Special mailbox types (IMAP special-use flags)
+ * These correspond to standard IMAP mailbox flags
+ */
+export enum MailboxSpecialUse {
+  Inbox = '\\Inbox',
+  Sent = '\\Sent',
+  Trash = '\\Trash',
+  Drafts = '\\Drafts',
+  Junk = '\\Junk',
+  Settings = '\\App.Settings',
+  Developer = '\\App.Developer',
+}
 
 // Authentication states - aligned with @johnqh/di
 export enum AuthStatus {

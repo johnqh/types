@@ -18,6 +18,7 @@ export {
   FeatureFlag,
   FontSize,
   InfoType,
+  MailboxSpecialUse,
   MediumView,
   MobileView,
   NotificationType,

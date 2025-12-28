@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { EmailFolder } from '../../../src/types/business/enums';
-import { MailboxSpecialUse } from '../../../src/types/wildduck/wildduck-types';
+import { EmailFolder, MailboxSpecialUse } from '../../../src/types/business/enums';
 
 describe('Email Folder Types', () => {
 

@@ -6,8 +6,8 @@ import {
   Theme,
   NotificationType,
   EmailFolderUtils,
+  MailboxSpecialUse,
 } from '../../../src/types/business/enums';
-import { MailboxSpecialUse } from '../../../src/types/wildduck/wildduck-types';
 
 describe('Business Enums', () => {
   describe('ChainType', () => {
