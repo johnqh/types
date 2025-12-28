@@ -1,12 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
   ChainType,
-  EmailFolder,
   SortOrder,
   Theme,
   NotificationType,
-  EmailFolderUtils,
-  MailboxSpecialUse,
 } from '../../../src/types/business/enums';
 
 describe('Business Enums', () => {
@@ -21,48 +18,6 @@ describe('Business Enums', () => {
       expect(chainTypes).toContain('evm');
       expect(chainTypes).toContain('solana');
       expect(chainTypes).toHaveLength(2);
-    });
-  });
-
-  describe('EmailFolder', () => {
-    it('should be a type that includes MailboxSpecialUse', () => {
-      // EmailFolder is a type union, not an enum, so we test with values
-      const standardFolder: EmailFolder = MailboxSpecialUse.Inbox;
-      const customFolder: EmailFolder = 'custom-folder';
-
-      expect(standardFolder).toBe('\\Inbox');
-      expect(customFolder).toBe('custom-folder');
-    });
-
-    it('should work with EmailFolderUtils', () => {
-      expect(EmailFolderUtils.isStandardFolder('\\Inbox')).toBe(true);
-      expect(EmailFolderUtils.isStandardFolder('custom-folder')).toBe(false);
-      expect(EmailFolderUtils.isCustomFolder('custom-folder')).toBe(true);
-      expect(EmailFolderUtils.displayName('\\Inbox')).toBe('\\Inbox');
-    });
-  });
-
-  describe('MailboxSpecialUse', () => {
-    it('should have correct values', () => {
-      expect(MailboxSpecialUse.Inbox).toBe('\\Inbox');
-      expect(MailboxSpecialUse.Sent).toBe('\\Sent');
-      expect(MailboxSpecialUse.Drafts).toBe('\\Drafts');
-      expect(MailboxSpecialUse.Junk).toBe('\\Junk');
-      expect(MailboxSpecialUse.Trash).toBe('\\Trash');
-      expect(MailboxSpecialUse.Settings).toBe('\\App.Settings');
-      expect(MailboxSpecialUse.Developer).toBe('\\App.Developer');
-    });
-
-    it('should have all expected standard folders', () => {
-      const folders = Object.values(MailboxSpecialUse);
-      expect(folders).toContain('\\Inbox');
-      expect(folders).toContain('\\Sent');
-      expect(folders).toContain('\\Drafts');
-      expect(folders).toContain('\\Junk');
-      expect(folders).toContain('\\Trash');
-      expect(folders).toContain('\\App.Settings');
-      expect(folders).toContain('\\App.Developer');
-      expect(folders).toHaveLength(7); // Inbox, Sent, Trash, Drafts, Junk, Settings, Developer
     });
   });
 

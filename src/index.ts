@@ -85,7 +85,6 @@ export {
   RequestStatus,
   NotificationType,
   InfoType,
-  MailboxSpecialUse,
 
   // Blockchain enums
   MessageType,

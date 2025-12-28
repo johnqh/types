@@ -1,6 +1,4 @@
 // Enums and utilities
-export type { EmailFolder } from './enums';
-
 export {
   AuthStatus,
   Chain,
@@ -11,14 +9,12 @@ export {
   EmailAction,
   EmailAddressType,
   EmailComposeType,
-  EmailFolderUtils,
   EmailSortCriteria,
   EmailValidationState,
   ErrorType,
   FeatureFlag,
   FontSize,
   InfoType,
-  MailboxSpecialUse,
   MediumView,
   MobileView,
   NotificationType,

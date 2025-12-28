@@ -3,20 +3,6 @@
  * These replace string literals throughout the application
  */
 
-/**
- * Special mailbox types (IMAP special-use flags)
- * These correspond to standard IMAP mailbox flags
- */
-export enum MailboxSpecialUse {
-  Inbox = '\\Inbox',
-  Sent = '\\Sent',
-  Trash = '\\Trash',
-  Drafts = '\\Drafts',
-  Junk = '\\Junk',
-  Settings = '\\App.Settings',
-  Developer = '\\App.Developer',
-}
-
 // Authentication states - aligned with @johnqh/di
 export enum AuthStatus {
   CONNECTED = 'connected',
@@ -162,40 +148,6 @@ export enum FontSize {
   MEDIUM = 'medium',
   LARGE = 'large',
 }
-
-// Helper type that allows both standard mailbox types and custom folder names
-export type EmailFolder = MailboxSpecialUse | string;
-
-// Utility functions for working with email folders
-export const EmailFolderUtils = {
-  /**
-   * Check if a folder name is one of the standard mailbox types
-   */
-  isStandardFolder(folder: string): folder is MailboxSpecialUse {
-    return Object.values(MailboxSpecialUse).includes(folder as MailboxSpecialUse);
-  },
-
-  /**
-   * Get all standard folder names
-   */
-  getStandardFolders(): MailboxSpecialUse[] {
-    return Object.values(MailboxSpecialUse);
-  },
-
-  /**
-   * Check if a folder is a custom folder (not one of the standard ones)
-   */
-  isCustomFolder(folder: string): boolean {
-    return !this.isStandardFolder(folder);
-  },
-
-  /**
-   * Normalize folder name for display (capitalize first letter)
-   */
-  displayName(folder: EmailFolder): string {
-    return folder.charAt(0).toUpperCase() + folder.slice(1);
-  },
-};
 
 // Email compose types
 export enum EmailComposeType {
