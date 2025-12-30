@@ -12,3 +12,6 @@ export * from './config';
 
 // Infrastructure types
 export * from './infrastructure';
+
+// Subscription types (rate limits, etc.)
+export * from './subscription';
