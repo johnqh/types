@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.39",
+  "version": "1.9.38",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -25,9 +25,9 @@
   "scripts": {
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json && npm run build:cjs-copy",
-    "build:cjs-copy": "find dist-cjs -name '*.js' | while read f; do cp \"$f\" \"dist/$(echo \"$f\" | sed 's|dist-cjs/||' | sed 's/.js$/.cjs/')\"; done && rm -rf dist-cjs",
-    "clean": "rimraf dist dist-cjs",
+    "build:cjs": "tsc -p tsconfig.cjs.json && npm run build:cjs-rename",
+    "build:cjs-rename": "find dist -name '*.js' -not -name '*.cjs' -exec sh -c 'cp \"$1\" \"${1%.js}.cjs\"' _ {} \\;",
+    "clean": "rimraf dist",
     "dev": "tsc --watch",
     "test": "vitest",
     "test:watch": "vitest --watch",
