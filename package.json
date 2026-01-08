@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.40",
+  "version": "1.9.41",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -23,9 +23,9 @@
     }
   },
   "scripts": {
-    "build": "npm run build:esm && npm run build:cjs",
+    "build": "bun run build:esm && bun run build:cjs",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json && npm run build:cjs-rename",
+    "build:cjs": "tsc -p tsconfig.cjs.json && bun run build:cjs-rename",
     "build:cjs-rename": "find dist -name '*.js' -not -name '*.cjs' -exec sh -c 'cp \"$1\" \"${1%.js}.cjs\"' _ {} \\;",
     "clean": "rimraf dist",
     "dev": "tsc --watch",
@@ -37,11 +37,11 @@
     "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
     "typecheck": "tsc --noEmit",
-    "verify": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "verify": "bun run typecheck && bun run lint && bun run test && bun run build",
     "ai:analyze": "node .ai/scripts/analyze-types.js",
     "ai:validate-exports": "node .ai/scripts/validate-exports.js",
-    "ai:docs": "npm run ai:analyze && npm run ai:validate-exports",
-    "prepublishOnly": "npm run clean && npm run verify"
+    "ai:docs": "bun run ai:analyze && bun run ai:validate-exports",
+    "prepublishOnly": "bun run clean && bun run verify"
   },
   "files": [
     "dist/**/*",
