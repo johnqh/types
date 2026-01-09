@@ -41,10 +41,11 @@ export interface EntityPermissions {
 // ========================================
 
 /**
- * Permission set for the Admin role.
- * Full access to all entity operations.
+ * Permission set for the Owner role (organizations only).
+ * Full access including user management, project and endpoint management.
+ * Organizations have exactly one owner; personal entities don't use this role.
  */
-const ADMIN_PERMISSIONS: EntityPermissions = {
+const OWNER_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
   canEditEntity: true,
   canDeleteEntity: true,
@@ -58,12 +59,13 @@ const ADMIN_PERMISSIONS: EntityPermissions = {
 };
 
 /**
- * Permission set for the Manager role.
- * Can manage projects and API keys, but not entity settings or members.
+ * Permission set for the Admin role.
+ * Can manage projects and endpoints, but cannot manage users.
+ * This is the default role for personal entities.
  */
-const MANAGER_PERMISSIONS: EntityPermissions = {
+const ADMIN_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
-  canEditEntity: false,
+  canEditEntity: true,
   canDeleteEntity: false,
   canManageMembers: false,
   canInviteMembers: false,
@@ -75,10 +77,10 @@ const MANAGER_PERMISSIONS: EntityPermissions = {
 };
 
 /**
- * Permission set for the Viewer role.
- * Read-only access to projects and API keys.
+ * Permission set for the Member role.
+ * Read-only access to projects and endpoints.
  */
-const VIEWER_PERMISSIONS: EntityPermissions = {
+const MEMBER_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
   canEditEntity: false,
   canDeleteEntity: false,
@@ -96,9 +98,9 @@ const VIEWER_PERMISSIONS: EntityPermissions = {
  * Used by permission checking utilities.
  */
 export const ROLE_PERMISSIONS: Record<EntityRole, EntityPermissions> = {
+  [EntityRole.OWNER]: OWNER_PERMISSIONS,
   [EntityRole.ADMIN]: ADMIN_PERMISSIONS,
-  [EntityRole.MANAGER]: MANAGER_PERMISSIONS,
-  [EntityRole.VIEWER]: VIEWER_PERMISSIONS,
+  [EntityRole.MEMBER]: MEMBER_PERMISSIONS,
 };
 
 // ========================================

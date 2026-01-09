@@ -20,14 +20,17 @@ export enum EntityType {
 /**
  * Role of a user within an entity.
  * Determines permissions for various operations.
+ * - OWNER: Only for organizations. Full access including user management.
+ * - ADMIN: Can manage projects and endpoints. Used for personal entities.
+ * - MEMBER: Read-only access to projects and endpoints.
  */
 export enum EntityRole {
-  /** Full access: manage entity, members, projects, and API keys */
+  /** Organization owner: full access including invite users, change roles, manage projects/endpoints */
+  OWNER = 'owner',
+  /** Can manage projects and endpoints, but cannot manage users. Default role for personal entities. */
   ADMIN = 'admin',
-  /** Can create/edit projects and API keys, but cannot manage members */
-  MANAGER = 'manager',
-  /** Read-only access to projects and API keys */
-  VIEWER = 'viewer',
+  /** Read-only access to projects and endpoints */
+  MEMBER = 'member',
 }
 
 /**
@@ -51,6 +54,8 @@ export enum InvitationStatus {
 /**
  * An entity represents a workspace that can own projects and API keys.
  * Can be either a personal workspace (one per user) or an organization (shared).
+ * - Personal entities: User has 'admin' role (no user management needed).
+ * - Organizations: Creator has 'owner' role (can manage users, projects, endpoints).
  */
 export interface Entity {
   /** Unique identifier (UUID) */
@@ -65,8 +70,6 @@ export interface Entity {
   description: string | null;
   /** Optional avatar URL */
   avatarUrl: string | null;
-  /** User ID of the entity owner/creator */
-  ownerUserId: string;
   /** ISO 8601 timestamp of creation */
   createdAt: string;
   /** ISO 8601 timestamp of last update */
@@ -96,16 +99,19 @@ export interface EntityMemberUser {
 
 /**
  * A membership record linking a user to an entity with a specific role.
+ * This table manages all user-entity roles including organization ownership.
  */
 export interface EntityMember {
   /** Unique identifier (UUID) */
   id: string;
   /** Entity this membership belongs to */
   entityId: string;
-  /** User who is a member */
+  /** User who is a member (firebase_uid) */
   userId: string;
-  /** User's role in the entity */
+  /** User's role in the entity (owner, admin, member) */
   role: EntityRole;
+  /** Whether this membership is active (false = soft deleted) */
+  isActive: boolean;
   /** ISO 8601 timestamp when user joined */
   joinedAt: string;
   /** ISO 8601 timestamp of record creation */
