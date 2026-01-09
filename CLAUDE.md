@@ -56,44 +56,56 @@ src/
 └── index.ts                 # Main export file
 ```
 
+## Package Manager
+
+**This project uses Bun as the package manager.** Always use `bun` commands instead of `npm`:
+
+```bash
+# Install dependencies
+bun install
+
+# Run any script
+bun run <script-name>
+```
+
 ## Essential Commands
 
 ### Development Commands
 ```bash
 # Build the project (dual ESM/CJS output)
-npm run build
+bun run build
 
 # Watch mode for development
-npm run dev
+bun run dev
 
 # Run all 219 tests
-npm test
+bun test
 
 # Type checking
-npm run typecheck
+bun run typecheck
 
 # Linting (ESLint v9)
-npm run lint
+bun run lint
 
 # Fix linting issues
-npm run lint:fix
+bun run lint:fix
 
 # Format code (Prettier)
-npm run format
+bun run format
 
 # Check formatting
-npm run format:check
+bun run format:check
 
 # Clean build artifacts
-npm run clean
+bun run clean
 
 # Full verification (build + test + lint + typecheck)
-npm run verify
+bun run verify
 
 # AI development tools
-npm run ai:analyze        # Analyze type structure
-npm run ai:validate       # Validate exports
-npm run ai:docs          # Generate AI documentation
+bun run ai:analyze        # Analyze type structure
+bun run ai:validate       # Validate exports
+bun run ai:docs          # Generate AI documentation
 ```
 
 ## Testing Strategy
@@ -173,19 +185,19 @@ npm run ai:docs          # Generate AI documentation
 ### Testing New Code
 ```bash
 # Run tests in watch mode during development
-npm run test:watch
+bun run test:watch
 
 # Run specific test file
-npm test -- path/to/test.file.ts
+bun test -- path/to/test.file.ts
 
 # Generate coverage report
-npm run test:coverage
+bun run test:coverage
 ```
 
 ## AI Assistant Specific Notes
 
 ### When Working on This Project:
-1. **Always run verification after changes**: `npm run verify`
+1. **Always run verification after changes**: `bun run verify`
 2. **Maintain zero dependencies**: Don't add runtime dependencies
 3. **Keep utilities pure**: No side effects in utility functions
 4. **Follow naming conventions**: Established patterns for consistency
