@@ -1,8 +1,15 @@
 # Claude AI Assistant Configuration
 
+This file provides comprehensive guidance for AI assistants (Claude Code, GitHub Copilot, Cursor, etc.) working with this codebase.
+
 ## Project Overview
 
-This is `@sudobility/types` v1.8.29, a comprehensive TypeScript types library for Web3 email applications. It provides shared type definitions, interfaces, enums, and utility functions used across multiple Web3 email platform projects.
+**Package**: `@sudobility/types`
+**Version**: 1.9.43
+**Type**: ES Module + CommonJS (dual output)
+**Test Coverage**: 107 tests across 7 test files
+
+A comprehensive TypeScript types library for Web3 email applications. It provides shared type definitions, interfaces, enums, and utility functions used across multiple Web3 email platform projects.
 
 ## Key Architecture
 
@@ -78,7 +85,7 @@ bun run build
 # Watch mode for development
 bun run dev
 
-# Run all 219 tests
+# Run all 107 tests
 bun test
 
 # Type checking
@@ -111,7 +118,7 @@ bun run ai:docs          # Generate AI documentation
 ## Testing Strategy
 
 - **Framework**: Vitest for fast unit testing
-- **Coverage**: 219 comprehensive tests covering all utilities and type guards
+- **Coverage**: 107 comprehensive tests covering all utilities and type guards
 - **Structure**: Tests mirror source structure in `test/` directory
 - **Focus**: Type guards, validation functions, utility functions, and API contracts
 
@@ -225,13 +232,13 @@ bun run test:coverage
 4. **Verification**: Comprehensive quality pipeline
 
 ### Quality Standards:
-- **267 tests passing**: Complete test coverage maintained
+- **107 tests passing**: Complete test coverage maintained
 - **Zero lint errors**: ESLint v9 with strict TypeScript rules
 - **Perfect formatting**: Prettier integration
 - **Type safety**: Strict TypeScript with comprehensive checking
 - **Documentation**: JSDoc comments on all public APIs
 
-## Recent Changes (v1.8.29)
+## Recent Changes (v1.9.43)
 
 ### Type System Improvements
 - **Enum Conversion**: Converted 11 string literal types to enums for better type safety
