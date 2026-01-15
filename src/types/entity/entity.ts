@@ -21,14 +21,14 @@ export enum EntityType {
  * Role of a user within an entity.
  * Determines permissions for various operations.
  * - OWNER: Only for organizations. Full access including user management.
- * - ADMIN: Can manage projects and endpoints. Used for personal entities.
+ * - MANAGER: Can manage projects and endpoints. Used for personal entities.
  * - MEMBER: Read-only access to projects and endpoints.
  */
 export enum EntityRole {
   /** Organization owner: full access including invite users, change roles, manage projects/endpoints */
   OWNER = 'owner',
   /** Can manage projects and endpoints, but cannot manage users. Default role for personal entities. */
-  ADMIN = 'admin',
+  MANAGER = 'manager',
   /** Read-only access to projects and endpoints */
   MEMBER = 'member',
 }
@@ -54,7 +54,7 @@ export enum InvitationStatus {
 /**
  * An entity represents a workspace that can own projects and API keys.
  * Can be either a personal workspace (one per user) or an organization (shared).
- * - Personal entities: User has 'admin' role (no user management needed).
+ * - Personal entities: User has 'manager' role (no user management needed).
  * - Organizations: Creator has 'owner' role (can manage users, projects, endpoints).
  */
 export interface Entity {
@@ -108,7 +108,7 @@ export interface EntityMember {
   entityId: string;
   /** User who is a member (firebase_uid) */
   userId: string;
-  /** User's role in the entity (owner, admin, member) */
+  /** User's role in the entity (owner, manager, member) */
   role: EntityRole;
   /** Whether this membership is active (false = soft deleted) */
   isActive: boolean;

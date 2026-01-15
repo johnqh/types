@@ -24,7 +24,7 @@ export interface CreateEntityRequest {
 
 /**
  * Request to update an entity's details.
- * Only admins can update entity settings.
+ * Only owners and managers can update entity settings.
  */
 export interface UpdateEntityRequest {
   /** New display name */
@@ -43,7 +43,7 @@ export interface UpdateEntityRequest {
 
 /**
  * Request to update a member's role.
- * Only admins can update member roles.
+ * Only owners can update member roles.
  */
 export interface UpdateMemberRoleRequest {
   /** New role for the member */
@@ -56,7 +56,7 @@ export interface UpdateMemberRoleRequest {
 
 /**
  * Request to invite a user to join an entity.
- * Only admins can send invitations.
+ * Only owners can send invitations.
  */
 export interface InviteMemberRequest {
   /** Email address of the user to invite */

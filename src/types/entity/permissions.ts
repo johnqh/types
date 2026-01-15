@@ -59,11 +59,11 @@ const OWNER_PERMISSIONS: EntityPermissions = {
 };
 
 /**
- * Permission set for the Admin role.
+ * Permission set for the Manager role.
  * Can manage projects and endpoints, but cannot manage users.
  * This is the default role for personal entities.
  */
-const ADMIN_PERMISSIONS: EntityPermissions = {
+const MANAGER_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
   canEditEntity: true,
   canDeleteEntity: false,
@@ -99,7 +99,7 @@ const MEMBER_PERMISSIONS: EntityPermissions = {
  */
 export const ROLE_PERMISSIONS: Record<EntityRole, EntityPermissions> = {
   [EntityRole.OWNER]: OWNER_PERMISSIONS,
-  [EntityRole.ADMIN]: ADMIN_PERMISSIONS,
+  [EntityRole.MANAGER]: MANAGER_PERMISSIONS,
   [EntityRole.MEMBER]: MEMBER_PERMISSIONS,
 };
 
