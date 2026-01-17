@@ -45,7 +45,7 @@ export interface EntityPermissions {
  * Full access including user management, project and endpoint management.
  * Organizations have exactly one owner; personal entities don't use this role.
  */
-const OWNER_PERMISSIONS: EntityPermissions = {
+export const OWNER_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
   canEditEntity: true,
   canDeleteEntity: true,
@@ -63,7 +63,7 @@ const OWNER_PERMISSIONS: EntityPermissions = {
  * Can manage projects and endpoints, but cannot manage users.
  * This is the default role for personal entities.
  */
-const MANAGER_PERMISSIONS: EntityPermissions = {
+export const MANAGER_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
   canEditEntity: true,
   canDeleteEntity: false,
@@ -80,7 +80,7 @@ const MANAGER_PERMISSIONS: EntityPermissions = {
  * Permission set for the Member role.
  * Read-only access to projects and endpoints.
  */
-const MEMBER_PERMISSIONS: EntityPermissions = {
+export const MEMBER_PERMISSIONS: EntityPermissions = {
   canViewEntity: true,
   canEditEntity: false,
   canDeleteEntity: false,
