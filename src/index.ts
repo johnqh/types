@@ -174,6 +174,9 @@ export type {
 // Wallet
 export { WalletType } from './types/infrastructure/wallet';
 
+// Firebase User
+export type { UserInfoResponse } from './types/infrastructure/firebase-user';
+
 // ============================================================================
 // TYPES - Subscription (Rate Limits)
 // ============================================================================
@@ -317,6 +320,12 @@ export {
   isAuthStatusConnected,
   isValidNonce,
 } from './utils/auth/auth';
+
+export {
+  parseAdminEmails,
+  isAdminEmail,
+  createAdminChecker,
+} from './utils/auth/admin-emails';
 
 // ============================================================================
 // UTILS - Formatting
