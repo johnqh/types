@@ -35,6 +35,18 @@ export interface RateLimitTier {
 }
 
 /**
+ * Reset times for each rate limit period (ISO 8601 strings).
+ */
+export interface RateLimitResets {
+  /** When the hourly counter resets (ISO 8601 string) */
+  hourly: string;
+  /** When the daily counter resets (ISO 8601 string) */
+  daily: string;
+  /** When the monthly counter resets (ISO 8601 string) */
+  monthly: string;
+}
+
+/**
  * Response data for GET /ratelimits endpoint.
  * Returns all rate limit configurations for all entitlement tiers.
  */
@@ -47,6 +59,8 @@ export interface RateLimitsConfigData {
   currentLimits: RateLimits;
   /** Current usage counts */
   currentUsage: RateLimitUsage;
+  /** When each period's counter resets */
+  resets?: RateLimitResets;
 }
 
 /**

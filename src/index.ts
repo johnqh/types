@@ -184,6 +184,7 @@ export type { UserInfoResponse } from './types/infrastructure/firebase-user';
 export type {
   RateLimits,
   RateLimitTier,
+  RateLimitResets,
   RateLimitsConfigData,
   RateLimitUsage,
   RateLimitsConfigResponse,
