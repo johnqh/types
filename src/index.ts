@@ -195,6 +195,20 @@ export type {
 export { RateLimitPeriodType } from './types/subscription/rate-limits';
 
 // ============================================================================
+// TYPES - Consumables
+// ============================================================================
+
+export type {
+  ConsumableSource,
+  ConsumablePurchaseRequest,
+  ConsumableUseRequest,
+  ConsumableBalanceResponse,
+  ConsumableUseResponse,
+  ConsumablePurchaseRecord,
+  ConsumableUsageRecord,
+} from './types/consumables';
+
+// ============================================================================
 // TYPES - Entity
 // ============================================================================
 
