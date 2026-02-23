@@ -1,11 +1,20 @@
 /**
- * Common async operation patterns and helpers
- * Reduces boilerplate code for common async operations
+ * Common async operation patterns and helpers.
+ * Reduces boilerplate code for common async operations.
+ *
+ * @since 1.0.0
  */
 
 import { logger } from './logging/logger';
 import { Optional } from '../types/common';
 
+/**
+ * Result type for safe async operations.
+ * Contains either `data` on success or `error` on failure.
+ *
+ * @template T - The success data type
+ * @since 1.0.0
+ */
 type AsyncResult<T> = {
   data?: T;
   error?: Error;
@@ -13,8 +22,24 @@ type AsyncResult<T> = {
 };
 
 /**
- * Safely execute an async operation with error handling
- * Returns a result object instead of throwing
+ * Safely execute an async operation with error handling.
+ * Returns a result object instead of throwing.
+ *
+ * @template T - The success data type
+ * @param operation - Async function to execute
+ * @param context - Optional context string for logging
+ * @returns A promise resolving to an {@link AsyncResult}
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const result = await safeAsync(() => fetchUser(id), 'fetchUser');
+ * if (result.success) {
+ *   console.log(result.data);
+ * } else {
+ *   console.error(result.error?.message);
+ * }
+ * ```
  */
 const safeAsync = async <T>(
   operation: () => Promise<T>,
@@ -31,7 +56,26 @@ const safeAsync = async <T>(
 };
 
 /**
- * Execute async operation with loading state tracking
+ * Execute async operation with loading state tracking.
+ * Manages `setLoading` and `setError` callbacks automatically.
+ *
+ * @template T - The success data type
+ * @param operation - Async function to execute
+ * @param setLoading - Callback to update loading state
+ * @param setError - Callback to update error state
+ * @param context - Optional context string for logging
+ * @returns The operation result, or undefined on error
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const data = await withLoadingState(
+ *   () => api.getUsers(),
+ *   setIsLoading,
+ *   setErrorMsg,
+ *   'getUsers'
+ * );
+ * ```
  */
 const withLoadingState = async <T>(
   operation: () => Promise<T>,
@@ -56,7 +100,22 @@ const withLoadingState = async <T>(
 };
 
 /**
- * Execute multiple async operations in parallel with error handling
+ * Execute multiple async operations in parallel with error handling.
+ * All operations run concurrently via `Promise.all`.
+ *
+ * @template T - Tuple of result types
+ * @param operations - Array of async functions to execute in parallel
+ * @param context - Optional context string for logging
+ * @returns A promise resolving to an {@link AsyncResult} of the tuple
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const result = await safeParallel(
+ *   [() => fetchUser(1), () => fetchPosts(1)] as const,
+ *   'loadProfile'
+ * );
+ * ```
  */
 const safeParallel = async <T extends readonly unknown[]>(
   operations: readonly [...{ [K in keyof T]: () => Promise<T[K]> }],
@@ -77,7 +136,25 @@ const safeParallel = async <T extends readonly unknown[]>(
 };
 
 /**
- * Execute async operation with timeout
+ * Execute async operation with a timeout.
+ * Rejects if the operation does not complete within `timeoutMs`.
+ *
+ * @template T - The success data type
+ * @param operation - Async function to execute
+ * @param timeoutMs - Maximum time in milliseconds
+ * @param context - Optional context string for logging
+ * @returns The operation result
+ * @throws Error if the operation times out
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const data = await withTimeout(
+ *   () => fetch('/api/data').then((r) => r.json()),
+ *   5000,
+ *   'fetchData'
+ * );
+ * ```
  */
 const withTimeout = async <T>(
   operation: () => Promise<T>,
@@ -100,10 +177,31 @@ const withTimeout = async <T>(
 };
 
 /**
- * Cache async operation results with TTL
+ * In-memory cache for {@link withCache}.
  */
 const cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
 
+/**
+ * Cache async operation results with TTL (time-to-live).
+ * Returns cached data if still valid; otherwise executes the operation
+ * and stores the result.
+ *
+ * @template T - The cached data type
+ * @param key - Unique cache key
+ * @param operation - Async function whose result is cached
+ * @param ttlMs - Cache TTL in milliseconds (default: 5 minutes)
+ * @returns The cached or freshly fetched data
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const user = await withCache(
+ *   `user-${id}`,
+ *   () => api.getUser(id),
+ *   60_000 // 1 minute
+ * );
+ * ```
+ */
 const withCache = async <T>(
   key: string,
   operation: () => Promise<T>,
@@ -122,7 +220,8 @@ const withCache = async <T>(
 };
 
 /**
- * Clear expired cache entries
+ * Clear expired cache entries from the in-memory cache.
+ * @since 1.0.0
  */
 const clearExpiredCache = (): void => {
   const now = Date.now();
@@ -134,10 +233,32 @@ const clearExpiredCache = (): void => {
 };
 
 /**
- * Debounce async operations
+ * Active debounce timers keyed by operation key.
  */
 const debounceMap = new Map<string, ReturnType<typeof setTimeout>>();
 
+/**
+ * Debounce async function calls by key.
+ * Only the last call within the delay window will execute.
+ *
+ * @template T - Argument types
+ * @template R - Return type
+ * @param fn - The async function to debounce
+ * @param delay - Debounce delay in milliseconds
+ * @param key - Unique key identifying this debounced operation
+ * @returns A debounced version of `fn`
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const debouncedSearch = debounceAsync(
+ *   (query: string) => api.search(query),
+ *   300,
+ *   'search'
+ * );
+ * await debouncedSearch('hello');
+ * ```
+ */
 const debounceAsync = <T extends unknown[], R>(
   fn: (...args: T) => Promise<R>,
   delay: number,

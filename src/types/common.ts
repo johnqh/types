@@ -1,18 +1,45 @@
 /**
- * Common utility types used throughout the application
+ * Common utility types used throughout the application.
+ *
+ * Provides foundational types like {@link Optional}, {@link Result},
+ * {@link ValidationResult}, and API response structures used across
+ * every package in the ecosystem.
+ *
+ * @since 1.0.0
  */
 
 import { ChainType } from './business/enums';
 
 /**
- * Utility type for values that can be T, undefined, or null
- * Provides a more semantic way to represent optional/nullable values
+ * Utility type for values that can be T, undefined, or null.
+ * Use instead of manual `T | null | undefined` unions for consistency.
+ *
+ * @template T - The base type
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * interface User {
+ *   name: string;
+ *   bio?: Optional<string>;
+ * }
+ * ```
  */
 export type Optional<T> = T | undefined | null;
 
 /**
- * Base wallet data structure containing address and chain type
- * Used across all wallet-related interfaces to ensure consistency
+ * Base wallet data structure containing address and chain type.
+ * Used across all wallet-related interfaces to ensure consistency.
+ *
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const wallet: WalletData = {
+ *   walletAddress: '0x742d35Cc6634C0532925a3b8D2C36B7f1234567',
+ *   chainType: ChainType.EVM,
+ * };
+ * ```
  */
 export interface WalletData {
   /** Wallet address (EVM 0x format or Solana Base58) */
@@ -22,8 +49,10 @@ export interface WalletData {
 }
 
 /**
- * Base folder data structure containing common folder properties
- * Used across all folder/mailbox-related interfaces to ensure consistency
+ * Base folder data structure containing common folder properties.
+ * Used across all folder/mailbox-related interfaces to ensure consistency.
+ *
+ * @since 1.0.0
  */
 export interface FolderBase {
   /** Folder name */
@@ -35,8 +64,10 @@ export interface FolderBase {
 }
 
 /**
- * Base message structure containing core message fields
- * Used across all message/email-related interfaces to ensure consistency
+ * Base message structure containing core message fields.
+ * Used across all message/email-related interfaces to ensure consistency.
+ *
+ * @since 1.0.0
  */
 export interface MessageBase {
   /** Message sender */
@@ -50,8 +81,20 @@ export interface MessageBase {
 }
 
 /**
- * Base response structure for all API operations
- * Unified response interface for consistency across the entire application
+ * Base response structure for all API operations.
+ * Unified response interface for consistency across the entire application.
+ *
+ * @template T - The response data type (defaults to `unknown`)
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const response: BaseResponse<User> = {
+ *   success: true,
+ *   data: { name: 'Alice' },
+ *   timestamp: new Date().toISOString(),
+ * };
+ * ```
  */
 export interface BaseResponse<T = unknown> {
   /** Operation success status */
@@ -65,7 +108,19 @@ export interface BaseResponse<T = unknown> {
 }
 
 /**
- * Unified pagination options for querying
+ * Unified pagination options for querying.
+ * Supports both offset-based and cursor-based pagination.
+ *
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const opts: PaginationOptions = {
+ *   limit: 20,
+ *   cursor: 'abc123',
+ *   sortOrder: 'desc',
+ * };
+ * ```
  */
 export interface PaginationOptions {
   /** Number of items per page */
@@ -79,7 +134,9 @@ export interface PaginationOptions {
 }
 
 /**
- * Unified pagination metadata for responses
+ * Unified pagination metadata for responses.
+ *
+ * @since 1.0.0
  */
 export interface PaginationInfo {
   /** Whether there are more items after current page */
@@ -97,7 +154,21 @@ export interface PaginationInfo {
 }
 
 /**
- * Paginated response structure
+ * Paginated response structure extending {@link BaseResponse} with
+ * pagination metadata.
+ *
+ * @template T - The item type in the paginated list
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const page: PaginatedResponse<User> = {
+ *   success: true,
+ *   data: [{ name: 'Alice' }],
+ *   timestamp: new Date().toISOString(),
+ *   pagination: { hasNextPage: true, pageSize: 20 },
+ * };
+ * ```
  */
 export interface PaginatedResponse<T> extends BaseResponse<T[]> {
   /** Pagination metadata */
@@ -105,7 +176,21 @@ export interface PaginatedResponse<T> extends BaseResponse<T[]> {
 }
 
 /**
- * Unified error structure for all operations
+ * Unified error structure for all operations.
+ * Provides typed error categories, human-readable messages,
+ * and optional suggested actions for the user.
+ *
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const error: UnifiedError = {
+ *   type: 'ValidationError',
+ *   message: 'Invalid email address',
+ *   details: { field: 'email' },
+ *   suggestedAction: 'Please enter a valid email.',
+ * };
+ * ```
  */
 export interface UnifiedError {
   /** Error type/code */
@@ -133,17 +218,46 @@ export interface UnifiedError {
 }
 
 /**
- * Result type for operations that can succeed or fail
- * @template T Success result type
- * @template E Error type (defaults to UnifiedError)
+ * Discriminated union for operations that can succeed or fail.
+ * Prefer this over throwing exceptions for recoverable errors.
+ *
+ * @template T - Success result type
+ * @template E - Error type (defaults to {@link UnifiedError})
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * function divide(a: number, b: number): Result<number> {
+ *   if (b === 0) {
+ *     return {
+ *       success: false,
+ *       error: { type: 'ValidationError', message: 'Division by zero' },
+ *     };
+ *   }
+ *   return { success: true, data: a / b };
+ * }
+ * ```
  */
 export type Result<T, E = UnifiedError> =
   | { success: true; data: T }
   | { success: false; error: E };
 
 /**
- * Unified validation result pattern
- * @template T The validated data type
+ * Unified validation result pattern.
+ * Used by validators and {@link createValidator} to return typed results.
+ *
+ * @template T - The validated data type
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * function validateAge(value: unknown): ValidationResult<number> {
+ *   if (typeof value === 'number' && value >= 0) {
+ *     return { isValid: true, data: value };
+ *   }
+ *   return { isValid: false, error: 'Age must be a non-negative number' };
+ * }
+ * ```
  */
 export type ValidationResult<T = unknown> =
   | { isValid: true; data: T }

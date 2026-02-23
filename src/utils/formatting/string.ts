@@ -1,11 +1,24 @@
 /**
- * String formatting and manipulation utilities
+ * String formatting and manipulation utilities.
+ *
+ * @since 1.0.0
  */
 
 import { Optional } from '../../types/common';
 
 /**
- * Truncate a string to a maximum length with ellipsis
+ * Truncate a string to a maximum length with a suffix (default `...`).
+ *
+ * @param str - Input string
+ * @param maxLength - Maximum allowed length including suffix
+ * @param suffix - Truncation suffix (default: `'...'`)
+ * @returns Truncated string or original if within limit
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * truncate('Hello, World!', 8); // "Hello..."
+ * ```
  */
 export function truncate(
   str: string,
@@ -19,7 +32,16 @@ export function truncate(
 }
 
 /**
- * Capitalize the first letter of a string
+ * Capitalize the first letter of a string.
+ *
+ * @param str - Input string
+ * @returns String with first character uppercased
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * capitalize('hello'); // "Hello"
+ * ```
  */
 export function capitalize(str: string): string {
   if (!str) return str;
@@ -27,7 +49,16 @@ export function capitalize(str: string): string {
 }
 
 /**
- * Convert a string to title case
+ * Convert a string to title case (capitalize each word).
+ *
+ * @param str - Input string
+ * @returns Title-cased string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * toTitleCase('hello world'); // "Hello World"
+ * ```
  */
 export function toTitleCase(str: string): string {
   if (!str) return str;
@@ -39,7 +70,16 @@ export function toTitleCase(str: string): string {
 }
 
 /**
- * Convert a string to kebab case
+ * Convert a string to kebab-case.
+ *
+ * @param str - Input string (camelCase, PascalCase, spaces, or underscores)
+ * @returns Kebab-cased string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * toKebabCase('helloWorld'); // "hello-world"
+ * ```
  */
 export function toKebabCase(str: string): string {
   if (!str) return str;
@@ -50,7 +90,16 @@ export function toKebabCase(str: string): string {
 }
 
 /**
- * Convert a string to camel case
+ * Convert a string to camelCase.
+ *
+ * @param str - Input string (kebab-case, snake_case, or spaces)
+ * @returns camelCased string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * toCamelCase('hello-world'); // "helloWorld"
+ * ```
  */
 export function toCamelCase(str: string): string {
   if (!str) return str;
@@ -60,7 +109,16 @@ export function toCamelCase(str: string): string {
 }
 
 /**
- * Convert a string to snake case
+ * Convert a string to snake_case.
+ *
+ * @param str - Input string (camelCase, kebab-case, or spaces)
+ * @returns snake_cased string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * toSnakeCase('helloWorld'); // "hello_world"
+ * ```
  */
 export function toSnakeCase(str: string): string {
   if (!str) return str;
@@ -71,7 +129,11 @@ export function toSnakeCase(str: string): string {
 }
 
 /**
- * Remove extra whitespace from a string
+ * Collapse consecutive whitespace to a single space and trim.
+ *
+ * @param str - Input string
+ * @returns Normalized string
+ * @since 1.0.0
  */
 export function normalizeWhitespace(str: string): string {
   if (!str) return str;
@@ -79,21 +141,38 @@ export function normalizeWhitespace(str: string): string {
 }
 
 /**
- * Check if a string is empty or only whitespace
+ * Check if a string is empty, undefined, null, or only whitespace.
+ *
+ * @param str - Input string (may be nullish)
+ * @returns True if blank
+ * @since 1.0.0
  */
 export function isBlank(str?: Optional<string>): boolean {
   return !str || str.trim().length === 0;
 }
 
 /**
- * Check if a string is not empty and not only whitespace
+ * Type guard: check if a string is not empty and not only whitespace.
+ *
+ * @param str - Input string (may be nullish)
+ * @returns True (and narrows to `string`) if not blank
+ * @since 1.0.0
  */
 export function isNotBlank(str?: Optional<string>): str is string {
   return !isBlank(str);
 }
 
 /**
- * Escape HTML special characters
+ * Escape HTML special characters (`&`, `<`, `>`, `"`, `'`).
+ *
+ * @param str - Input string
+ * @returns HTML-escaped string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * escapeHtml('<b>Hi</b>'); // "&lt;b&gt;Hi&lt;/b&gt;"
+ * ```
  */
 export function escapeHtml(str: string): string {
   if (!str) return str;
@@ -108,7 +187,16 @@ export function escapeHtml(str: string): string {
 }
 
 /**
- * Remove HTML tags from a string
+ * Remove all HTML tags from a string.
+ *
+ * @param str - Input string with HTML
+ * @returns Plain text with tags removed
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * stripHtml('<p>Hello <b>world</b></p>'); // "Hello world"
+ * ```
  */
 export function stripHtml(str: string): string {
   if (!str) return str;
@@ -116,7 +204,12 @@ export function stripHtml(str: string): string {
 }
 
 /**
- * Extract initials from a name
+ * Extract initials from a name (e.g., "John Doe" -> "JD").
+ *
+ * @param name - Full name
+ * @param maxInitials - Maximum number of initials (default: 2)
+ * @returns Uppercase initials
+ * @since 1.0.0
  */
 export function getInitials(name: string, maxInitials = 2): string {
   if (!name) return '';
@@ -131,7 +224,18 @@ export function getInitials(name: string, maxInitials = 2): string {
 }
 
 /**
- * Format bytes to human-readable size
+ * Format bytes to a human-readable size string (e.g., "1.5 MB").
+ *
+ * @param bytes - Size in bytes
+ * @param decimals - Decimal places (default: 2)
+ * @returns Formatted string like "1.5 MB"
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * formatBytes(1536); // "1.5 KB"
+ * formatBytes(0);    // "0 Bytes"
+ * ```
  */
 export function formatBytes(bytes: number, decimals = 2): string {
   if (bytes === 0) return '0 Bytes';
@@ -146,7 +250,13 @@ export function formatBytes(bytes: number, decimals = 2): string {
 }
 
 /**
- * Generate a random string
+ * Generate a random string of a given length.
+ *
+ * @param length - Desired string length
+ * @param charset - Character set: `'alpha'`, `'numeric'`,
+ *   `'alphanumeric'` (default), `'hex'`, or a custom string
+ * @returns Random string
+ * @since 1.0.0
  */
 export function randomString(length: number, charset = 'alphanumeric'): string {
   let chars: string;
@@ -177,7 +287,21 @@ export function randomString(length: number, charset = 'alphanumeric'): string {
 }
 
 /**
- * Pluralize a word based on count
+ * Pluralize a word based on count.
+ * Appends `'s'` by default when count is not 1.
+ *
+ * @param count - Item count
+ * @param singular - Singular form
+ * @param plural - Optional explicit plural form
+ * @returns Singular or plural form based on count
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * pluralize(1, 'item');  // "item"
+ * pluralize(3, 'item');  // "items"
+ * pluralize(2, 'child', 'children'); // "children"
+ * ```
  */
 export function pluralize(
   count: number,
@@ -191,7 +315,16 @@ export function pluralize(
 }
 
 /**
- * Format a number with commas as thousands separators
+ * Format a number with commas as thousands separators.
+ *
+ * @param num - Number to format
+ * @returns Formatted string (e.g., "1,234,567")
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * formatNumber(1234567); // "1,234,567"
+ * ```
  */
 export function formatNumber(num: number): string {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

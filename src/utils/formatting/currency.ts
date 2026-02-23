@@ -1,9 +1,13 @@
 /**
- * Currency formatting utilities for USDC and other tokens
+ * Currency formatting utilities for USDC and other tokens.
+ *
+ * @since 1.0.0
  */
 
-// USDC configuration constants
+/** Number of decimal places for USDC token amounts. */
 export const USDC_DECIMALS = 6;
+
+/** Revenue claim expiration period in days. */
 export const CLAIM_PERIOD_DAYS = 60;
 
 /**

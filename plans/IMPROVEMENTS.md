@@ -2,17 +2,17 @@
 
 ## Priority 1 - High Impact
 
-### 1. Add Comprehensive JSDoc to All Exported Types
+### 1. Add Comprehensive JSDoc to All Exported Types ✅
 - Many interfaces and types lack `@description`, `@example`, and `@since` tags
 - Add `@example` blocks to utility functions like `safeAsync`, `withTimeout`, `withCache`
 - Document all enum values with descriptions
 
-### 2. Increase Test Coverage
+### 2. Increase Test Coverage ✅
 - Current coverage is moderate; add tests for edge cases in validators (`validateAddress`, `validateAmount`)
 - Add property-based tests for pure utility functions in `utils/`
 - Test all type guard functions with both positive and negative cases
 
-### 3. Extract Blockchain Types to Separate Entry Point
+### 3. Extract Blockchain Types to Separate Entry Point ✅
 - `src/types/blockchain/` could be a separate export path (`@sudobility/types/blockchain`)
 - This avoids importing blockchain-heavy types in projects that don't need them
 - Follows the pattern already used by entity and subscription types

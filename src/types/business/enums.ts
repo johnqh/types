@@ -1,22 +1,39 @@
 /**
- * Platform-agnostic enums for discrete states
- * These replace string literals throughout the application
+ * Platform-agnostic enums for discrete states.
+ * These replace string literals throughout the application.
+ *
+ * @since 1.0.0
  */
 
-// Authentication states - aligned with @johnqh/di
+/**
+ * Authentication status of a wallet connection.
+ * @since 1.0.0
+ */
 export enum AuthStatus {
+  /** Wallet is connected but not yet verified via signature */
   CONNECTED = 'connected',
+  /** Wallet is not connected */
   DISCONNECTED = 'disconnected',
+  /** Wallet is connected and ownership is verified via signature */
   VERIFIED = 'verified',
 }
 
-// Chain types (more specific than @johnqh/di version)
+/**
+ * Blockchain family classification.
+ * @since 1.0.0
+ */
 export enum ChainType {
+  /** Ethereum Virtual Machine compatible chains */
   EVM = 'evm',
+  /** Solana blockchain */
   SOLANA = 'solana',
 }
 
-// Supported blockchain networks
+/**
+ * Supported blockchain networks across EVM and Solana ecosystems.
+ * Includes mainnets, testnets, and local development chains.
+ * @since 1.0.0
+ */
 export enum Chain {
   // Ethereum
   ETH_MAINNET = 'eth-mainnet',
@@ -135,21 +152,33 @@ export enum Chain {
   SOLANA_LOCAL = 'solana-local',
 }
 
-// Theme states
+/**
+ * UI theme preference.
+ * @since 1.0.0
+ */
 export enum Theme {
+  /** Light color scheme */
   LIGHT = 'light',
+  /** Dark color scheme */
   DARK = 'dark',
+  /** Follow OS/system preference */
   SYSTEM = 'system',
 }
 
-// Font sizes
+/**
+ * UI font size preference.
+ * @since 1.2.0
+ */
 export enum FontSize {
   SMALL = 'small',
   MEDIUM = 'medium',
   LARGE = 'large',
 }
 
-// Email compose types
+/**
+ * Email composition mode.
+ * @since 1.0.0
+ */
 export enum EmailComposeType {
   NEW = 'new',
   REPLY = 'reply',
@@ -157,7 +186,10 @@ export enum EmailComposeType {
   FORWARD = 'forward',
 }
 
-// Mobile navigation views
+/**
+ * Mobile navigation view states.
+ * @since 1.0.0
+ */
 export enum MobileView {
   EMAIL_ADDRESSES = 'emailAddresses',
   FOLDERS = 'folders',
@@ -165,13 +197,19 @@ export enum MobileView {
   EMAIL_BODY = 'emailBody',
 }
 
-// Medium screen navigation
+/**
+ * Medium-screen (tablet) navigation pane selection.
+ * @since 1.0.0
+ */
 export enum MediumView {
   LEFT = 'left',
   RIGHT = 'right',
 }
 
-// Email actions
+/**
+ * Actions that can be performed on an email message.
+ * @since 1.0.0
+ */
 export enum EmailAction {
   OPEN = 'open',
   REPLY = 'reply',
@@ -183,7 +221,10 @@ export enum EmailAction {
   MARK_UNREAD = 'mark_unread',
 }
 
-// Subscription actions
+/**
+ * Subscription lifecycle actions.
+ * @since 1.3.0
+ */
 export enum SubscriptionAction {
   VIEW = 'view',
   PURCHASE = 'purchase',
@@ -191,15 +232,25 @@ export enum SubscriptionAction {
   RESTORE = 'restore',
 }
 
-// Network request states
+/**
+ * Network request lifecycle states.
+ * @since 1.0.0
+ */
 export enum RequestStatus {
+  /** No request in progress */
   IDLE = 'idle',
+  /** Request is in flight */
   LOADING = 'loading',
+  /** Request completed successfully */
   SUCCESS = 'success', // STATUS_VALUES.SUCCESS
+  /** Request failed */
   ERROR = 'error', // STATUS_VALUES.ERROR
 }
 
-// Notification types
+/**
+ * UI notification severity levels.
+ * @since 1.0.0
+ */
 export enum NotificationType {
   INFO = 'info',
   SUCCESS = 'success', // STATUS_VALUES.SUCCESS
@@ -207,7 +258,10 @@ export enum NotificationType {
   ERROR = 'error', // STATUS_VALUES.ERROR
 }
 
-// Info types for UI feedback
+/**
+ * Info-level UI feedback types.
+ * @since 1.0.0
+ */
 export enum InfoType {
   INFO = 'info',
   SUCCESS = 'success',
@@ -215,7 +269,10 @@ export enum InfoType {
   ERROR = 'error',
 }
 
-// Email address types
+/**
+ * Email address resolution types.
+ * @since 1.0.0
+ */
 export enum EmailAddressType {
   DIRECT = 'direct',
   ENS = 'ens',
@@ -223,13 +280,19 @@ export enum EmailAddressType {
   CUSTOM = 'custom',
 }
 
-// Mailbox sort orders
+/**
+ * Sort order direction.
+ * @since 1.0.0
+ */
 export enum SortOrder {
   ASC = 'asc',
   DESC = 'desc',
 }
 
-// Email sort criteria
+/**
+ * Fields by which emails can be sorted.
+ * @since 1.0.0
+ */
 export enum EmailSortCriteria {
   DATE = 'date',
   SUBJECT = 'subject',
@@ -237,7 +300,10 @@ export enum EmailSortCriteria {
   SIZE = 'size',
 }
 
-// Connection types
+/**
+ * Network connection type (WiFi, cellular, etc.).
+ * @since 1.1.0
+ */
 export enum ConnectionType {
   UNKNOWN = 'unknown',
   NONE = 'none',
@@ -249,7 +315,11 @@ export enum ConnectionType {
   ETHERNET = 'ethernet',
 }
 
-// Connection states (consolidated from WalletConnectionState, NetworkStatus, and ConnectionState)
+/**
+ * Wallet/network connection lifecycle states.
+ * Consolidated from WalletConnectionState, NetworkStatus, and ConnectionState.
+ * @since 1.0.0
+ */
 export enum ConnectionState {
   UNKNOWN = 'unknown',
   DISCONNECTED = 'disconnected',
@@ -261,14 +331,20 @@ export enum ConnectionState {
   ERROR = 'error',
 }
 
-// Platform types
+/**
+ * Runtime platform identification.
+ * @since 1.0.0
+ */
 export enum PlatformType {
   WEB = 'web',
   REACT_NATIVE = 'react_native',
   DESKTOP = 'desktop',
 }
 
-// Email validation states
+/**
+ * Email address validation status.
+ * @since 1.0.0
+ */
 export enum EmailValidationState {
   VALID = 'valid',
   INVALID = 'invalid',
@@ -276,7 +352,10 @@ export enum EmailValidationState {
   UNKNOWN = 'unknown',
 }
 
-// Feature flags
+/**
+ * Feature flags for gating experimental or premium features.
+ * @since 1.2.0
+ */
 export enum FeatureFlag {
   AI_SEARCH = 'ai_search',
   SMART_COMPOSE = 'smart_compose',
@@ -286,7 +365,10 @@ export enum FeatureFlag {
   ANALYTICS = 'analytics',
 }
 
-// Error types
+/**
+ * High-level error category classification.
+ * @since 1.0.0
+ */
 export enum ErrorType {
   NETWORK = 'network',
   AUTH = 'auth',
@@ -295,7 +377,10 @@ export enum ErrorType {
   UNKNOWN = 'unknown',
 }
 
-// Currency types for subscriptions
+/**
+ * Fiat currency codes for subscription pricing.
+ * @since 1.3.0
+ */
 export enum Currency {
   USD = 'USD',
   EUR = 'EUR',

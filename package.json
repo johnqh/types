@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.53",
+  "version": "1.9.54",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -20,6 +20,11 @@
       "import": "./dist/types/business/enums.js",
       "require": "./dist/types/business/enums.cjs",
       "types": "./dist/types/business/enums.d.ts"
+    },
+    "./blockchain": {
+      "import": "./dist/types/blockchain/index.js",
+      "require": "./dist/types/blockchain/index.cjs",
+      "types": "./dist/types/blockchain/index.d.ts"
     }
   },
   "scripts": {

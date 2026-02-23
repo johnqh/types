@@ -1,11 +1,25 @@
 /**
- * Date formatting utilities
+ * Date formatting utilities.
+ *
+ * @since 1.0.0
  */
 
 import { Optional } from '../../types/common';
 
 /**
- * Format a date for display in email list
+ * Format a date for display in email list.
+ * Returns time for today, "Yesterday", day name for the past week,
+ * or a short date for older messages.
+ *
+ * @param date - Date object or ISO date string
+ * @returns Formatted date string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * formatEmailDate(new Date()); // "3:45 PM"
+ * formatEmailDate('2024-01-15'); // "Jan 15"
+ * ```
  */
 export function formatEmailDate(date: Date | string): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
@@ -56,14 +70,33 @@ export function formatEmailDate(date: Date | string): string {
 }
 
 /**
- * Format a timestamp to ISO string
+ * Format a Unix timestamp (ms) to an ISO 8601 string.
+ *
+ * @param timestamp - Unix timestamp in milliseconds
+ * @returns ISO 8601 date string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * formatTimestamp(1700000000000); // "2023-11-14T22:13:20.000Z"
+ * ```
  */
 export function formatTimestamp(timestamp: number): string {
   return new Date(timestamp).toISOString();
 }
 
 /**
- * Format a date to a relative time string (e.g., "2 hours ago")
+ * Format a date to a relative time string (e.g., "2 hours ago").
+ *
+ * @param date - Date object, ISO string, or Unix timestamp (ms)
+ * @returns Human-readable relative time string
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * formatRelativeTime(Date.now() - 3600000); // "1 hour ago"
+ * formatRelativeTime('2024-01-01'); // "1 year ago"
+ * ```
  */
 export function formatRelativeTime(date: Date | string | number): string {
   const dateObj =
@@ -113,7 +146,17 @@ export function formatRelativeTime(date: Date | string | number): string {
 }
 
 /**
- * Parse a date string safely
+ * Parse a date string safely, returning null on invalid input.
+ *
+ * @param dateString - Date string to parse
+ * @returns Parsed Date or null if invalid
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * parseDate('2024-01-15'); // Date object
+ * parseDate('not-a-date'); // null
+ * ```
  */
 export function parseDate(dateString: string): Optional<Date> {
   try {
@@ -128,7 +171,13 @@ export function parseDate(dateString: string): Optional<Date> {
 }
 
 /**
- * Check if a date is within a range
+ * Check if a date falls within an inclusive range.
+ *
+ * @param date - Date to check
+ * @param startDate - Range start (inclusive)
+ * @param endDate - Range end (inclusive)
+ * @returns True if date is within the range
+ * @since 1.0.0
  */
 export function isDateInRange(
   date: Date,
@@ -139,7 +188,12 @@ export function isDateInRange(
 }
 
 /**
- * Add days to a date
+ * Add (or subtract) days from a date. Returns a new Date instance.
+ *
+ * @param date - Starting date
+ * @param days - Number of days to add (negative to subtract)
+ * @returns New Date with days added
+ * @since 1.0.0
  */
 export function addDays(date: Date, days: number): Date {
   const result = new Date(date);
@@ -148,7 +202,12 @@ export function addDays(date: Date, days: number): Date {
 }
 
 /**
- * Add hours to a date
+ * Add (or subtract) hours from a date. Returns a new Date instance.
+ *
+ * @param date - Starting date
+ * @param hours - Number of hours to add (negative to subtract)
+ * @returns New Date with hours added
+ * @since 1.0.0
  */
 export function addHours(date: Date, hours: number): Date {
   const result = new Date(date);
