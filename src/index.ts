@@ -178,9 +178,10 @@ export { WalletType } from './types/infrastructure/wallet';
 export type { UserInfoResponse } from './types/infrastructure/firebase-user';
 
 // ============================================================================
-// TYPES - Subscription (Rate Limits)
+// TYPES - Subscription
 // ============================================================================
 
+// Rate Limits
 export type {
   RateLimits,
   RateLimitTier,
@@ -193,6 +194,13 @@ export type {
   RateLimitHistoryResponse,
 } from './types/subscription/rate-limits';
 export { RateLimitPeriodType } from './types/subscription/rate-limits';
+
+// Periods
+export type { SubscriptionPeriod } from './types/subscription/period';
+export { PERIOD_RANKS, ALL_PERIODS } from './types/subscription/period';
+
+// Entitlements
+export { NONE_ENTITLEMENT } from './types/subscription/entitlements';
 
 // ============================================================================
 // TYPES - Consumables
