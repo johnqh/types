@@ -3,7 +3,7 @@
  * @description Permission types and constants for role-based access control
  */
 
-import { EntityRole } from './entity';
+import { EntityRole } from './entity.js';
 
 // ========================================
 // PERMISSION INTERFACE

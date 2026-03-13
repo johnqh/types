@@ -5,8 +5,8 @@
  * @since 1.0.0
  */
 
-import { logger } from './logging/logger';
-import { Optional } from '../types/common';
+import { logger } from './logging/logger.js';
+import { Optional } from '../types/common.js';
 
 /**
  * Result type for safe async operations.

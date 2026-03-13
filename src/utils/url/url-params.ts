@@ -3,7 +3,7 @@
  * Provides URLSearchParams functionality with React Native compatibility
  */
 
-import { Optional } from '../../types/common';
+import { Optional } from '../../types/common.js';
 
 /**
  * URLSearchParams interface for cross-platform compatibility

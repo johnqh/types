@@ -1,4 +1,4 @@
-import type { Optional } from '../common';
+import type { Optional } from '../common.js';
 
 /**
  * UI-level navigation state interface for web and mobile applications

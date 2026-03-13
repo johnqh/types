@@ -4,7 +4,7 @@
  * @since 1.0.0
  */
 
-import { Optional } from '../../types/common';
+import { Optional } from '../../types/common.js';
 
 /**
  * Format a date for display in email list.

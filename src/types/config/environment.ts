@@ -2,7 +2,7 @@
  * Environment configuration types for cross-platform applications
  */
 
-import { Optional } from '../common';
+import { Optional } from '../common.js';
 
 /**
  * Environment variables interface with typed NODE_ENV and flexible additional properties.

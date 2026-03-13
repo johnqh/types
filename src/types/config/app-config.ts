@@ -2,7 +2,7 @@
  * Application configuration types
  */
 
-import { Optional } from '../common';
+import { Optional } from '../common.js';
 
 /**
  * Firebase service configuration interface.

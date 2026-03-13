@@ -2,8 +2,8 @@
  * Authentication utilities for wallet-based authentication
  */
 
-import { AuthStatus } from '../../types/business/enums';
-import { Optional } from '../../types/common';
+import { AuthStatus } from '../../types/business/enums.js';
+import { Optional } from '../../types/common.js';
 
 /**
  * Generate an authentication message with a nonce

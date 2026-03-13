@@ -3,8 +3,8 @@
  * Defines the structure for tracking wallet connection and verification state
  */
 
-import { Optional } from '../common';
-import { ConnectionState, ChainType } from './enums';
+import { Optional } from '../common.js';
+import { ConnectionState, ChainType } from './enums.js';
 
 /**
  * Wallet status interface representing the current state of wallet connection

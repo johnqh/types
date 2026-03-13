@@ -3,7 +3,7 @@
  * @description Request types for entity API endpoints
  */
 
-import type { EntityRole } from './entity';
+import type { EntityRole } from './entity.js';
 
 // ========================================
 // ENTITY REQUESTS

@@ -7,8 +7,8 @@
  */
 
 // Import ChainType from business enums
-import { ChainType } from '../../types/business/enums';
-import { Optional } from '../../types/common';
+import { ChainType } from '../../types/business/enums.js';
+import { Optional } from '../../types/common.js';
 
 export interface AddressValidationResult {
   name?: Optional<string>;

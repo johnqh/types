@@ -3,7 +3,7 @@
  * Platform-agnostic HTTP client interface
  */
 
-import { BaseResponse, Optional } from '../common';
+import { BaseResponse, Optional } from '../common.js';
 
 interface NetworkRequestOptions {
   method?: Optional<'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'>;

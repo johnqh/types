@@ -23,14 +23,14 @@ export type {
   RpcConfig,
   SendMessageOptions,
   TransactionResult,
-} from './common';
+} from './common.js';
 
 // Enums and constants
 export {
   MessageType,
   PROTOCOL_CONSTANTS,
   TransactionStatus,
-} from './common';
+} from './common.js';
 
 // Type guards
 export {
@@ -38,7 +38,7 @@ export {
   isEvmRecipient,
   isSolanaAddress,
   isSolanaRecipient,
-} from './common';
+} from './common.js';
 
 // Validators
 export {
@@ -46,4 +46,4 @@ export {
   validateAmount,
   validateDomain,
   validateMessage,
-} from './validation';
+} from './validation.js';

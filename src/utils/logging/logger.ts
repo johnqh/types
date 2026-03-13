@@ -3,7 +3,7 @@
  * Provides consistent logging across the application with proper formatting
  */
 
-import { Optional } from '../../types/common';
+import { Optional } from '../../types/common.js';
 
 enum LogLevel {
   ERROR = 'error',

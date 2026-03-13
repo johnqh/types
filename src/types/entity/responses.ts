@@ -3,13 +3,13 @@
  * @description Response types for entity API endpoints
  */
 
-import type { BaseResponse } from '../common';
+import type { BaseResponse } from '../common.js';
 import type {
   Entity,
   EntityWithRole,
   EntityMember,
   EntityInvitation,
-} from './entity';
+} from './entity.js';
 
 // ========================================
 // ENTITY RESPONSES

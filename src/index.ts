@@ -25,7 +25,7 @@ export type {
   UnifiedError,
   Result,
   ValidationResult,
-} from './types/common';
+} from './types/common.js';
 
 // ============================================================================
 // TYPES - Business
@@ -56,15 +56,15 @@ export {
   SortOrder,
   SubscriptionAction,
   Theme,
-} from './types/business/enums';
+} from './types/business/enums.js';
 
 // Wallet status
-export type { WalletStatus } from './types/business/wallet-status';
+export type { WalletStatus } from './types/business/wallet-status.js';
 export {
   getWalletConnectionState,
   isWalletConnected,
   isWalletVerified,
-} from './types/business/wallet-status';
+} from './types/business/wallet-status.js';
 
 // ============================================================================
 // TYPES - Blockchain
@@ -84,7 +84,7 @@ export type {
   RpcConfig,
   SendMessageOptions,
   TransactionResult,
-} from './types/blockchain/common';
+} from './types/blockchain/common.js';
 
 export {
   MessageType,
@@ -94,14 +94,14 @@ export {
   isEvmRecipient,
   isSolanaAddress,
   isSolanaRecipient,
-} from './types/blockchain/common';
+} from './types/blockchain/common.js';
 
 export {
   validateAddress,
   validateAmount,
   validateDomain,
   validateMessage,
-} from './types/blockchain/validation';
+} from './types/blockchain/validation.js';
 
 // ============================================================================
 // TYPES - Config
@@ -110,10 +110,10 @@ export {
 export type {
   EnvProvider,
   EnvironmentVariables,
-} from './types/config/environment';
-export { StorageType } from './types/config/environment';
+} from './types/config/environment.js';
+export { StorageType } from './types/config/environment.js';
 
-export type { AppConfig, FirebaseConfig } from './types/config/app-config';
+export type { AppConfig, FirebaseConfig } from './types/config/app-config.js';
 
 // ============================================================================
 // TYPES - Infrastructure
@@ -125,11 +125,11 @@ export type {
   AnalyticsEventProperties,
   AnalyticsService,
   EmailAnalyticsService,
-} from './types/infrastructure/analytics';
+} from './types/infrastructure/analytics.js';
 export {
   AnalyticsEvent,
   AnalyticsEventBuilder,
-} from './types/infrastructure/analytics';
+} from './types/infrastructure/analytics.js';
 
 // API
 export type {
@@ -147,19 +147,19 @@ export type {
   SupportedChainId,
   UserChainId,
   UserStatisticsEntity,
-} from './types/infrastructure/api';
+} from './types/infrastructure/api.js';
 export {
   ContractType,
   ProcessedEventName,
-} from './types/infrastructure/api';
+} from './types/infrastructure/api.js';
 
 // Network
 export type {
   NetworkClient,
   NetworkRequestOptions,
   NetworkResponse,
-} from './types/infrastructure/network';
-export { NetworkError } from './types/infrastructure/network';
+} from './types/infrastructure/network.js';
+export { NetworkError } from './types/infrastructure/network.js';
 
 // Navigation
 export type {
@@ -169,13 +169,13 @@ export type {
   UINavigationOptions,
   UINavigationService,
   UINavigationState,
-} from './types/infrastructure/navigation';
+} from './types/infrastructure/navigation.js';
 
 // Wallet
-export { WalletType } from './types/infrastructure/wallet';
+export { WalletType } from './types/infrastructure/wallet.js';
 
 // Firebase User
-export type { UserInfoResponse } from './types/infrastructure/firebase-user';
+export type { UserInfoResponse } from './types/infrastructure/firebase-user.js';
 
 // ============================================================================
 // TYPES - Subscription
@@ -192,15 +192,15 @@ export type {
   RateLimitHistoryEntry,
   RateLimitHistoryData,
   RateLimitHistoryResponse,
-} from './types/subscription/rate-limits';
-export { RateLimitPeriodType } from './types/subscription/rate-limits';
+} from './types/subscription/rate-limits.js';
+export { RateLimitPeriodType } from './types/subscription/rate-limits.js';
 
 // Periods
-export type { SubscriptionPeriod } from './types/subscription/period';
-export { PERIOD_RANKS, ALL_PERIODS } from './types/subscription/period';
+export type { SubscriptionPeriod } from './types/subscription/period.js';
+export { PERIOD_RANKS, ALL_PERIODS } from './types/subscription/period.js';
 
 // Entitlements
-export { NONE_ENTITLEMENT } from './types/subscription/entitlements';
+export { NONE_ENTITLEMENT } from './types/subscription/entitlements.js';
 
 // ============================================================================
 // TYPES - Consumables
@@ -214,7 +214,7 @@ export type {
   ConsumableUseResponse,
   ConsumablePurchaseRecord,
   ConsumableUsageRecord,
-} from './types/consumables';
+} from './types/consumables/index.js';
 
 // ============================================================================
 // TYPES - Entity
@@ -225,24 +225,24 @@ export {
   EntityType,
   EntityRole,
   InvitationStatus,
-} from './types/entity/entity';
+} from './types/entity/entity.js';
 
 export type {
   Entity,
   EntityWithRole,
   EntityMember,
   EntityInvitation,
-} from './types/entity/entity';
+} from './types/entity/entity.js';
 
 // Permissions
-export type { EntityPermissions } from './types/entity/permissions';
+export type { EntityPermissions } from './types/entity/permissions.js';
 export {
   OWNER_PERMISSIONS,
   MANAGER_PERMISSIONS,
   MEMBER_PERMISSIONS,
   getPermissionsForRole,
   hasPermission,
-} from './types/entity/permissions';
+} from './types/entity/permissions.js';
 
 // Requests
 export type {
@@ -252,7 +252,7 @@ export type {
   InviteMemberRequest,
   AcceptInvitationRequest,
   DeclineInvitationRequest,
-} from './types/entity/requests';
+} from './types/entity/requests.js';
 
 // Responses
 export type {
@@ -265,16 +265,16 @@ export type {
   EntityInvitationListResponse,
   SlugAvailabilityData,
   SlugAvailabilityResponse,
-} from './types/entity/responses';
+} from './types/entity/responses.js';
 
 // ============================================================================
 // UTILS - Validation
 // ============================================================================
 
-export type { AddressValidationResult } from './utils/validation/web3-username-validator';
-export { Web3UsernameValidator } from './utils/validation/web3-username-validator';
+export type { AddressValidationResult } from './utils/validation/web3-username-validator.js';
+export { Web3UsernameValidator } from './utils/validation/web3-username-validator.js';
 
-export type { ValidationResult as TypeValidationResult } from './utils/validation/type-validation';
+export type { ValidationResult as TypeValidationResult } from './utils/validation/type-validation.js';
 export {
   createAssertion,
   createValidator,
@@ -294,13 +294,13 @@ export {
   optional,
   parseJson,
   validateArray,
-} from './utils/validation/type-validation';
+} from './utils/validation/type-validation.js';
 
 // ============================================================================
 // UTILS - Blockchain
 // ============================================================================
 
-export type { ParsedEmailAddress } from './utils/blockchain/address';
+export type { ParsedEmailAddress } from './utils/blockchain/address.js';
 export {
   AddressType,
   formatWalletAddress,
@@ -311,12 +311,12 @@ export {
   isValidSignature,
   isValidWalletAddress,
   parseEmailAddress,
-} from './utils/blockchain/address';
+} from './utils/blockchain/address.js';
 
 export type {
   MultiChainIdGenerator,
   UserChainIdGenerator,
-} from './utils/blockchain/event-helpers';
+} from './utils/blockchain/event-helpers.js';
 export {
   createChainStatsId,
   createDelegationId,
@@ -327,7 +327,7 @@ export {
   isZeroAddress,
   normalizeAddress,
   validateEventArgs,
-} from './utils/blockchain/event-helpers';
+} from './utils/blockchain/event-helpers.js';
 
 // ============================================================================
 // UTILS - Auth
@@ -342,13 +342,13 @@ export {
   isAuthExpired,
   isAuthStatusConnected,
   isValidNonce,
-} from './utils/auth/auth';
+} from './utils/auth/auth.js';
 
 export {
   parseAdminEmails,
   isAdminEmail,
   createAdminChecker,
-} from './utils/auth/admin-emails';
+} from './utils/auth/admin-emails.js';
 
 // ============================================================================
 // UTILS - Formatting
@@ -360,7 +360,7 @@ export {
   USDC_DECIMALS,
   formatUSDC,
   parseUSDC,
-} from './utils/formatting/currency';
+} from './utils/formatting/currency.js';
 
 // Date
 export {
@@ -371,7 +371,7 @@ export {
   formatTimestamp,
   isDateInRange,
   parseDate,
-} from './utils/formatting/date';
+} from './utils/formatting/date.js';
 
 // String
 export {
@@ -391,7 +391,7 @@ export {
   toSnakeCase,
   toTitleCase,
   truncate,
-} from './utils/formatting/string';
+} from './utils/formatting/string.js';
 
 // ============================================================================
 // UTILS - Constants
@@ -415,10 +415,10 @@ export {
   NETWORK_IDS,
   ANIMATION,
   Z_INDEX,
-} from './utils/constants/application';
+} from './utils/constants/application.js';
 
-export { STATUS_VALUES } from './utils/constants/status-values';
-export type { StatusValue } from './utils/constants/status-values';
+export { STATUS_VALUES } from './utils/constants/status-values.js';
+export type { StatusValue } from './utils/constants/status-values.js';
 
 // ============================================================================
 // UTILS - Logging
@@ -433,7 +433,7 @@ export {
   contractLogger,
   ensLogger,
   storageLogger,
-} from './utils/logging/logger';
+} from './utils/logging/logger.js';
 
 // ============================================================================
 // UTILS - URL
@@ -445,7 +445,7 @@ export {
   searchParamsToString,
   parseSearchParams,
   type URLSearchParamsLike,
-} from './utils/url/url-params';
+} from './utils/url/url-params.js';
 
 // ============================================================================
 // UTILS - Async Helpers
@@ -460,4 +460,4 @@ export {
   clearExpiredCache,
   debounceAsync,
   type AsyncResult,
-} from './utils/async-helpers';
+} from './utils/async-helpers.js';

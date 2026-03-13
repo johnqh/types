@@ -5,8 +5,8 @@
  * @version 1.4.2
  */
 
-import { MessageBase, UnifiedError, Result, Optional } from '../common';
-import { Chain } from '../business/enums';
+import { MessageBase, UnifiedError, Result, Optional } from '../common.js';
+import { Chain } from '../business/enums.js';
 
 // ============================================================================
 // NETWORK CONFIGURATION TYPES
@@ -247,7 +247,7 @@ export type {
   PaginationOptions,
   PaginationInfo,
   PaginatedResponse,
-} from '../common';
+} from '../common.js';
 
 /**
  * Query filters for messages

@@ -9,10 +9,10 @@
  * - Database entity interfaces
  */
 
-import { Optional, BaseResponse, PaginationInfo } from '../common';
+import { Optional, BaseResponse, PaginationInfo } from '../common.js';
 
 // Re-export ChainType from business enums
-export { ChainType } from '../business/enums';
+export { ChainType } from '../business/enums.js';
 
 // Re-export unified response type
 export type ApiResponse<T = unknown> = BaseResponse<T>;

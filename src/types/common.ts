@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
 
-import { ChainType } from './business/enums';
+import { ChainType } from './business/enums.js';
 
 /**
  * Utility type for values that can be T, undefined, or null.

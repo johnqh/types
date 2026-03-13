@@ -5,7 +5,7 @@
  * for validating API responses and external data.
  */
 
-import type { ValidationResult, Optional } from '../../types/common';
+import type { ValidationResult, Optional } from '../../types/common.js';
 
 // Re-export unified ValidationResult from common
 export type { ValidationResult };

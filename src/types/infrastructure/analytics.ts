@@ -8,7 +8,7 @@
  * @ai-usage Implement this interface to create analytics services for Firebase, Mixpanel, etc.
  */
 
-import { Optional } from '../common';
+import { Optional } from '../common.js';
 
 /**
  * Flexible analytics event properties interface.

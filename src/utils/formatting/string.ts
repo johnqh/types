@@ -4,7 +4,7 @@
  * @since 1.0.0
  */
 
-import { Optional } from '../../types/common';
+import { Optional } from '../../types/common.js';
 
 /**
  * Truncate a string to a maximum length with a suffix (default `...`).

@@ -5,8 +5,8 @@
  * @since 1.0.0
  */
 
-import { ChainType } from '../business/enums';
-import { isValidWalletAddress } from '../../utils/blockchain/address';
+import { ChainType } from '../business/enums.js';
+import { isValidWalletAddress } from '../../utils/blockchain/address.js';
 
 /**
  * Validate a domain name format.

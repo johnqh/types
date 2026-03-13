@@ -5,10 +5,10 @@
  * including EVM addresses, Solana addresses, ENS names, and SNS names.
  */
 
-import { ChainType } from '../../types/business/enums';
-import { Optional } from '../../types/common';
+import { ChainType } from '../../types/business/enums.js';
+import { Optional } from '../../types/common.js';
 // Import base validation functions from common types
-import { isEvmAddress, isSolanaAddress } from '../../types/blockchain/common';
+import { isEvmAddress, isSolanaAddress } from '../../types/blockchain/common.js';
 
 /**
  * Address type enumeration
@@ -33,7 +33,7 @@ export type ParsedEmailAddress = {
 };
 
 // Address validation functions are now imported directly from common.ts
-// Use isEvmAddress and isSolanaAddress from '../../types/blockchain/common'
+// Use isEvmAddress and isSolanaAddress from '../../types/blockchain/common.js'
 
 /**
  * Check if address is an ENS name (.eth or .box)
