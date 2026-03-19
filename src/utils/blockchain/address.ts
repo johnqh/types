@@ -8,7 +8,10 @@
 import { ChainType } from '../../types/business/enums.js';
 import { Optional } from '../../types/common.js';
 // Import base validation functions from common types
-import { isEvmAddress, isSolanaAddress } from '../../types/blockchain/common.js';
+import {
+  isEvmAddress,
+  isSolanaAddress,
+} from '../../types/blockchain/common.js';
 
 /**
  * Address type enumeration

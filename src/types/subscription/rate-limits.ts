@@ -3,7 +3,7 @@
  * @description Types for rate limiting endpoints across sudojo_api, shapeshyft_api, and whisperly_api
  */
 
-import type { BaseResponse } from "../common";
+import type { BaseResponse } from '../common';
 
 // ========================================
 // RATE LIMIT CONFIGURATION TYPES
@@ -88,9 +88,9 @@ export type RateLimitsConfigResponse = BaseResponse<RateLimitsConfigData>;
  * Valid period types for rate limit history.
  */
 export enum RateLimitPeriodType {
-  HOUR = "hour",
-  DAY = "day",
-  MONTH = "month",
+  HOUR = 'hour',
+  DAY = 'day',
+  MONTH = 'month',
 }
 
 /**

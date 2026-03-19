@@ -122,7 +122,7 @@ const safeParallel = async <T extends readonly unknown[]>(
   context?: string
 ): Promise<AsyncResult<T>> => {
   try {
-    const results = await Promise.all(operations.map(op => op()));
+    const results = await Promise.all(operations.map((op) => op()));
     return { data: results as unknown as T, success: true };
   } catch (error) {
     const errorObj = error instanceof Error ? error : new Error(String(error));
@@ -179,7 +179,10 @@ const withTimeout = async <T>(
 /**
  * In-memory cache for {@link withCache}.
  */
-const cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
+const cache = new Map<
+  string,
+  { data: unknown; timestamp: number; ttl: number }
+>();
 
 /**
  * Cache async operation results with TTL (time-to-live).
@@ -265,7 +268,7 @@ const debounceAsync = <T extends unknown[], R>(
   key: string
 ): ((...args: T) => Promise<Optional<R>>) => {
   return (...args: T): Promise<Optional<R>> => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const existingTimeout = debounceMap.get(key);
       if (existingTimeout) {
         clearTimeout(existingTimeout);

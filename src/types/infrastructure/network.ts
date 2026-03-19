@@ -8,8 +8,8 @@ import { BaseResponse, Optional } from '../common.js';
 interface NetworkRequestOptions {
   method?: Optional<'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'>;
   headers?: Optional<Record<string, string>>;
-  body?: Optional<string | FormData | Blob>;
-  signal?: Optional<AbortSignal>;
+  body?: Optional<string | globalThis.FormData | Blob>;
+  signal?: Optional<globalThis.AbortSignal>;
   timeout?: Optional<number>;
 }
 

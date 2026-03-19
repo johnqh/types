@@ -77,8 +77,10 @@ class Logger {
     data?: Optional<unknown>
   ): void {
     if (this.shouldLog(LogLevel.INFO)) {
+      // eslint-disable-next-line no-console
       console.log(this.formatMessage(LogLevel.INFO, message, context));
       if (data) {
+        // eslint-disable-next-line no-console
         console.log(data);
       }
     }
@@ -90,8 +92,10 @@ class Logger {
     data?: Optional<unknown>
   ): void {
     if (this.shouldLog(LogLevel.DEBUG)) {
+      // eslint-disable-next-line no-console
       console.log(this.formatMessage(LogLevel.DEBUG, message, context));
       if (data) {
+        // eslint-disable-next-line no-console
         console.log(data);
       }
     }

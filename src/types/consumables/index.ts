@@ -9,7 +9,7 @@
 // ========================================
 
 /** Purchase source platform */
-export type ConsumableSource = "web" | "apple" | "google" | "free";
+export type ConsumableSource = 'web' | 'apple' | 'google' | 'free';
 
 // ========================================
 // API REQUEST TYPES

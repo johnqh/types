@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.58",
+  "version": "1.9.59",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "type": "module",
   "main": "./dist/index.js",
@@ -65,6 +65,10 @@
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^16.4.0",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",

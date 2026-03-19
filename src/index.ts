@@ -202,6 +202,9 @@ export { PERIOD_RANKS, ALL_PERIODS } from './types/subscription/period.js';
 // Entitlements
 export { NONE_ENTITLEMENT } from './types/subscription/entitlements.js';
 
+// Platform
+export { SubscriptionPlatform } from './types/subscription/platform.js';
+
 // ============================================================================
 // TYPES - Consumables
 // ============================================================================

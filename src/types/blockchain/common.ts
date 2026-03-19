@@ -292,7 +292,6 @@ export function isSolanaAddress(address: string): boolean {
 
     // Additional validation: try to decode with bs58 if available
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const bs58 = require('bs58');
       const decoded = bs58.decode(address);
       return decoded.length === 32; // Solana addresses decode to 32 bytes
