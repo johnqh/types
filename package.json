@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/types",
-  "version": "1.9.59",
+  "version": "1.9.60",
   "description": "Comprehensive TypeScript types, interfaces, and utilities for Web3 email applications - optimized for AI-assisted development",
   "type": "module",
   "main": "./dist/index.js",
@@ -77,5 +77,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnqh/types.git"
   }
 }
