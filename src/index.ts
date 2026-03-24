@@ -205,6 +205,9 @@ export { NONE_ENTITLEMENT } from './types/subscription/entitlements.js';
 // Platform
 export { SubscriptionPlatform } from './types/subscription/platform.js';
 
+// Backend subscription result (API contract)
+export type { BackendSubscriptionResult } from './types/subscription/backend-subscription.js';
+
 // ============================================================================
 // TYPES - Consumables
 // ============================================================================
