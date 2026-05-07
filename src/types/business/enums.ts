@@ -388,3 +388,11 @@ export enum Currency {
   CAD = 'CAD',
   AUD = 'AUD',
 }
+
+/**
+ * User account status.
+ */
+export enum UserStatus {
+  ACTIVE = 'active',
+  DELETED = 'deleted',
+}

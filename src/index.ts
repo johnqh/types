@@ -56,6 +56,7 @@ export {
   SortOrder,
   SubscriptionAction,
   Theme,
+  UserStatus,
 } from './types/business/enums.js';
 
 // Wallet status
