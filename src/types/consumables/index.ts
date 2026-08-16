@@ -65,6 +65,22 @@ export interface ConsumablePurchaseRecord {
 /** Usage history record (GET /consumables/usages array item) */
 export interface ConsumableUsageRecord {
   id: number;
+  /**
+   * How many credits this usage consumed.
+   *
+   * Optional because rows written before variable amounts existed have none,
+   * and a product that only ever spends one need not send it. Absent should be
+   * read as one, not as free.
+   */
+  credits?: number;
+  /**
+   * What the credits were spent on, where that is not a file — e.g.
+   * "generate-track — 4 track-measures".
+   *
+   * `filename` is the same idea for products whose unit of work *is* a file;
+   * a consumer should prefer whichever its product sets.
+   */
+  reference?: string | null;
   filename: string | null;
   created_at: string;
 }
