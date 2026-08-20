@@ -1,5 +1,10 @@
 # types - AI Development Guide
 
+> **Git policy — never auto-commit or auto-push.** Leave your work in the working tree.
+> Run `git commit`, `git push`, `gh pr create`, or `scripts/push_all.sh` **only when the user
+> explicitly asks in that turn**. Approval for an earlier change does not carry forward, and
+> finishing a task is not permission to commit it.
+
 ## Overview
 
 `@sudobility/types` is a comprehensive, zero-runtime-dependency TypeScript types and utilities library for Web3 email applications. It provides shared type definitions, interfaces, enums, validators, formatters, and pure utility functions used across multiple packages in the 0xmail platform. The library outputs both ESM and CommonJS builds for maximum compatibility.
@@ -292,3 +297,7 @@ This package has **zero runtime dependencies**. All dependencies are dev-only:
 | `@types/node` ^24.9.1 | Node.js type definitions |
 
 Consumers import this package as a dependency. No peer dependencies are required.
+
+## Git Workflow
+
+- Do not use feature branches for code changes. Always stay on the current branch.
