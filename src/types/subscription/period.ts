@@ -8,11 +8,7 @@
  * Standard subscription periods
  */
 export type SubscriptionPeriod =
-  | 'weekly'
-  | 'monthly'
-  | 'quarterly'
-  | 'yearly'
-  | 'lifetime';
+  'weekly' | 'monthly' | 'quarterly' | 'yearly' | 'lifetime';
 
 /**
  * Period ranking for comparison (higher = longer)

@@ -239,8 +239,7 @@ export interface UnifiedError {
  * ```
  */
 export type Result<T, E = UnifiedError> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+  { success: true; data: T } | { success: false; error: E };
 
 /**
  * Unified validation result pattern.
